@@ -121,6 +121,14 @@ def generate(prompt, design_data):
         design_text = design_raw.readlines()
 
     design_text = "".join(design_text)
+
+    with open("data/foundation/colour.md") as design_colour: # extracted from https://github.com/govtechmy/myds/tree/main/packages/style/styles/theme
+        colour_text = design_colour.readlines()
+
+    colour_text = "".join(colour_text)
+    
+    design_text = design_text + "\n\n" + colour_text
+    
     design_block = f"**When creating components you are to adhere to the Malaysian Design System**\nKeeep in mind components created should have neat and organized layout !\n\n{design_text}"
 
     build_context = f"""Library components can be used while making the new React component
