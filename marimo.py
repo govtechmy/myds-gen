@@ -15,7 +15,6 @@ def _():
     import os
     import marimo as mo
     from util.stages import design, component_generation, build_context
-
     return build_context, component_generation, design, mo, os
 
 
@@ -39,11 +38,11 @@ def _(mo):
 
 @app.cell
 def _(build_context, button, component_generation, design, mo, prompt_ui):
-    prompt = prompt_ui.text
+    prompt = prompt_ui.value
     mo.stop(not button.value)
     with mo.status.spinner(subtitle="Learning about the prompt...") as _spinner:
         valid_prompt = design.prompt_validation(prompt)
-    
+
         if valid_prompt:
             design_data = design.design_planning(prompt)
             _spinner.update(subtitle="Gathering knowledge...")
