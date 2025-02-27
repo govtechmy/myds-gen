@@ -587,7 +587,7 @@
         "description": "A modal pop-up designed to capture user attention for important actions or messages. It consists of three main components, which are Header, Content, and Footer. These elements together form a flexible and cohesive dialog structure that can accommodate different types of alerts or forms.",
         "docs": {
             "import": "import {\n  AlertDialog,\n  AlertDialogContent,\n  AlertDialogDescription,\n  AlertDialogTitle,\n  AlertDialogTrigger,\n  AlertDialogAction,\n  AlertDialogClose,\n} from \"@govtechmy/myds-react/alert-dialog\";\n",
-            "use": "export default () => (\n  <AlertDialog>\n    <AlertDialogTrigger />\n    <AlertDialogBody>\n      <AlertDialogHeader>\n        <AlertDialogTitle />\n      </AlertDialogHeader>\n      <AlertDialogContent>\n        <AlertDialogDescription />\n      </AlertDialogContent>\n      <AlertDialogFooter>\n        <AlertDialogClose />\n      </AlertDialogFooter>\n    </AlertDialogBody>\n  </AlertDialog>\n);\n",
+            "use": "export default () => (\n  <AlertDialog variant=\"default\">\n    <AlertDialogTrigger />\n    <AlertDialogBody>\n      <AlertDialogHeader>\n        <AlertDialogTitle />\n      </AlertDialogHeader>\n      <AlertDialogContent>\n        <AlertDialogDescription />\n      </AlertDialogContent>\n      <AlertDialogFooter>\n        <AlertDialogClose />\n      </AlertDialogFooter>\n    </AlertDialogBody>\n  </AlertDialog>\n);\n",
             "props": {
                 "AlertDialog": {
                     "variant": {
