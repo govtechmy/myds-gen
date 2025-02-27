@@ -63,8 +63,8 @@ def design_planning(prompt):
                     + "\n```"
                     # + "\n\nWhen components are not available, output them in the `not_in_libraryComponent` field."
                     + "\n\nWhen suggesting icons, use common icon names used in Lucide icon library."
-                    + "\nIMPORTANT:"
-                    + "\nThe XIcon in the library refers to the twitter icon, use CrossIcon when the cross icon is needed."
+                    + "\n**IMPORTANT:**"
+                    + "\n**Use CrossIcon when the cross or closing or cancel icon is needed.**"
                 )
             ],
             role="model",
