@@ -1,6 +1,6 @@
 # Setting up the env
 1. install packages using [uv](https://github.com/astral-sh/uv)
-```bash
+```sh
 uv sync
 ```
 
@@ -8,16 +8,21 @@ uv sync
 
 # Setting up data:
 1. simple myds db
-```bash
+```sh
 uv run data/components/extract.py
 ```
 
 2. icons vector db
-```bash
+```sh
 uv run data/icons/build_icon_vector.py
 ```
 
 # Running in cli:
-```bash
+```sh
 uv run main.py
+```
+
+# Running marimo app
+```sh
+uv run marimo run marimo.py
 ```
