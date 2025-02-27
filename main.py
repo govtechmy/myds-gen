@@ -1,19 +1,22 @@
 from rich.console import Console
 from rich.markdown import Markdown
 from tqdm import tqdm
-from util.stages import design, component_generation, build_context
+from util.stages import design, component_generation, build_context, generation_validation
 
 def main(prompt):
     
     valid_prompt = design.prompt_validation(prompt)
 
     if valid_prompt:
-        p_bar = tqdm(range(3), colour="green")
+        p_bar = tqdm(range(4), colour="green")
         design_data = design.design_planning(prompt)
         p_bar.update()
         component_task, full_context = build_context.generate(prompt, design_data)
         p_bar.update()
         component_string = component_generation.generate(component_task,full_context)
+        print(component_string)
+        p_bar.update()
+        component_string = generation_validation.validate(component_string)
         p_bar.update()
         return component_task["name"], component_string
     else:
