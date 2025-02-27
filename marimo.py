@@ -15,6 +15,7 @@ def _():
     import os
     import marimo as mo
     from util.stages import design, component_generation, build_context
+
     return build_context, component_generation, design, mo, os
 
 
@@ -48,11 +49,11 @@ def _(build_context, button, component_generation, design, mo, prompt_ui):
             _spinner.update(subtitle="Gathering knowledge...")
             component_task, full_context = build_context.generate(prompt, design_data)
             _spinner.update(subtitle="Generating component...")
-            component_string = component_generation.generate(component_task,full_context)
+            component_string = component_generation.generate(
+                component_task, full_context
+            )
             tsx_download = mo.download(
-                data=component_string.replace("```tsx\n", "").replace(
-                    "\n```", ""
-                ),
+                data=component_string.replace("```tsx\n", "").replace("\n```", ""),
                 filename=f"{component_task['name']}.tsx",
                 mimetype="text/plain",
             )

@@ -2,6 +2,7 @@ import uuid
 import pandas as pd
 from util.util.rag import rag_icon, fake_rag_component
 
+
 # ----------------
 # processing markdown tables and code examples
 def prop_md(prop_dict):
@@ -14,19 +15,21 @@ def prop_md(prop_dict):
 
 
 def example_block(comp_name, comp_examples, props):
-    return f"\n\n# full code examples of React components that use {comp_name} :\n"+ "\n\n".join(
-        [f"```tsx\n{example.strip()}\n```" for example in comp_examples]
-    ) + "\n\n" f"# API reference for {comp_name} :\n\n" + "\n".join(
-        [
-            f"## {c_name}\n\n{prop_md(c_prop)}"
-            for c_name, c_prop in props.items()
-        ]
+    return (
+        f"\n\n# full code examples of React components that use {comp_name} :\n"
+        + "\n\n".join([f"```tsx\n{example.strip()}\n```" for example in comp_examples])
+        + "\n\n"
+        f"# API reference for {comp_name} :\n\n"
+        + "\n".join(
+            [f"## {c_name}\n\n{prop_md(c_prop)}" for c_name, c_prop in props.items()]
+        )
     )
+
+
 # ----------------
 
 
 def generate(prompt, design_data):
-    
     component_task = {
         "name": f"{design_data['new_component_name']}_{uuid.uuid4()}",
         "description": {
@@ -65,8 +68,7 @@ def generate(prompt, design_data):
             "import": "lucide-react",
         },
         "components": [
-            fake_rag_component(i["name"])
-            for i in design_task["components"]
+            fake_rag_component(i["name"]) for i in design_task["components"]
         ],
     }
 
@@ -77,11 +79,11 @@ def generate(prompt, design_data):
     total_suggestion = len(flat_comp_list)
     suggestion_comp_block = "\n\n".join(
         [
-            f'Suggested library component ({i}/{total_suggestion}) : {x[1]["name"]} - {x[1]["description"]}\n'
-            + f'Suggested usage : {design_task["components"][x[0]]["usage"]}\n\n\n'
-            + f'# {x[1]["name"]} can be imported into the new component like this:\n'
-            + f'```tsx\n{x[1]["docs"]["import"].strip()}\n```\n\n---\n\n# examples of how {x[1]["name"]} can be used inside the new component:\n'
-            + f'```tsx\n{x[1]["docs"]["use"]}```\n\n---'
+            f"Suggested library component ({i}/{total_suggestion}) : {x[1]['name']} - {x[1]['description']}\n"
+            + f"Suggested usage : {design_task['components'][x[0]]['usage']}\n\n\n"
+            + f"# {x[1]['name']} can be imported into the new component like this:\n"
+            + f"```tsx\n{x[1]['docs']['import'].strip()}\n```\n\n---\n\n# examples of how {x[1]['name']} can be used inside the new component:\n"
+            + f"```tsx\n{x[1]['docs']['use']}```\n\n---"
             + example_block(
                 x[1]["name"],
                 x[1]["docs"]["examples"],
@@ -97,38 +99,35 @@ def generate(prompt, design_data):
             "Icon elements can optionally be used when making the React component.\n\n---\n\n"
             + "# example: importing icons in the component (only import the ones you need) :\n\n```tsx\nimport { "
             + " , ".join(
-                [
-                    " , ".join(x["retrieved"])
-                    for x in retrieved["icons"]["icons"]
-                ]
+                [" , ".join(x["retrieved"]) for x in retrieved["icons"]["icons"]]
             )
             + " } from @govtechmy/myds-react/icon\n```\n\n# example: using an icon inside the component :\n\n```tsx\n"
             + f'<{example_icon} className="h-4 w-4" />\n```\n\n---\n\n\n'
             + "Here are some available icons that might be relevant to the component you are making. You can choose from them if relevant :\n\n```\n"
             + "\n".join(
-                [
-                    f"- {i}"
-                    for x in retrieved["icons"]["icons"]
-                    for i in x["retrieved"]
-                ]
+                [f"- {i}" for x in retrieved["icons"]["icons"] for i in x["retrieved"]]
             )
             + "\n```"
         )
     else:
         suggestion_icon_block = ""
 
-    with open("data/foundation/design_doc_min.md") as design_raw: # a distilled version of https://myds.vercel.app/en/docs/design foundation tabs
+    with (
+        open("data/foundation/design_doc_min.md") as design_raw
+    ):  # a distilled version of https://myds.vercel.app/en/docs/design foundation tabs
         design_text = design_raw.readlines()
 
     design_text = "".join(design_text)
 
-    with open("data/foundation/colour.md") as design_colour: # extracted from https://github.com/govtechmy/myds/tree/main/packages/style/styles/theme
+    with (
+        open("data/foundation/colour.md") as design_colour
+    ):  # extracted from https://github.com/govtechmy/myds/tree/main/packages/style/styles/theme
         colour_text = design_colour.readlines()
 
     colour_text = "".join(colour_text)
-    
+
     design_text = design_text + "\n\n" + colour_text
-    
+
     design_block = f"**When creating components you are to adhere to the Malaysian Design System**\nKeeep in mind components created should have neat and organized layout !\n\n{design_text}"
 
     build_context = f"""Library components can be used while making the new React component

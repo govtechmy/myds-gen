@@ -1,4 +1,4 @@
-import os 
+import os
 import json
 from google import genai
 from google.genai import types
@@ -6,6 +6,7 @@ from google.genai import types
 
 GEMINI_API_KEY = os.environ["GEMINI_API_KEY"]
 client = genai.Client(api_key=GEMINI_API_KEY)
+
 
 def generate(component_task, build_context):
     system_instruction2 = "You are an expert at writing React components.\nYour task is to write a new React component for a web app, according to the provided task details with best practices of React.\nThe React component you write can make use of Tailwind classes for styling.\nUtilize the library components and icons as much as you can.\n\nYou will write the full React component code, which should include all imports. Your generated code will be directly written to a .tsx React component file and used in production."

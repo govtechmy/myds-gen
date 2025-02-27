@@ -1,9 +1,10 @@
-import os 
+import os
 from google import genai
 from google.genai import types
 
 GEMINI_API_KEY = os.environ["GEMINI_API_KEY"]
 client = genai.Client(api_key=GEMINI_API_KEY)
+
 
 def validate(generated_code):
     system_instruction = """You are an expert at writing React components and fixing React code with errors.
