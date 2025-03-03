@@ -29,7 +29,7 @@ def example_block(comp_name, comp_examples, props):
 # ----------------
 
 
-def generate(prompt, design_data):
+def gen_comp_task(prompt, design_data):
     component_task = {
         "name": f"{design_data['new_component_name']}_{uuid.uuid4()}",
         "description": {
@@ -56,7 +56,10 @@ def generate(prompt, design_data):
             for i in design_data["use_library_components"]
         ],
     }
+    return component_task
 
+
+def parse_task(component_task):
     design_task = {
         "components": component_task["components"],
         "icons": component_task["icons"],
@@ -111,6 +114,12 @@ def generate(prompt, design_data):
         )
     else:
         suggestion_icon_block = ""
+    return suggestion_comp_block, suggestion_icon_block
+
+
+def generate(prompt, design_data, wireframe):
+    component_task = gen_comp_task(prompt, design_data)
+    suggestion_comp_block, suggestion_icon_block = parse_task(component_task)
 
     with (
         open("data/foundation/design_doc_min.md") as design_raw
@@ -130,13 +139,19 @@ def generate(prompt, design_data):
 
     design_block = f"**When creating components you are to adhere to the Malaysian Design System**\nKeeep in mind components created should have neat and organized layout !\n\n{design_text}"
 
-    build_context = f"""Library components can be used while making the new React component
+    build_context = f"""Library components to be used while making the new React component
 
     {suggestion_comp_block}
 
     {suggestion_icon_block}
 
     {design_block}
+
+    # Component Wireframe:
+
+    {wireframe}
+
+    Adhere to the wireframe whe creating the component!
     """
 
     return component_task, build_context

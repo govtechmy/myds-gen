@@ -13,10 +13,12 @@ def main(prompt):
     valid_prompt = design.prompt_validation(prompt)
 
     if valid_prompt:
-        p_bar = tqdm(range(4), colour="green")
+        p_bar = tqdm(range(5), colour="green")
         design_data = design.design_planning(prompt)
         p_bar.update()
-        component_task, full_context = build_context.generate(prompt, design_data)
+        wireframe = design.design_layout(prompt, design_data)
+        p_bar.update()
+        component_task, full_context = build_context.generate(prompt, design_data, wireframe)
         p_bar.update()
         component_string = component_generation.generate(component_task, full_context)
         p_bar.update()

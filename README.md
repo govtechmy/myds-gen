@@ -35,3 +35,6 @@ uv run main.py
 ```sh
 uv run marimo run marimo.py
 ```
+
+# Workflow
+![workflow](process.png)
