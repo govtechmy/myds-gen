@@ -3,7 +3,8 @@ import json
 from google import genai
 from google.genai import types
 
-from util.util.output_schema import ComponentSchema, ValidPromptSchema
+from util.util.output_schema import ComponentSchema, ValidPromptSchema, WireframeSchema
+from util.stages.build_context import gen_comp_task
 
 GEMINI_API_KEY = os.environ["GEMINI_API_KEY"]
 client = genai.Client(api_key=GEMINI_API_KEY)
@@ -23,9 +24,7 @@ def prompt_validation(prompt):
         contents=prompt,
     )
 
-    valid_check = eval(
-        validation_response.text.replace("false", "False").replace("true", "True")
-    )
+    valid_check = json.loads(validation_response.text)
     return valid_check["valid_prompt"]
 
 
@@ -36,9 +35,7 @@ def design_planning(prompt):
         {"name": e["name"], "description": e["description"]} for e in data
     ]
 
-    system_instruction = """Your task is to design a new React component for a web app, according to the user's request.\n` +
-        `If you judge it is relevant to do so, you can specify pre-made library components to use in the component update.\n` +
-        `You can also specify the use of icons if you see that the user's update request requires it."""
+    system_instruction = """Your task is to design a new React component for a web app, according to the user's request.\nIf you judge it is relevant to do so, you can specify pre-made library components to use in the component update.\nYou can also specify the use of icons if you see that the user's update request requires it."""
 
     generation_config = types.GenerateContentConfig(
         temperature=1,
@@ -85,15 +82,43 @@ def design_planning(prompt):
         contents=contents,
     )
 
-    design_data = eval(
-        design_response.text.replace(
-            '"does_new_component_need_icons_elements": true',
-            '"does_new_component_need_icons_elements": True',
-        )
-        .replace(
-            '"does_new_component_need_icons_elements": false',
-            '"does_new_component_need_icons_elements": False',
-        )
-        .replace("null", "[]")
-    )
+    design_data = json.loads(design_response.text)
     return design_data
+
+
+def design_layout(prompt, design_data):
+    component_task = gen_comp_task(prompt, design_data)
+    system_instruction = """Your task is to design the wireframe of new React component for a web app, according to the provided task details.\nSpecify the component needed and the icons (if required) in the wireframe diagram."""
+
+    generation_config = types.GenerateContentConfig(
+        temperature=1,
+        systemInstruction=system_instruction,
+        responseMimeType="application/json",
+        responseSchema=WireframeSchema,
+    )
+
+    design_response = client.models.generate_content(
+        model="gemini-2.0-flash",
+        config=generation_config,
+        contents=[
+            f"- COMPONENT NAME : {component_task['name']}\n\n"
+            + "- COMPONENT DESCRIPTION :\n```\n"
+            + component_task["description"]["user"]
+            + "\n```\n\n"
+            + "- additional component suggestions :\n```\n"
+            + component_task["description"]["llm"]
+            + "\n```"
+            + "\n\nCreate wireframe using ASCII based on the provided design task.\n\n"
+            + "**Available library components**\n- "
+            + "\n- ".join([i["name"] for i in component_task["components"]])
+            + ("**Icon Elements**\n- " if component_task["icons"] else "")
+            + (
+                "\n- ".join([i for i in component_task["icons"]])
+                if component_task["icons"]
+                else ""
+            )
+            + "\n\nOutput the generated wireframe in a ```ascii ``` block"
+        ],
+    )
+    design_response = json.loads(design_response.text)["ascii_wireframe"]
+    return design_response

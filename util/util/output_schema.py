@@ -27,3 +27,6 @@ class ComponentSchema(BaseModel):
 
 class ValidPromptSchema(BaseModel):
     valid_prompt: bool
+
+class WireframeSchema(BaseModel):
+    ascii_wireframe: str
