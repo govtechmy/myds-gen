@@ -20,7 +20,7 @@ def main(prompt):
         p_bar.update()
         component_string = component_generation.generate(component_task, full_context)
         p_bar.update()
-        component_string = generation_validation.validate(component_string)
+        component_string = generation_validation.validate_full(component_string, component_task["name"])
         p_bar.update()
         return component_task["name"], component_string
     else:
