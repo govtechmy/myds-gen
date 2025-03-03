@@ -6,6 +6,15 @@ uv sync
 
 2. create `.env` and add your Gemini API key as in `.env.example`
 
+3. install eslint
+```sh
+npm i eslint --save-dev
+```
+4. install tsc
+```sh
+npm install typescript --save-dev
+```
+
 # Setting up data:
 1. simple myds db
 ```sh
