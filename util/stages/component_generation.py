@@ -1,5 +1,4 @@
 import os
-import json
 from google import genai
 from google.genai import types
 
@@ -26,7 +25,7 @@ def generate(component_task, build_context):
             + "\n```\n\n"
             + "- additional component suggestions :\n```\n"
             + component_task["description"]["llm"]
-            + "\n```\n\n\nWrite the full code for the new React web component, which uses Tailwind classes if needed (add tailwind dark: classes too if you can; backgrounds in dark: classes should be black), and optionally, library components and icons, based on the provided design task.\n"
+            + "\n```\n\n\nWrite the full code for the new React web component, which uses Tailwind classes if needed (add tailwind dark: classes too if you can; backgrounds in dark: classes should be black), and, library components and icons, based on the provided design task.\n"
             + "When using flexbox, use the `gap` property instead of `space-x`\n"
             + "The full code of the new React component that you write will be written directly to a .tsx file inside the React project. Make sure all necessary imports are done, and that your full code is enclosed with ```tsx blocks.\n"
             + "Answer with generated code only. DO NOT ADD ANY EXTRA TEXT DESCRIPTION OR COMMENTS BESIDES THE CODE. Your answer contains code only ! component code only !\nImportant :\n"
@@ -40,5 +39,8 @@ def generate(component_task, build_context):
             + "Write the React component code as the creative genius and React component genius you are - with good ui formatting.\n",
         ],
     )
+
+    with open(f"output/{component_task['name']}.tsx", "w+") as f:
+        f.write(gen_code_response.text.replace("```tsx\n", "").replace("\n```", ""))
 
     return gen_code_response.text
