@@ -109,7 +109,7 @@ def fix_code_gemini(error_text, generated_code, component_name):
     with open(f"output/{component_name}.tsx", "w+") as f:
         f.write(gen_code_response.text.replace("```tsx\n", "").replace("\n```", ""))
 
-    sleep(10)
+    # sleep(10)
     return gen_code_response.text
 
 
