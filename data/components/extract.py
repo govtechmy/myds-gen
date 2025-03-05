@@ -26,10 +26,10 @@ def extract_comp_dict(filename):
         usage = [i for i in test_split if i.split("\n")[0] == "Usage"]
     props = [i for i in test_split if i.split("\n")[0] == "Props"][0]
 
-    usage_doc = [i for i in re.findall(r"```tsx.*\n([\S\s]+?)```*", usage[0])]
+    usage_doc = [i for i in re.findall(r"```ts[\s\S]+?\n([\S\s]+?)\n```*", usage[0])]
 
     try:
-        examples = [i for i in test_split if i.split("\n")[0] not in ["Props", "Usage"]]
+        examples = [i for i in test_split if i.split("\n")[0] not in ["Props", "Usage", "Simple Usage"]]
         examples_doc = re.findall(r"```tsx\s?\n([\S\s]+?)```*", examples[0])
         examples_doc = [
             inspect.cleandoc(ix).replace("\n", "\n\t\t") for ix in examples_doc
@@ -52,15 +52,26 @@ def extract_comp_dict(filename):
         )
         for i in props.split("###")[1:]
     }
-    prop_dict = {
-        i: eval(
-            "{"
-            + re.sub(r"\s\s\w+:", prop_proc, y).replace('"`', '"').replace('`"', '"')
-            + "}"
-        )
-        for i, x in prop_dict.items()
-        for y in x
-    }
+    if filename == "theme-switch":
+        prop_dict = {
+            i: eval(
+                "{"
+                + re.sub(r"\s\s\w+:", prop_proc, y).replace('"`', '"').replace('`"', '"').replace('"default": (\n        <pre>\n          <code>\n            {`[','"default": """[').replace("`}\n          </code>\n        </pre>\n      )", '"""').replace("`", '"""')
+                + "}"
+            )
+            for i, x in prop_dict.items()
+            for y in x
+        }
+    else:
+        prop_dict = {
+            i: eval(
+                "{"
+                + re.sub(r"\s\s\w+:", prop_proc, y).replace('"`', '"').replace('`"', '"')
+                + "}"
+            )
+            for i, x in prop_dict.items()
+            for y in x
+        }
     return {
         "name": name,
         "description": description,
