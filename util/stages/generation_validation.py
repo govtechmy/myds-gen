@@ -60,13 +60,24 @@ def validate_tsc(file_name):
         [
             "tsc",
             file_name,
-            "--jsx",
-            "react-jsx",
+            "--target",
+            "es5",
+            "--lib",
+            "dom,dom.iterable,esnext",
+            "--allowJs",
+            "--skipLibCheck",
+            "--strict",
             "--noEmit",
-            "--moduleResolution",
-            "node16",
+            "--esModuleInterop",
             "--module",
-            "node16",
+            "esnext",
+            "--moduleResolution",
+            "bundler",
+            "--resolveJsonModule",
+            "--isolatedModules",
+            "--jsx",
+            "preserve",
+            "--noEmit",
         ],
         capture_output=True,
         text=True,  # Decode bytes to string
@@ -91,17 +102,18 @@ def fix_code_gemini(error_text, generated_code, component_name):
             "\n\n**Current React component code which has errors :**\n\n"
             + generated_code
             + "\n\nRewrite the full code to fix and update the provided React web component"
-            + "The full code of the new React component that you write will be written directly to a .tsx file inside the React project. Make sure all necessary imports are done, and that your full code is enclosed with ```tsx ``` blocks.",
-            "Answer with generated code only. DO NOT ADD ANY EXTRA TEXT DESCRIPTION OR COMMENTS BESIDES THE CODE. Your answer contains code only ! component code only !"
-            + "Important :"
-            + "- Make sure you import the components libraries and icons that are provided to you (if you use them) !"
-            + "- Tailwind classes should be written directly in the elements class tags (or className in case of React). DO NOT WRITE ANY CSS OUTSIDE OF CLASSES"
-            + "- Do not use libraries or imports except what is provided in this task; otherwise it would crash the component because not installed. Do not import extra libraries besides what is provided !"
-            + "- Do not have ANY dynamic data! Components are meant to be working as is without supplying any variable to them when importing them ! Only write a component that render directly with placeholders as data, component not supplied with any dynamic data."
-            + "- Fix all errors according to the provided errors data"
-            + "- You are allowed to remove any problematic part of the code and replace it"
-            + "- Only write the code for the component; Do not write extra code to import it! The code will directly be stored in an individual React .tsx file"
-            + "- Very important : Your component should be exported as default !"
+            + "The full code of the new React component that you write will be written directly to a .tsx file inside the React project. Make sure all necessary imports are done, and that your full code is enclosed with ```tsx ``` blocks.\n",
+            "\nAnswer with generated code only. DO NOT ADD ANY EXTRA TEXT DESCRIPTION OR COMMENTS BESIDES THE CODE. Your answer contains code only ! component code only !\n\n"
+            + "Important :\n\n"
+            + "- Make sure you import the components libraries and icons that are provided to you (if you use them) !\n"
+            + "- Tailwind classes should be written directly in the elements class tags (or className in case of React). DO NOT WRITE ANY CSS OUTSIDE OF CLASSES\n"
+            + "- Do not use libraries or imports except what is provided in this task; otherwise it would crash the component because not installed. Do not import extra libraries besides what is provided !\n"
+            + "- Do not have ANY dynamic data! Components are meant to be working as is without supplying any variable to them when importing them ! Only write a component that render directly with placeholders as data, component not supplied with any dynamic data.\n"
+            + "- Fix all errors according to the provided errors data\n"
+            + "- You are allowed to remove any problematic part of the code and replace it\n"
+            + "- Only use the `@govtechmy/myds-react` and `@govtechmy/myds-style` libraries !\n"
+            + "- Only write the code for the component; Do not write extra code to import it! The code will directly be stored in an individual React .tsx file\n"
+            + "- Very important : Your component should be exported as default !\n"
             + "Fix and write the updated version of the React component code as the creative genius and React component genius you are.",
         ],
     )
