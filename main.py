@@ -1,6 +1,7 @@
 from rich.console import Console
 from rich.markdown import Markdown
 from tqdm import tqdm
+from dotenv import load_dotenv
 from util.stages import (
     design,
     component_generation,
@@ -8,6 +9,7 @@ from util.stages import (
     generation_validation,
 )
 
+load_dotenv()
 
 def main(prompt):
     valid_prompt = design.prompt_validation(prompt)
