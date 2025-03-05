@@ -1,0 +1,25 @@
+{
+  "name": "myds-gen",
+  "version": "0.0.1",
+  "description": "",
+  "main": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/govtechmy/myds-gen.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/govtechmy/myds-gen/issues"
+  },
+  "homepage": "https://github.com/govtechmy/myds-gen#readme",
+  "dependencies": {
+    "@govtechmy/myds-react": "^0.0.14",
+    "@govtechmy/myds-style": "^0.0.5",
+    "eslint": "^9.21.0",
+    "typescript": "^5.8.2"
+  }
+}
