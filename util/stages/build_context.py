@@ -1,6 +1,6 @@
 import uuid
 import pandas as pd
-from util.util.rag import rag_icon, fake_rag_component
+from util.util.rag import rag_icon, rag_component
 
 
 # ----------------
@@ -65,25 +65,29 @@ def parse_task(component_task):
         "icons": component_task["icons"],
     }
 
+    components_retrieved = [
+            rag_component(i["name"]) for i in design_task["components"]
+        ]
+    
+    components_retrieved = [x for i in components_retrieved for x in i] #flatten
+
     retrieved = {
         "icons": {
             "icons": [rag_icon(i) for i in design_task["icons"]],
             "import": "lucide-react",
         },
-        "components": [
-            fake_rag_component(i["name"]) for i in design_task["components"]
-        ],
+        "components": [i for n, i in enumerate(components_retrieved) if i not in components_retrieved[:n]]
     }
 
     flat_comp_list = [
-        (i, x) for i, xs in enumerate(retrieved["components"]) for x in xs
+        (i, x) for i, x in enumerate(retrieved["components"])
     ]
 
     total_suggestion = len(flat_comp_list)
     suggestion_comp_block = "\n\n".join(
         [
             f"Suggested library component ({i}/{total_suggestion}) : {x[1]['name']} - {x[1]['description']}\n"
-            + f"Suggested usage : {design_task['components'][x[0]]['usage']}\n\n\n"
+            # + f"Suggested usage : {design_task['components'][x[0]]['usage']}\n\n\n"
             + f"# {x[1]['name']} can be imported into the new component like this:\n"
             + f"```tsx\n{x[1]['docs']['import'].strip()}\n```\n\n---\n\n# examples of how {x[1]['name']} can be used inside the new component:\n"
             + f"```tsx\n{x[1]['docs']['use']}```\n\n---"
@@ -96,6 +100,7 @@ def parse_task(component_task):
         ]
     )
 
+    suggestion_comp_block = suggestion_comp_block + "\n\nSuggested library component usages: \n-" + "\n- ".join([f"{i['name']} - {i['usage']}" for i in design_task["components"]])
     if component_task["icons"]:
         example_icon = retrieved["icons"]["icons"][0]["retrieved"][0]
         suggestion_icon_block = (
@@ -151,7 +156,7 @@ def generate(prompt, design_data, wireframe):
 
     {wireframe}
 
-    Adhere to the wireframe whe creating the component!
+    Adhere to the wireframe when creating the component!
     """
 
     return component_task, build_context
