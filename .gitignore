@@ -171,3 +171,8 @@ cython_debug/
 .pypirc
 
 output/*.tsx
+.DS_Store
+tsconfig.tsbuildinfo
+test.ipynb
+
+node_modules
