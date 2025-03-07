@@ -141,7 +141,7 @@ def validate_full(generated_code, component_name):
     total_error = lint_error + compile_error
     fix_turn = 1
     num_tries = 5
-    while total_error and fix_turn < num_tries:
+    while total_error and fix_turn <= num_tries:
         print(f"validation try: {fix_turn}/5")
         fix_turn += 1
         error_text = "\n".join([f"{i + 1}. {x}" for i, x in enumerate(total_error)])
@@ -150,5 +150,6 @@ def validate_full(generated_code, component_name):
 
         lint_error = validate_lint(file_name)
         compile_error = validate_tsc(file_name)
+        total_error = lint_error + compile_error
 
     return fixed_code
