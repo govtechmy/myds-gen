@@ -30,3 +30,13 @@ class ValidPromptSchema(BaseModel):
 
 class WireframeSchema(BaseModel):
     ascii_wireframe: str
+
+class LibraryComponentIterate(BaseModel):
+    does_update_need_new_library_components: bool
+    if_so_what_library_components_are_needed: Optional[List[LibraryComponent]] = None
+
+class ComponentIterateSchema(BaseModel):
+    description_of_update: str
+    new_component_icons_elements: NewComponentIconsElements
+    new_library_components: LibraryComponentIterate
+    wireframe_need_to_be_updated: bool
