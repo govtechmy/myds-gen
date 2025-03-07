@@ -89,39 +89,7 @@ def design_layout(component_task, current_wireframe):
         responseMimeType="application/json",
         responseSchema=WireframeSchema,
     )
-    print([
-            f"- COMPONENT NAME : {component_task['name']}\n\n"
-            + "- COMPONENT DESCRIPTION :\n```\n"
-            + component_task["description"]["user"]
-            + "\n```\n\n"
-            + "- additional component suggestions :\n```\n"
-            + component_task["description"]["llm"]
-            + "\n```\n\n"
-            + "- COMPONENT UPDATE QUERY :\n```\n"
-            + component_task["update"]["update_prompt"]
-            + "\n```\n\n"
-            + "- additional component update suggestions :\n```\n"
-            + component_task["update"]["update_description"]
-            + "\n```\n\n"
-            + "- current wireframe :\n"
-            + current_wireframe
-            + "\n\n"
-            + "\n\nUpdate the given ASCII wireframe based on the updated design task and available library components.\n"
-            + "The updated wireframe should onlu include changes described by the new updates query\n\n"
-            + "Retain as much of the original wireframe as possible !\n"
-            + "ONLY ADD OR REMOVE ITEMS THAT WERE MENTIONED IN THE UPDATE QUERIES !\n"
-            + "**Library components to be included !**\n- "
-            + "\n- ".join([i["name"] for i in component_task["update"]["components"]])
-            + ("**Icon Elements**\n- " if component_task["update"]["icons"] else "")
-            + (
-                "\n- ".join([i for i in component_task["update"]["icons"]])
-                if component_task["update"]["icons"]
-                else ""
-            )
-            + "\n\nOutput the generated wireframe in a ```ascii ``` block"
-            # + "Specify the library components and the icons in the detailed wireframe diagram.\n"
-            + "The detailed wireframe must look clean and professional as the creative genius you are."
-        ])
+
     design_response = client.models.generate_content(
         model="gemini-2.0-flash",
         config=generation_config,
