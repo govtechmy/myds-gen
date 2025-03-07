@@ -39,8 +39,8 @@ if __name__ == "__main__":
         md = Markdown(component_string)
         console.print(md)
 
-        with open(f"output/{component_name}.tsx", "w+") as f:
-            f.write(component_string.replace("```tsx\n", "").replace("\n```", ""))
+        # with open(f"output/{component_name}.tsx", "w+") as f:
+        #     f.write(component_string.replace("```tsx\n", "").replace("\n```", ""))
         print(f"Component is saved as: output/{component_name}.tsx")
     else:
         print(

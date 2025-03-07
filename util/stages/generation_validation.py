@@ -91,7 +91,7 @@ def fix_code_gemini(error_text, generated_code, component_name):
     system_instruction = "You are an expert at writing React components and fixing React code with errors\nYour task is to fix the code of a React component for a web app, according to the provided detected component errors.\nAlso, the React component you write can make use of Tailwind classes for styling.\nYou will write the full React component code, which should include all imports. The fixed code you generate will be directly written to a .tsx React component file and used directly in production."
 
     generation_config_part2 = types.GenerateContentConfig(
-        temperature=0.4,
+        temperature=0.2,
         systemInstruction=system_instruction,
     )
     gen_code_response = client.models.generate_content(
@@ -141,7 +141,7 @@ def validate_full(generated_code, component_name):
     total_error = lint_error + compile_error
     fix_turn = 1
     num_tries = 5
-    while total_error and fix_turn < num_tries:
+    while total_error and fix_turn <= num_tries:
         print(f"validation try: {fix_turn}/5")
         fix_turn += 1
         error_text = "\n".join([f"{i + 1}. {x}" for i, x in enumerate(total_error)])
@@ -150,5 +150,6 @@ def validate_full(generated_code, component_name):
 
         lint_error = validate_lint(file_name)
         compile_error = validate_tsc(file_name)
+        total_error = lint_error + compile_error
 
     return fixed_code
