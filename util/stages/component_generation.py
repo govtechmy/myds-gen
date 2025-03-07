@@ -34,6 +34,7 @@ def generate(component_task, build_context):
             + "- Do not use libraries or imports except what is provided in this task; otherwise it would crash the component because not installed. Do not import extra libraries besides what is provided above !\n"
             + "- DO NOT HAVE ANY DYNAMIC DATA OR DATA PROPS ! Components are meant to be working as is without supplying any variable to them when importing them ! Only write a component that render directly with placeholders as data, component not supplied with any dynamic data.\n"
             + "- DO NOT HAVE ANY DYNAMIC DATA OR DATA PROPS !\nUse placecats.com for placeholder images\n"
+            + "- DO NOT GENERATE SVG !\n"
             + "- Only write the code for the component; Do not write extra code to import it! The code will directly be stored in an individual React .tsx file !\n"
             + "- Very important : Your component should be exported as default !\n"
             + "Write the React component code as the creative genius and React component genius you are - with good ui formatting.\n",

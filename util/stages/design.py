@@ -13,7 +13,7 @@ client = genai.Client(api_key=GEMINI_API_KEY)
 def prompt_validation(prompt):
     prompt_validation_config = types.GenerateContentConfig(
         temperature=0.2,
-        systemInstruction="You are checking whether the user prompt is describing a web component.",
+        systemInstruction="You are checking whether the user prompt is describing a web component. If the prompt is describing a webpage it is not a web component.",
         responseMimeType="application/json",
         responseSchema=ValidPromptSchema,
     )
@@ -35,10 +35,10 @@ def design_planning(prompt):
         {"name": e["name"], "description": e["description"]} for e in data
     ]
 
-    system_instruction = """Your task is to design a new React component for a web app, according to the user's request.\nSpecify the pre-made library components to use in the component update.\nYou must also specify the use of icons if you see that the user's update request requires it."""
+    system_instruction = """Your task is to design a new React component for a web app, according to the user's request.\nSpecify the pre-made library components to use in the task.\nYou must also specify the use of icons if you see that the task requires it."""
 
     generation_config = types.GenerateContentConfig(
-        temperature=1,
+        temperature=0.6,
         systemInstruction=system_instruction,
         responseMimeType="application/json",
         responseSchema=ComponentSchema,
@@ -62,6 +62,7 @@ def design_planning(prompt):
                     + "\n\nWhen suggesting icons, use common icon names used in Lucide icon library."
                     + "\n**IMPORTANT:**"
                     + "\n**Use CrossIcon when the cross or closing or cancel icon is needed.**"
+                    + "\n**Card component is not available.**"
                 )
             ],
             role="model",
@@ -86,12 +87,12 @@ def design_planning(prompt):
     return design_data
 
 
-def design_layout(prompt, design_data):
-    component_task = gen_comp_task(prompt, design_data)
+def design_layout(prompt, component_task):
+    # component_task = gen_comp_task(prompt, design_data)
     system_instruction = """You are an expert senior UIUX Designer.\nYour task is to design the wireframe of new React component for a web app, according to the provided task details.\nSpecify the library components and the icons in the wireframe diagram."""
 
     generation_config = types.GenerateContentConfig(
-        temperature=1,
+        temperature=0.5,
         systemInstruction=system_instruction,
         responseMimeType="application/json",
         responseSchema=WireframeSchema,
@@ -108,7 +109,7 @@ def design_layout(prompt, design_data):
             + "- additional component suggestions :\n```\n"
             + component_task["description"]["llm"]
             + "\n```"
-            + "\n\nCreate wireframe using ASCII based on the provided design task and available library components.\n\n"
+            + "\n\nCreate detailed wireframe using ASCII based on the provided design task and available library components.\n\n"
             + "**Available library components**\n- "
             + "\n- ".join([i["name"] for i in component_task["components"]])
             + ("**Icon Elements**\n- " if component_task["icons"] else "")
@@ -118,8 +119,8 @@ def design_layout(prompt, design_data):
                 else ""
             )
             + "\n\nOutput the generated wireframe in a ```ascii ``` block"
-            + "Specify the library components and the icons in the wireframe diagram.\n"
-            + "The wireframe must look clean and professional as the creative genius you are."
+            + "Specify the library components and the icons in the detailed wireframe diagram.\n"
+            + "The detailed wireframe must look clean and professional as the creative genius you are."
         ],
     )
     design_response = json.loads(design_response.text)["ascii_wireframe"]
