@@ -2,7 +2,7 @@ import inspect
 import re
 import os
 import json
-
+import build_component_vector
 
 def prop_proc(s):
     a = ":"
@@ -103,3 +103,5 @@ def generate_json():
 
 if __name__ == "__main__":
     generate_json()
+
+    build_component_vector.main()
