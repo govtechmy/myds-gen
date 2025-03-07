@@ -38,7 +38,7 @@ class GenerateComponent:
         self.component_task = build_context.gen_comp_task_iter(self.prompt, self.design_data_iterate, self.component_task)
 
         if self.component_task["update"]["wireframe"]:
-            print("iterate wireframe")
+            # print("iterate wireframe")
             self.wireframe = design_iterate.design_layout(self.component_task, self.wireframe)
 
         self.full_context_iter = build_context.generate_iter(self.component_task, self.wireframe)
@@ -46,3 +46,4 @@ class GenerateComponent:
         self.component_string = component_generation_iterate.generate(self.component_task, self.full_context_iter, self.component_string)
         self.file_name = self.component_task["name"]
         self.component_string = generation_validation.validate_full(self.component_string, self.file_name)
+        print(f"Component `{self.file_name} is updated at: output/{self.file_name}.tsx")
