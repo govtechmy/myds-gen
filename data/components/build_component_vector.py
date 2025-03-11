@@ -16,10 +16,10 @@ def main():
     ##hardcoded for now
     with open("data/components/myds.json") as f:
         data = json.load(f)
-    
-    components = [[i["name"], i["name"]+ " - " + i["description"]]  for i in data]
 
-    df = pd.DataFrame(components, columns=["component_name","description"])
+    components = [[i["name"], i["name"] + " - " + i["description"]] for i in data]
+
+    df = pd.DataFrame(components, columns=["component_name", "description"])
     df["vector"] = df["description"].apply(get_embeddings)
     df.to_parquet("data/components/component_vector.pq")
 

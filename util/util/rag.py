@@ -32,12 +32,11 @@ def rag_icon(icon_name):
         "retrieved": [df.iloc[i]["icon_name"] for i in top_ten_match],
     }
 
+
 def rag_component(component_name):
     df = pd.read_parquet("data/components/component_vector.pq")
     query_embedding = get_embeddings(component_name)
-    top_2_match = np.argsort(np.dot(np.stack(df["vector"]), query_embedding))[-2:][
-        ::-1
-    ]
+    top_2_match = np.argsort(np.dot(np.stack(df["vector"]), query_embedding))[-2:][::-1]
     top2retrieved = [df.iloc[i]["component_name"] for i in top_2_match]
     top2retrieved_comps = [x for i in top2retrieved for x in fake_rag_component(i)]
 

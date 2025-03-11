@@ -4,6 +4,7 @@ import os
 import json
 import build_component_vector
 
+
 def prop_proc(s):
     a = ":"
     b = ""
@@ -29,7 +30,11 @@ def extract_comp_dict(filename):
     usage_doc = [i for i in re.findall(r"```ts[\s\S]+?\n([\S\s]+?)\n```*", usage[0])]
 
     try:
-        examples = [i for i in test_split if i.split("\n")[0] not in ["Props", "Usage", "Simple Usage"]]
+        examples = [
+            i
+            for i in test_split
+            if i.split("\n")[0] not in ["Props", "Usage", "Simple Usage"]
+        ]
         examples_doc = re.findall(r"```tsx\s?\n([\S\s]+?)```*", examples[0])
         examples_doc = [
             inspect.cleandoc(ix).replace("\n", "\n\t\t") for ix in examples_doc
@@ -56,7 +61,15 @@ def extract_comp_dict(filename):
         prop_dict = {
             i: eval(
                 "{"
-                + re.sub(r"\s\s\w+:", prop_proc, y).replace('"`', '"').replace('`"', '"').replace('"default": (\n        <pre>\n          <code>\n            {`[','"default": """[').replace("`}\n          </code>\n        </pre>\n      )", '"""').replace("`", '"""')
+                + re.sub(r"\s\s\w+:", prop_proc, y)
+                .replace('"`', '"')
+                .replace('`"', '"')
+                .replace(
+                    '"default": (\n        <pre>\n          <code>\n            {`[',
+                    '"default": """[',
+                )
+                .replace("`}\n          </code>\n        </pre>\n      )", '"""')
+                .replace("`", '"""')
                 + "}"
             )
             for i, x in prop_dict.items()
@@ -66,7 +79,9 @@ def extract_comp_dict(filename):
         prop_dict = {
             i: eval(
                 "{"
-                + re.sub(r"\s\s\w+:", prop_proc, y).replace('"`', '"').replace('`"', '"')
+                + re.sub(r"\s\s\w+:", prop_proc, y)
+                .replace('"`', '"')
+                .replace('`"', '"')
                 + "}"
             )
             for i, x in prop_dict.items()

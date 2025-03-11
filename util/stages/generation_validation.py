@@ -5,6 +5,7 @@ import subprocess
 from time import sleep
 from google import genai
 from google.genai import types
+from ..util.output_schema import TsxOutput
 
 GEMINI_API_KEY = os.environ["GEMINI_API_KEY"]
 client = genai.Client(api_key=GEMINI_API_KEY)
@@ -49,7 +50,7 @@ def validate_lint(file_name):
         check=False,
     )
     errors = [
-        f"{i['ruleId']}: {i['message']}"
+        f"Line: {i['line']} - `{i['ruleId']}: {i['message']}`"
         for i in json.loads(result.stdout)[0]["messages"]
     ]
     return errors
@@ -83,7 +84,17 @@ def validate_tsc(file_name):
         text=True,  # Decode bytes to string
         check=False,
     )
-    errors = list(set([i.strip() for i in re.findall(r":([\s\S]+?)\n", result.stdout)]))
+    errors = list(
+        set(
+            [
+                f"line: {i} - error: `{x.strip()}`"
+                for i, x in zip(
+                    re.findall(r"\((\d+?),\d+?\):", result.stdout),
+                    re.findall(r":([\s\S]+?)\n", result.stdout),
+                )
+            ]
+        )
+    )
     return errors
 
 
@@ -91,8 +102,10 @@ def fix_code_gemini(error_text, generated_code, component_name):
     system_instruction = "You are an expert at writing React components and fixing React code with errors\nYour task is to fix the code of a React component for a web app, according to the provided detected component errors.\nAlso, the React component you write can make use of Tailwind classes for styling.\nYou will write the full React component code, which should include all imports. The fixed code you generate will be directly written to a .tsx React component file and used directly in production."
 
     generation_config_part2 = types.GenerateContentConfig(
-        temperature=0.2,
+        temperature=0.1,
         systemInstruction=system_instruction,
+        responseMimeType="application/json",
+        responseSchema=TsxOutput,
     )
     gen_code_response = client.models.generate_content(
         model="gemini-2.0-flash",
@@ -107,7 +120,8 @@ def fix_code_gemini(error_text, generated_code, component_name):
             + "Important :\n\n"
             + "- Make sure you import the components libraries and icons that are provided to you (if you use them) !\n"
             + "- Tailwind classes should be written directly in the elements class tags (or className in case of React). DO NOT WRITE ANY CSS OUTSIDE OF CLASSES\n"
-            + "- Do not use libraries or imports except what is provided in this task; otherwise it would crash the component because not installed. Do not import extra libraries besides what is provided !\n"
+            + "- DO NOT USE ANY <style> IN THE CODE ! CLASSES STYLING ONLY !\n"
+            + "- DO NOT USE LIBRARIES OR IMPORTS EXCEPT WHAT IS PROVIDED IN THIS TASK; OTHERWISE IT WOULD CRASH THE COMPONENT BECAUSE NOT INSTALLED. DO NOT IMPORT EXTRA LIBRARIES BESIDES WHAT IS PROVIDED !\n"
             + "- Do not have ANY dynamic data! Components are meant to be working as is without supplying any variable to them when importing them ! Only write a component that render directly with placeholders as data, component not supplied with any dynamic data.\n"
             + "- Fix all errors according to the provided errors data\n"
             + "- You are allowed to remove any problematic part of the code and replace it\n"
@@ -117,12 +131,12 @@ def fix_code_gemini(error_text, generated_code, component_name):
             + "Fix and write the updated version of the React component code as the creative genius and React component genius you are.",
         ],
     )
+    generated_code = json.loads(gen_code_response.text)
 
     with open(f"output/{component_name}.tsx", "w+") as f:
-        f.write(gen_code_response.text.replace("```tsx\n", "").replace("\n```", ""))
+        f.write(generated_code["tsx"].replace("```tsx\n", "").replace("\n```", ""))
 
-    # sleep(10)
-    return gen_code_response.text
+    return generated_code["tsx"]
 
 
 def validate_full(generated_code, component_name):
