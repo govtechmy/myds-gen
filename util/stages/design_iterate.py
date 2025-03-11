@@ -84,7 +84,7 @@ def design_layout(component_task, current_wireframe):
     system_instruction = """You are an expert senior UIUX Designer.\nYour task is to update the wireframe of new React component for a web app, according to the provided task details.\nSpecify the library components and the icons in the wireframe diagram."""
 
     generation_config = types.GenerateContentConfig(
-        temperature=0.3,
+        temperature=0.2,
         systemInstruction=system_instruction,
         responseMimeType="application/json",
         responseSchema=WireframeSchema,

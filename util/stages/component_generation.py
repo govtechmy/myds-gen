@@ -33,7 +33,7 @@ def generate(component_task, build_context):
             + "- Tailwind classes should be written directly in the elements class tags (or className in case of React). DO NOT WRITE ANY CSS OUTSIDE OF CLASSES. DO NOT USE ANY <style> IN THE CODE ! CLASSES STYLING ONLY !\n"
             + "- Do not use libraries or imports except what is provided in this task; otherwise it would crash the component because not installed. Do not import extra libraries besides what is provided above !\n"
             + "- DO NOT HAVE ANY DYNAMIC DATA OR DATA PROPS ! Components are meant to be working as is without supplying any variable to them when importing them ! Only write a component that render directly with placeholders as data, component not supplied with any dynamic data.\n"
-            + "- DO NOT HAVE ANY DYNAMIC DATA OR DATA PROPS !\nUse placecats.com for placeholder images\n"
+            + "- DO NOT HAVE ANY DYNAMIC DATA OR DATA PROPS !\nUse picsum.photos for placeholder images\n"
             + "- DO NOT GENERATE SVG !\n"
             + "- Only write the code for the component; Do not write extra code to import it! The code will directly be stored in an individual React .tsx file !\n"
             + "- Very important : Your component should be exported as default !\n"

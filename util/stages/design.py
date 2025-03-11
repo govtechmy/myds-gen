@@ -4,7 +4,6 @@ from google import genai
 from google.genai import types
 
 from util.util.output_schema import ComponentSchema, ValidPromptSchema, WireframeSchema
-from util.stages.build_context import gen_comp_task
 
 GEMINI_API_KEY = os.environ["GEMINI_API_KEY"]
 client = genai.Client(api_key=GEMINI_API_KEY)
@@ -92,7 +91,7 @@ def design_layout(prompt, component_task):
     system_instruction = """You are an expert senior UIUX Designer.\nYour task is to design the wireframe of new React component for a web app, according to the provided task details.\nSpecify the library components and the icons in the wireframe diagram."""
 
     generation_config = types.GenerateContentConfig(
-        temperature=0.5,
+        temperature=0.8,
         systemInstruction=system_instruction,
         responseMimeType="application/json",
         responseSchema=WireframeSchema,
