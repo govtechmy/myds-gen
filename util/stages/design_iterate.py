@@ -3,8 +3,10 @@ import json
 from google import genai
 from google.genai import types
 from util.util.output_schema import ComponentIterateSchema, WireframeSchema
+
 GEMINI_API_KEY = os.environ["GEMINI_API_KEY"]
 client = genai.Client(api_key=GEMINI_API_KEY)
+
 
 def design_update(prompt, current_code, current_wireframe, current_component_task):
     with open("data/components/myds.json") as f:
@@ -23,7 +25,6 @@ You must also specify the use of icons if you see that the user's update request
         responseMimeType="application/json",
         responseSchema=ComponentIterateSchema,
     )
-
 
     contents = [
         types.Content(
@@ -79,6 +80,7 @@ You must also specify the use of icons if you see that the user's update request
     )
     design_data = json.loads(design_response.text)
     return design_data
+
 
 def design_layout(component_task, current_wireframe):
     system_instruction = """You are an expert senior UIUX Designer.\nYour task is to update the wireframe of new React component for a web app, according to the provided task details.\nSpecify the library components and the icons in the wireframe diagram."""

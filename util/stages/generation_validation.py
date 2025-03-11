@@ -50,7 +50,7 @@ def validate_lint(file_name):
         check=False,
     )
     errors = [
-        f"{i['ruleId']}: {i['message']}"
+        f"Line: {i['line']} - `{i['ruleId']}: {i['message']}`"
         for i in json.loads(result.stdout)[0]["messages"]
     ]
     return errors
@@ -84,7 +84,17 @@ def validate_tsc(file_name):
         text=True,  # Decode bytes to string
         check=False,
     )
-    errors = list(set([i.strip() for i in re.findall(r":([\s\S]+?)\n", result.stdout)]))
+    errors = list(
+        set(
+            [
+                f"line: {i} - error: `{x.strip()}`"
+                for i, x in zip(
+                    re.findall(r"\((\d+?),\d+?\):", result.stdout),
+                    re.findall(r":([\s\S]+?)\n", result.stdout),
+                )
+            ]
+        )
+    )
     return errors
 
 
