@@ -40,3 +40,7 @@ class ComponentIterateSchema(BaseModel):
     new_component_icons_elements: NewComponentIconsElements
     new_library_components: LibraryComponentIterate
     wireframe_need_to_be_updated: bool
+
+
+class TsxOutput(BaseModel):
+    tsx: str

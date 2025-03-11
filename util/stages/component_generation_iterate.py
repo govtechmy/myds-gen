@@ -1,7 +1,8 @@
 import os
+import json
 from google import genai
 from google.genai import types
-
+from ..util.output_schema import TsxOutput
 
 GEMINI_API_KEY = os.environ["GEMINI_API_KEY"]
 client = genai.Client(api_key=GEMINI_API_KEY)
@@ -46,7 +47,9 @@ def generate(component_task, build_context, current_component_string):
         ],
     )
 
-    with open(f"output/{component_task['name']}.tsx", "w+") as f:
-        f.write(gen_code_response.text.replace("```tsx\n", "").replace("\n```", ""))
+    generated_code = json.loads(gen_code_response.text)
 
-    return gen_code_response.text
+    with open(f"output/{component_task['name']}.tsx", "w+") as f:
+        f.write(generated_code["tsx"].replace("```tsx\n", "").replace("\n```", ""))
+
+    return generated_code["tsx"]
