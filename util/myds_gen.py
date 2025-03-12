@@ -30,7 +30,7 @@ class GenerateComponent:
         self.full_context = build_context.generate(self.component_task, self.wireframe)
         p_bar.update()
         self.component_string = component_generation.generate(
-            self.component_task, self.full_context
+            self.component_task, self.full_context, write_file=True
         )
         p_bar.update()
         self.file_name = self.component_task["name"]
@@ -63,7 +63,7 @@ class GenerateComponent:
         )
 
         self.component_string = component_generation_iterate.generate(
-            self.component_task, self.full_context_iter, self.component_string
+            self.component_task, self.full_context_iter, self.component_string, write_file=True
         )
         self.file_name = self.component_task["name"]
         self.component_string = generation_validation.validate_full(

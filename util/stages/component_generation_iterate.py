@@ -8,7 +8,7 @@ GEMINI_API_KEY = os.environ["GEMINI_API_KEY"]
 client = genai.Client(api_key=GEMINI_API_KEY)
 
 
-def generate(component_task, build_context, current_component_string):
+def generate(component_task, build_context, current_component_string, write_file=False):
     system_instruction2 = "You are an expert at writing React components.\nYour task is to write a new update for the provided React component for a web app, according to the provided task details with best practices of React.\nThe React component you write can make use of Tailwind classes for styling.\nUtilize the library components and icons as much as you can if provided.\n\nYou will write the full React component code, which should include all imports. Your generated code will be directly written to a .tsx React component file and used in production."
 
     generation_config_part2 = types.GenerateContentConfig(
@@ -49,7 +49,11 @@ def generate(component_task, build_context, current_component_string):
 
     generated_code = json.loads(gen_code_response.text)
 
-    with open(f"output/{component_task['name']}.tsx", "w+") as f:
-        f.write(generated_code["tsx"].replace("```tsx\n", "").replace("\n```", ""))
+    if write_file:
+        with open(f"output/{component_task['name']}.tsx", "w+") as f:
+            f.write(generated_code["tsx"].replace("```tsx\n", "").replace("\n```", ""))
+        if os.getenv("WEB_LOCAL_MODULE_PATH"):
+            with open(os.getenv("WEB_LOCAL_MODULE_PATH"), "w+") as f:
+                f.write(generated_code["tsx"].replace("```tsx\n", "").replace("\n```", ""))
 
     return generated_code["tsx"]

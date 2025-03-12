@@ -103,7 +103,7 @@ def validate_tsc(file_name):
     return errors
 
 
-def fix_code_gemini(error_text, generated_code, component_name):
+def fix_code_gemini(error_text, generated_code, file_name):
     system_instruction = "You are an expert at writing React components and fixing React code with errors\nYour task is to fix the code of a React component for a web app, according to the provided detected component errors.\nAlso, the React component you write can make use of Tailwind classes for styling.\nYou will write the full React component code, which should include all imports. The fixed code you generate will be directly written to a .tsx React component file and used directly in production."
 
     generation_config_part2 = types.GenerateContentConfig(
@@ -137,15 +137,24 @@ def fix_code_gemini(error_text, generated_code, component_name):
         ],
     )
     generated_code = json.loads(gen_code_response.text)
-
-    with open(f"output/{component_name}.tsx", "w+") as f:
+    
+    with open(file_name, "w+") as f:
         f.write(generated_code["tsx"].replace("```tsx\n", "").replace("\n```", ""))
+    if os.getenv("WEB_LOCAL_MODULE_PATH") and file_name != os.getenv("WEB_LOCAL_MODULE_PATH"):
+        with open(os.getenv("WEB_LOCAL_MODULE_PATH"), "w+") as f:
+            f.write(generated_code["tsx"].replace("```tsx\n", "").replace("\n```", ""))
 
     return generated_code["tsx"]
 
 
-def validate_full(generated_code, component_name):
+def validate_full(generated_code, component_name):    
     file_name = f"output/{component_name}.tsx"
+
+    if not os.path.isfile(file_name):
+        if os.getenv("WEB_LOCAL_MODULE_PATH"):
+            file_name = os.getenv("WEB_LOCAL_MODULE_PATH")
+        with open(file_name, "w+") as f:
+            f.write(generated_code.replace("```tsx\n", "").replace("\n```", ""))
     # lint_error = validate_lint(file_name)
     lint_error = []
     compile_error = validate_tsc(file_name)
@@ -154,7 +163,7 @@ def validate_full(generated_code, component_name):
         [f"{i + 1}. {x}" for i, x in enumerate(lint_error + compile_error)]
     )
 
-    fixed_code = fix_code_gemini(error_text, generated_code, component_name)
+    fixed_code = fix_code_gemini(error_text, generated_code, file_name)
 
     lint_error = validate_lint(file_name)
     compile_error = validate_tsc(file_name)
@@ -166,7 +175,7 @@ def validate_full(generated_code, component_name):
         fix_turn += 1
         error_text = "\n".join([f"{i + 1}. {x}" for i, x in enumerate(total_error)])
 
-        fixed_code = fix_code_gemini(error_text, generated_code, component_name)
+        fixed_code = fix_code_gemini(error_text, generated_code, file_name)
 
         lint_error = validate_lint(file_name)
         compile_error = validate_tsc(file_name)
