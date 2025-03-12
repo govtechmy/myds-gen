@@ -11,6 +11,7 @@ if DEP_TYPE == "serverless":
     DESIGN_DOC = os.environ["DESIGN_DOC"]
     COLOR_DOC = os.environ["COLOR_DOC"]
 
+
 # ----------------
 # processing markdown tables and code examples
 def prop_md(prop_dict):
@@ -182,7 +183,7 @@ def generate(component_task, wireframe):
             design_text = design_raw.readlines()
 
     design_text = "".join(design_text)
-    
+
     if DEP_TYPE == "serverless":
         response = requests.get(COLOR_DOC)
         colour_text = response.text
