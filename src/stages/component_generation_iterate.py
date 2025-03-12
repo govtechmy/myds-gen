@@ -2,7 +2,7 @@ import os
 import json
 from google import genai
 from google.genai import types
-from util.output_schema import TsxOutput
+from src.util.output_schema import TsxOutput
 
 GEMINI_API_KEY = os.environ["GEMINI_API_KEY"]
 client = genai.Client(api_key=GEMINI_API_KEY)

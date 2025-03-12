@@ -1,6 +1,6 @@
 import uuid
 import pandas as pd
-from util.rag import rag_icon, rag_component
+from src.util.rag import rag_icon, rag_component
 
 
 # ----------------

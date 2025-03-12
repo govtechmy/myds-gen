@@ -9,7 +9,7 @@ from src.stages import (
     design_iterate,
     component_generation_iterate,
 )
-from util.api_schema import (
+from src.util.api_schema import (
     BaseTask,
     BaseContext,
     ToGenerate,
