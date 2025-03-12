@@ -41,6 +41,11 @@ The fixed code you generate will be directly written to a .tsx React component f
 
     return gen_code_response.text
 
+def get_error_line(line_number, file_name):
+    with open(file_name) as f:
+        data = f.readlines()
+
+    return data[int(line_number)-1].strip()
 
 def validate_lint(file_name):
     result = subprocess.run(
@@ -50,7 +55,7 @@ def validate_lint(file_name):
         check=False,
     )
     errors = [
-        f"Line: {i['line']} - `{i['ruleId']}: {i['message']}`"
+        f"line {i['line']}: `{get_error_line(i['line'],file_name)}`\n- eslint error on line {i['line']}:\n  `{i['ruleId']}: {i['message']}`"
         for i in json.loads(result.stdout)[0]["messages"]
     ]
     return errors
@@ -87,7 +92,7 @@ def validate_tsc(file_name):
     errors = list(
         set(
             [
-                f"line: {i} - error: `{x.strip()}`"
+                f"line {i}: `{get_error_line(i, file_name)}`\n- tsc error on line {i}:\n  `{x.strip()}`"
                 for i, x in zip(
                     re.findall(r"\((\d+?),\d+?\):", result.stdout),
                     re.findall(r":([\s\S]+?)\n", result.stdout),
@@ -115,19 +120,19 @@ def fix_code_gemini(error_text, generated_code, component_name):
             "\n\n**Current React component code which has errors :**\n\n"
             + generated_code
             + "\n\nRewrite the full code to fix and update the provided React web component"
-            + "The full code of the new React component that you write will be written directly to a .tsx file inside the React project. Make sure all necessary imports are done, and that your full code is enclosed with ```tsx ``` blocks.\n",
-            "\nAnswer with generated code only. DO NOT ADD ANY EXTRA TEXT DESCRIPTION OR COMMENTS BESIDES THE CODE. Your answer contains code only ! component code only !\n\n"
-            + "Important :\n\n"
-            + "- Make sure you import the components libraries and icons that are provided to you (if you use them) !\n"
-            + "- Tailwind classes should be written directly in the elements class tags (or className in case of React). DO NOT WRITE ANY CSS OUTSIDE OF CLASSES\n"
-            + "- DO NOT USE ANY <style> IN THE CODE ! CLASSES STYLING ONLY !\n"
-            + "- DO NOT USE LIBRARIES OR IMPORTS EXCEPT WHAT IS PROVIDED IN THIS TASK; OTHERWISE IT WOULD CRASH THE COMPONENT BECAUSE NOT INSTALLED. DO NOT IMPORT EXTRA LIBRARIES BESIDES WHAT IS PROVIDED !\n"
-            + "- Do not have ANY dynamic data! Components are meant to be working as is without supplying any variable to them when importing them ! Only write a component that render directly with placeholders as data, component not supplied with any dynamic data.\n"
-            + "- Fix all errors according to the provided errors data\n"
-            + "- You are allowed to remove any problematic part of the code and replace it\n"
-            + "- Only use the `@govtechmy/myds-react` and `@govtechmy/myds-style` libraries !\n"
-            + "- Only write the code for the component; Do not write extra code to import it! The code will directly be stored in an individual React .tsx file\n"
-            + "- Very important : Your component should be exported as default !\n"
+            # + "The full code of the new React component that you write will be written directly to a .tsx file inside the React project. Make sure all necessary imports are done, and that your full code is enclosed with ```tsx ``` blocks.\n",
+            # "\nAnswer with generated code only. DO NOT ADD ANY EXTRA TEXT DESCRIPTION OR COMMENTS BESIDES THE CODE. Your answer contains code only ! component code only !\n\n"
+            # + "Important :\n\n"
+            # + "- Make sure you import the components libraries and icons that are provided to you (if you use them) !\n"
+            # + "- Tailwind classes should be written directly in the elements class tags (or className in case of React). DO NOT WRITE ANY CSS OUTSIDE OF CLASSES\n"
+            # + "- DO NOT USE ANY <style> IN THE CODE ! CLASSES STYLING ONLY !\n"
+            # + "- DO NOT USE LIBRARIES OR IMPORTS EXCEPT WHAT IS PROVIDED IN THIS TASK; OTHERWISE IT WOULD CRASH THE COMPONENT BECAUSE NOT INSTALLED. DO NOT IMPORT EXTRA LIBRARIES BESIDES WHAT IS PROVIDED !\n"
+            # + "- Do not have ANY dynamic data! Components are meant to be working as is without supplying any variable to them when importing them ! Only write a component that render directly with placeholders as data, component not supplied with any dynamic data.\n"
+            # + "- Fix all errors according to the provided errors data\n"
+            # + "- You are allowed to remove any problematic part of the code and replace it\n"
+            # + "- Only use the `@govtechmy/myds-react` and `@govtechmy/myds-style` libraries !\n"
+            # + "- Only write the code for the component; Do not write extra code to import it! The code will directly be stored in an individual React .tsx file\n"
+            # + "- Very important : Your component should be exported as default !\n"
             + "Fix and write the updated version of the React component code as the creative genius and React component genius you are.",
         ],
     )
@@ -141,7 +146,8 @@ def fix_code_gemini(error_text, generated_code, component_name):
 
 def validate_full(generated_code, component_name):
     file_name = f"output/{component_name}.tsx"
-    lint_error = validate_lint(file_name)
+    # lint_error = validate_lint(file_name)
+    lint_error = []
     compile_error = validate_tsc(file_name)
 
     error_text = "\n".join(
