@@ -151,13 +151,18 @@ def fix_code_gemini(error_text, generated_code, file_name):
 
 
 def validate_full(generated_code, component_name):
-    file_name = f"output/{component_name}.tsx"
-
-    if not os.path.isfile(file_name):
-        if os.getenv("WEB_LOCAL_MODULE_PATH"):
-            file_name = os.getenv("WEB_LOCAL_MODULE_PATH")
+    if os.getenv("DEP_TYPE") == "serverless":
+        file_name = "/tmp/test.tsx"
         with open(file_name, "w+") as f:
             f.write(generated_code.replace("```tsx\n", "").replace("\n```", ""))
+    else:
+        file_name = f"output/{component_name}.tsx"
+
+        if not os.path.isfile(file_name):
+            if os.getenv("WEB_LOCAL_MODULE_PATH"):
+                file_name = os.getenv("WEB_LOCAL_MODULE_PATH")
+            with open(file_name, "w+") as f:
+                f.write(generated_code.replace("```tsx\n", "").replace("\n```", ""))
     # lint_error = validate_lint(file_name)
     lint_error = []
     compile_error = validate_tsc(file_name)
