@@ -1,7 +1,12 @@
 ## Colour
 
-### Primitive Colours
+**Corresponding colours of primitive tokens**:
+- primary: blue
+- danger: red
+- success: green
+- warning: yellow
 
+### Primitive Colours
 - `white`
 - `black`
 - `gray-50`
