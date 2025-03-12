@@ -6,13 +6,9 @@ uv sync
 
 2. create `.env` and add your Gemini API key as in `.env.example`
 
-3. install eslint
+3. install js modules
 ```sh
-npm i eslint --save-dev
-```
-4. install tsc
-```sh
-npm install typescript --save-dev
+npm i
 ```
 
 # Setting up data:
@@ -26,14 +22,15 @@ uv run data/components/extract.py
 uv run data/icons/build_icon_vector.py
 ```
 
-# Running in API server:
+# Running in local:
 ```sh
-uv run fastapi dev api/index.py
+npm run dev-local
 ```
-API can be accessed http://127.0.0.1:8000/api/py/docs
+API can be accessed http://localhost:3000/api/py/docs
 
-# Example usage of module
-1. [example.ipynb](example.ipynb)
+# Examples
+1. Python module usage - [example.ipynb](example.ipynb)
+2. API usage - [example-api.ipynb](example-api.ipynb)
 
 # Workflow
 ![workflow](process.png)
