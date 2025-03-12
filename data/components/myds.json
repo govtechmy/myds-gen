@@ -744,16 +744,12 @@
     },
     {
         "name": "Navbar",
-        "description": "The Navbar component is a standardized navbar for Malaysian government websites.",
+        "description": "The Navbar component establishes a clear navigation menu for users to browse the site.",
         "docs": {
-            "import": "import {\n  Navbar,\n  BrandLogo,\n  NavbarContainer,\n  NavbarActionGroup,\n  NavItemsDropdown,\n  NavItemsDropdownItems,\n  NavItemsMenu,\n  NavigationMenuCombo,\n} from \"@govtechmy/myds-react/navbar\";",
-            "use": "export default () => {\n  return (\n    <Navbar>\n      <NavbarContainer>\n        <BrandLogo />\n        <NavigationMenuCombo>\n          <NavItemsMenu />\n          <NavItemsDropdown>\n            <NavItemsDropdownItems />\n          </NavItemsDropdown>\n        </NavigationMenuCombo>\n      </NavbarContainer>\n      <NavbarActionGroup />\n    </Navbar>\n  );\n};",
+            "import": "import {\n  Navbar,\n  NavbarLogo,\n  NavbarMenu,\n  NavbarMenuItem,\n  NavbarMenuDropdown,\n  NavbarAction,\n} from \"@govtechmy/myds-react/navbar\";",
+            "use": "export default () => {\n  return (\n    <Navbar>\n      <NavbarLogo />\n      <NavbarMenu>\n        <NavbarMenuItem />\n        <NavbarMenuDropdown>\n          <NavbarMenuItem />\n        </NavbarMenuDropdown>\n      </NavbarMenu>\n      <NavbarActionGroup />\n    </Navbar>\n  );\n};",
             "props": {
                 "Navbar": {
-                    "showMenu": {
-                        "description": "Controls whether the menu is shown or hidden.",
-                        "type": "boolean"
-                    },
                     "children": {
                         "description": "Content to be rendered inside the Navbar.",
                         "type": "ReactNode"
@@ -761,57 +757,34 @@
                     "className": {
                         "description": "Additional styles for the Navbar.",
                         "type": "string"
-                    },
-                    "background": {
-                        "description": "Additional styles for the background.",
-                        "type": "string"
                     }
                 },
-                "NavbarContainer": {
+                "NavbarLogo": {
                     "children": {
-                        "description": "Content to be rendered inside the NavbarContainer.",
+                        "description": "Title of the Navbar logo.",
                         "type": "ReactNode"
                     },
-                    "className": {
-                        "description": "Additional styles for the NavbarContainer.",
-                        "type": "string"
-                    }
-                },
-                "BrandLogo": {
-                    "imageSrc": {
-                        "description": "The source URL for the logo image.",
-                        "type": "string"
-                    },
-                    "alt": {
-                        "description": "Alternative text for the logo image.",
-                        "type": "string"
-                    },
                     "href": {
-                        "description": "The URL to navigate to when the logo is clicked.",
+                        "description": "URL to navigate to when the logo is clicked.",
                         "type": "string",
                         "defaultValue": "/"
                     },
-                    "children": {
-                        "description": "Optional text or content displayed next to the logo.",
-                        "type": "ReactNode"
+                    "src": {
+                        "description": "Image URL for the Navbar logo.",
+                        "type": "string"
+                    },
+                    "alt": {
+                        "description": "Alternative text for the Navbar logo.",
+                        "type": "string"
                     }
                 },
-                "NavigationMenuCombo": {
-                    "showMenu": {
-                        "description": "Indicates if the mobile menu is currently shown.",
-                        "type": "boolean",
-                        "defaultValue": "false"
-                    },
-                    "setMenu": {
-                        "description": "Function to toggle the mobile menu visibility.",
-                        "type": "(value: boolean) => void"
-                    },
+                "NavbarMenu": {
                     "children": {
-                        "description": "Content to be rendered in the desktop and mobile navigation menu.",
-                        "type": "ReactNode"
+                        "description": "Content to be rendered inside the NavbarMenu.",
+                        "type": "string"
                     }
                 },
-                "NavItemsMenu": {
+                "NavbarMenuItem": {
                     "children": {
                         "description": "Menu item content.",
                         "type": "ReactNode"
@@ -820,66 +793,37 @@
                         "description": "URL for the navigation item.",
                         "type": "string"
                     },
-                    "active": {
-                        "description": "Indicates if the item is active.",
-                        "type": "boolean",
-                        "defaultValue": "false"
-                    },
                     "className": {
                         "description": "Additional styles for the navigation item.",
                         "type": "string"
                     }
                 },
-                "NavItemsDropdown": {
+                "NavbarMenuDropdown": {
                     "children": {
-                        "description": "Dropdown menu content.",
+                        "description": "Content to be rendered inside the NavbarMenuDropdown.",
                         "type": "ReactNode"
                     },
-                    "menu": {
-                        "description": "Text for the dropdown trigger.",
+                    "title": {
+                        "description": "Dropdown title text.",
                         "type": "string"
                     },
                     "className": {
-                        "description": "Additional styles for the dropdown.",
-                        "type": "string"
+                        "description": "Additional styles for the dropdown content.",
+                        "type": "boolean",
+                        "defaultValue": "false"
                     }
                 },
-                "NavItemsDropdownItems": {
-                    "href": {
-                        "description": "URL for the dropdown item.",
-                        "type": "string"
-                    },
+                "NavbarAction": {
                     "children": {
-                        "description": "Dropdown item content.",
+                        "description": "Content to be rendered inside the NavbarAction.",
                         "type": "ReactNode"
-                    },
-                    "className": {
-                        "description": "Additional styles for the dropdown item.",
-                        "type": "string"
-                    }
-                },
-                "NavbarActionGroup": {
-                    "children": {
-                        "description": "Content to be rendered inside the NavbarActionGroup.",
-                        "type": "ReactNode"
-                    },
-                    "showMenu": {
-                        "description": "Indicates if the menu is currently shown.",
-                        "type": "boolean"
-                    },
-                    "setMenu": {
-                        "description": "Function to toggle the menu visibility.",
-                        "type": "(value: boolean) => void"
-                    },
-                    "className": {
-                        "description": "Additional styles for the NavbarActionGroup.",
-                        "type": "string"
                     }
                 }
             },
             "examples": [
-                "import {\n  Navbar,\n  BrandLogo,\n  NavbarContainer,\n  NavbarActionGroup,\n  NavItemsDropdown,\n  NavItemsDropdownItems,\n  NavItemsMenu,\n  NavigationMenuCombo,\n} from \"@govtechmy/myds-react/navbar\";\nexport default function component() {\n\treturn (<BrandLogo\n\t\t  imageSrc=\"https://d2391uizq0pg2.cloudfront.net/common/logo.svg\"\n\t\t  href=\"/\"\n\t\t>\n\t\t  MYDS\n\t\t</BrandLogo>\n\t);\n}",
-                "import {\n  Navbar,\n  BrandLogo,\n  NavbarContainer,\n  NavbarActionGroup,\n  NavItemsDropdown,\n  NavItemsDropdownItems,\n  NavItemsMenu,\n  NavigationMenuCombo,\n} from \"@govtechmy/myds-react/navbar\";\nexport default function component() {\n\treturn (<NavbarContainer>\n\t\t  <NavigationMenuCombo showMenu={showMenu} setMenu={setMenu}>\n\t\t    <NavItemsMenu href=\"/menu1\" active={false}>\n\t\t      <div>Menu 1</div>\n\t\t    </NavItemsMenu>\n\t\t    <NavItemsMenu href=\"/menu2\" active={false}>\n\t\t      Menu 2\n\t\t    </NavItemsMenu>\n\t\t    <NavItemsDropdown menu=\"Menu Dropdown\">\n\t\t      <NavItemsDropdownItems href=\"/submenu1\">Submenu 1</NavItemsDropdownItems>\n\t\t      <NavItemsDropdownItems href=\"/submenu2\">Submenu 2</NavItemsDropdownItems>\n\t\t      <NavItemsDropdownItems href=\"/submenu3\">Submenu 3</NavItemsDropdownItems>\n\t\t    </NavItemsDropdown>\n\t\t    <NavItemsMenu href=\"/menu3\" active={false}>\n\t\t      Menu 3\n\t\t    </NavItemsMenu>\n\t\t  </NavigationMenuCombo>\n\t\t</NavbarContainer>\n\t);\n}"
+                "import {\n  Navbar,\n  NavbarLogo,\n  NavbarMenu,\n  NavbarMenuItem,\n  NavbarMenuDropdown,\n  NavbarAction,\n} from \"@govtechmy/myds-react/navbar\";\nexport default function component() {\n\treturn (<NavbarLogo\n\t\t  src=\"https://d2391uizq0pg2.cloudfront.net/common/logo.svg\"\n\t\t  alt=\"Malaysian Government Design System\"\n\t\t>\n\t\t  MYDS\n\t\t</NavbarLogo>\n\t);\n}",
+                "import {\n  Navbar,\n  NavbarLogo,\n  NavbarMenu,\n  NavbarMenuItem,\n  NavbarMenuDropdown,\n  NavbarAction,\n} from \"@govtechmy/myds-react/navbar\";\nexport default function component() {\n\treturn (<Navbar>\n\t\t  <NavbarMenu>\n\t\t    <NavbarMenuItem href=\"/menu1\">Menu 1</NavbarMenuItem>\n\t\t    <NavbarMenuItem href=\"/menu2\">Menu 2</NavbarMenuItem>\n\t\t    <NavbarMenuDropdown title=\"Menu Dropdown\">\n\t\t      <NavbarMenuItem href=\"/submenu1\">Submenu 1</NavbarMenuItem>\n\t\t      <NavbarMenuItem href=\"/submenu2\">Submenu 2</NavbarMenuItem>\n\t\t      <NavbarMenuItem href=\"/submenu3\">Submenu 3</NavbarMenuItem>\n\t\t      <NavbarMenuItem href=\"/submenu1\">Submenu 4</NavbarMenuItem>\n\t\t    </NavbarMenuDropdown>\n\t\t    <NavbarMenuItem href=\"/menu3\">Menu 3</NavbarMenuItem>\n\t\t  </NavbarMenu>\n\t\t</Navbar>\n\t);\n}",
+                "import {\n  Navbar,\n  NavbarLogo,\n  NavbarMenu,\n  NavbarMenuItem,\n  NavbarMenuDropdown,\n  NavbarAction,\n} from \"@govtechmy/myds-react/navbar\";\nexport default function component() {\n\treturn (<NavbarAction>\n\t\t  {/* Button Search  : mobile hide if needed  */}\n\t\t  <Button\n\t\t    variant=\"default-ghost\"\n\t\t    iconOnly\n\t\t    aria-label=\"search-button\"\n\t\t    size={\"small\"}\n\t\t  >\n\t\t    <ButtonIcon>\n\t\t      <SearchIcon />\n\t\t    </ButtonIcon>\n\t\t  </Button>\n\t\t\n\t\t  {/* Button Light Mode Toggle  : mobile hide if needed  */}\n\t\t  <ThemeSwitch as=\"toggle\" />\n\t\t\n\t\t  {/* Select Language Toggle  : mobile hide if needed  */}\n\t\t  <div className=\"hidden sm:block\">\n\t\t    <Select defaultValue=\"EN\" variant=\"outline\" size=\"small\">\n\t\t      <SelectTrigger aria-label=\"language-selection\">\n\t\t        <GlobeIcon className=\"h-4 w-4\"></GlobeIcon>\n\t\t        <SelectValue />\n\t\t      </SelectTrigger>\n\t\t      <SelectContent align=\"end\" className=\"font-body rounded-[4px] py-1\">\n\t\t        <SelectItem value=\"EN\">EN</SelectItem>\n\t\t        <SelectItem value=\"BM\">BM</SelectItem>\n\t\t      </SelectContent>\n\t\t    </Select>\n\t\t  </div>\n\t\t</NavbarAction>\n\t);\n}"
             ]
         }
     },
@@ -1859,180 +1803,89 @@
         "name": "Footer",
         "description": "The Footer component is a standardized footer for Malaysian government websites.",
         "docs": {
-            "import": "import {\n  Address,\n  Footer,\n  FooterBottomSection,\n  FooterCopyright,\n  FooterContent,\n  FooterMainInfo,\n  FooterTimestamp,\n  FooterTopSection,\n  ImageWithTitle,\n  SocialMedia,\n  FooterCopyrightDate,\n  FooterCopyrightLinkWrapper,\n  FooterContentColumn,\n  SocialMediaItem,\n} from \"@govtechmy/myds-react/footer\";",
-            "use": "export default () => (\n  <Footer>\n    <FooterTopSection>\n      <FooterMainInfo>\n        <ImageWithTitle />\n        <Address />\n        <SocialMedia>\n          <SocialMediaItem />\n        </SocialMedia>\n      </FooterMainInfo>\n      <FooterContent>\n        <FooterContentColumn />\n      </FooterContent>\n    </FooterTopSection>\n    <FooterBottomSection>\n      <FooterCopyright>\n        <FooterCopyrightDate />\n        <FooterCopyrightLinkWrapper />\n      </FooterCopyright>\n      <FooterTimestamp />\n    </FooterBottomSection>\n  </Footer>\n);",
+            "import": "import {\n  Footer,\n  SiteInfo,\n  FooterSection,\n  SiteLinkGroup,\n  SiteLink,\n  FooterLogo,\n} from \"@govtechmy/myds-react/footer\";",
+            "use": "export default () => (\n  <Footer>\n    <FooterSection>\n      <SiteInfo>\n        <FooterLogo />\n      </SiteInfo>\n      <SiteLinkGroup>\n        <SiteLink />\n      </SiteLinkGroup>\n    </FooterSection>\n  </Footer>\n);",
             "props": {
                 "Footer": {
-                    "className": {
-                        "description": "Additional styles for the footer",
-                        "type": "string"
-                    },
-                    "background": {
-                        "description": "Additional styles for the background of footer",
-                        "type": "string"
-                    },
                     "children": {
-                        "description": "Footer content",
+                        "description": "Content of the footer",
                         "type": "ReactNode"
-                    }
-                },
-                "FooterTopSection": {
-                    "className": {
-                        "description": "Additional styles for the top section",
-                        "type": "string"
-                    },
-                    "children": {
-                        "description": "Content for the top section",
-                        "type": "ReactNode"
-                    }
-                },
-                "FooterMainInfo": {
-                    "className": {
-                        "description": "Additional styles for the main info section",
-                        "type": "string"
-                    },
-                    "children": {
-                        "description": "Main info content",
-                        "type": "ReactNode"
-                    }
-                },
-                "ImageWithTitle": {
-                    "imgSrc": {
-                        "description": "Source of the image",
-                        "type": "string"
-                    },
-                    "imgAlt": {
-                        "description": "Alternative text for the image",
-                        "type": "string"
                     },
                     "className": {
-                        "description": "Additional styles for the container",
+                        "description": "Additional styles",
                         "type": "string"
-                    },
-                    "children": {
-                        "description": "Title or content displayed next to the image",
-                        "type": "ReactNode"
                     }
                 },
-                "Address": {
-                    "className": {
-                        "description": "Additional styles for the address",
-                        "type": "string"
-                    },
+                "FooterSection": {
                     "children": {
-                        "description": "Address text",
+                        "description": "Content of the footer section",
                         "type": "ReactNode"
-                    }
-                },
-                "SocialMedia": {
-                    "title": {
-                        "description": "Optional title for the section",
-                        "type": "string"
                     },
                     "className": {
-                        "description": "Additional styles for the section",
+                        "description": "Additional styles",
                         "type": "string"
-                    },
-                    "children": {
-                        "description": "Social media items",
-                        "type": "ReactNode"
                     }
                 },
-                "SocialMediaItem": {
-                    "icon": {
-                        "description": "Icon for the social media",
+                "SiteInfo": {
+                    "children": {
+                        "description": "Content of the site info section",
                         "type": "ReactNode"
-                    },
-                    "href": {
-                        "description": "URL for the social media link",
-                        "type": "string"
-                    },
-                    "name": {
-                        "description": "Name of the social media",
-                        "type": "string"
                     },
                     "className": {
-                        "description": "Additional styles for the section",
+                        "description": "Additional styles",
                         "type": "string"
                     }
                 },
-                "FooterContent": {
+                "SiteLinkGroup": {
                     "children": {
-                        "description": "Content for the footer",
+                        "description": "Content of the site link grouping",
                         "type": "ReactNode"
-                    }
-                },
-                "FooterContentColumn": {
-                    "title": {
-                        "description": "Title of the column",
-                        "type": "string"
-                    },
-                    "children": {
-                        "description": "Column content",
-                        "type": "ReactNode"
-                    }
-                },
-                "FooterBottomSection": {
-                    "className": {
-                        "description": "Additional styles for the bottom section",
-                        "type": "string"
-                    },
-                    "children": {
-                        "description": "Content for the bottom section",
-                        "type": "ReactNode"
-                    }
-                },
-                "FooterCopyright": {
-                    "className": {
-                        "description": "Additional styles for the copyright container",
-                        "type": "string"
-                    },
-                    "children": {
-                        "description": "Copyright content",
-                        "type": "ReactNode"
-                    }
-                },
-                "FooterCopyrightDate": {
-                    "className": {
-                        "description": "Additional styles for the copyright date",
-                        "type": "string"
-                    },
-                    "children": {
-                        "description": "Text to display before the year",
-                        "type": "ReactNode"
-                    }
-                },
-                "FooterCopyrightLinkWrapper": {
-                    "className": {
-                        "description": "Additional styles for the link wrapper",
-                        "type": "string"
-                    },
-                    "children": {
-                        "description": "Links for copyright information",
-                        "type": "ReactNode"
-                    }
-                },
-                "FooterTimestamp": {
-                    "time": {
-                        "description": "Timestamp in string, number, or Date format, representing a valid ISO 8601 date or any format supported by the JavaScript Date constructor.",
-                        "type": "string | number | Date"
                     },
                     "className": {
-                        "description": "Additional styles for the timestamp",
+                        "description": "Additional styles",
+                        "type": "string"
+                    },
+                    "groupTitle": {
+                        "description": "Title element for the grouping",
+                        "type": "ReactNode"
+                    },
+                    "linkCount": {
+                        "description": "The number of children to be displayed in the grouping",
+                        "type": "number",
+                        "default": 8
+                    }
+                },
+                "FooterLogo": {
+                    "className": {
+                        "description": "Additional styles",
+                        "type": "string"
+                    },
+                    "logoTitle": {
+                        "description": "Brand name of the footer",
+                        "type": "ReactNode"
+                    },
+                    "logo": {
+                        "description": "Brand logo of the footer",
+                        "type": "ReactNode"
+                    }
+                },
+                "SiteLink": {
+                    "className": {
+                        "description": "Additional styles",
                         "type": "string"
                     },
                     "children": {
-                        "description": "Text to display before the timestamp",
+                        "description": "Content of the site link",
                         "type": "ReactNode"
+                    },
+                    "asChild": {
+                        "description": "Flag to inherit child component directly",
+                        "type": "boolean",
+                        "default": "false"
                     }
                 }
             },
-            "examples": [
-                "import {\n  Address,\n  Footer,\n  FooterBottomSection,\n  FooterCopyright,\n  FooterContent,\n  FooterMainInfo,\n  FooterTimestamp,\n  FooterTopSection,\n  ImageWithTitle,\n  SocialMedia,\n  FooterCopyrightDate,\n  FooterCopyrightLinkWrapper,\n  FooterContentColumn,\n  SocialMediaItem,\n} from \"@govtechmy/myds-react/footer\";\nexport default function component() {\n\treturn (<ImageWithTitle\n\t\t     imgSrc=\"https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Coat_of_arms_of_Malaysia.svg/500px-Coat_of_arms_of_Malaysia.svg.png\"\n\t\t     imgAlt=\"JataNegara\"\n\t\t>\n\t\t  Organization Title\n\t\t</ImageWithTitle>\n\t);\n}",
-                "import {\n  Address,\n  Footer,\n  FooterBottomSection,\n  FooterCopyright,\n  FooterContent,\n  FooterMainInfo,\n  FooterTimestamp,\n  FooterTopSection,\n  ImageWithTitle,\n  SocialMedia,\n  FooterCopyrightDate,\n  FooterCopyrightLinkWrapper,\n  FooterContentColumn,\n  SocialMediaItem,\n} from \"@govtechmy/myds-react/footer\";\nexport default function component() {\n\treturn (<Address>\n\t\t  Sample Address Line 1,\n\t\t  Sample Street Name, Sample Area,\n\t\t  Sample District, Sample City,\n\t\t  12345 Sample Postal Code,\n\t\t  Sample Country\n\t\t</Address>\n\t);\n}",
-                "import {\n  Address,\n  Footer,\n  FooterBottomSection,\n  FooterCopyright,\n  FooterContent,\n  FooterMainInfo,\n  FooterTimestamp,\n  FooterTopSection,\n  ImageWithTitle,\n  SocialMedia,\n  FooterCopyrightDate,\n  FooterCopyrightLinkWrapper,\n  FooterContentColumn,\n  SocialMediaItem,\n} from \"@govtechmy/myds-react/footer\";\nexport default function component() {\n\treturn (import {\n\t\t  FacebookIcon,\n\t\t  InstagramIcon,\n\t\t  TikTokIcon,\n\t\t  XIcon,\n\t\t} from \"@govtechmy/myds-react/icon\";\n\t\t\n\t\t<SocialMedia title=\"Follow Us\">\n\t\t  <SocialMediaItem\n\t\t    icon={<FacebookIcon />}\n\t\t    href=\"https://www.facebook.com\"\n\t\t    name=\"Facebook\"\n\t\t  />\n\t\t  <SocialMediaItem\n\t\t    icon={<TikTokIcon />}\n\t\t    href=\"https://www.tiktok.com\"\n\t\t    name=\"TikTok\"\n\t\t  />\n\t\t  <SocialMediaItem\n\t\t    icon={<InstagramIcon />}\n\t\t    href=\"https://www.instagram.com\"\n\t\t    name=\"Instagram\"\n\t\t  />\n\t\t  <SocialMediaItem icon={<XIcon />} href=\"https://www.twitter.com\" name=\"X\" />\n\t\t</SocialMedia>\n\t);\n}",
-                "import {\n  Address,\n  Footer,\n  FooterBottomSection,\n  FooterCopyright,\n  FooterContent,\n  FooterMainInfo,\n  FooterTimestamp,\n  FooterTopSection,\n  ImageWithTitle,\n  SocialMedia,\n  FooterCopyrightDate,\n  FooterCopyrightLinkWrapper,\n  FooterContentColumn,\n  SocialMediaItem,\n} from \"@govtechmy/myds-react/footer\";\nexport default function component() {\n\treturn (<FooterContent>\n\t\t  <FooterContentColumn title=\"Title 1\">\n\t\t    <Link href=\"https://www.example.com\" underline=\"hover\">\n\t\t      Link 1\n\t\t    </Link>\n\t\t    <Link href=\"https://www.example.com\" underline=\"hover\">\n\t\t      Link 2\n\t\t    </Link>\n\t\t  </FooterContentColumn>\n\t\t  <FooterContentColumn title=\"Title 2\">\n\t\t    <Link href=\"https://www.example.com\" underline=\"hover\">\n\t\t      Link 1\n\t\t    </Link>\n\t\t    <Link href=\"https://www.example.com\" underline=\"hover\">\n\t\t      Link 2\n\t\t    </Link>\n\t\t  </FooterContentColumn>\n\t\t</FooterContent>\n\t);\n}"
-            ]
+            "examples": []
         }
     },
     {
