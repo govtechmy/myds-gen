@@ -766,6 +766,7 @@ dependencies = [
     { name = "ruff" },
     { name = "tabulate" },
     { name = "tqdm" },
+    { name = "uvicorn", extra = ["standard"] },
 ]
 
 [package.metadata]
@@ -783,6 +784,7 @@ requires-dist = [
     { name = "ruff", specifier = ">=0.9.7" },
     { name = "tabulate", specifier = ">=0.9.0" },
     { name = "tqdm", specifier = ">=4.67.1" },
+    { name = "uvicorn", extras = ["standard"], specifier = ">=0.34.0" },
 ]
 
 [[package]]
