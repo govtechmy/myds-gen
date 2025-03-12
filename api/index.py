@@ -92,5 +92,5 @@ async def assemble_context_iterate(task: ContextIterate) -> str:
 @app.post("/api/py/generate_component_iterate", tags=["Component Iteration"])
 async def generate_component_iterate(task: GenIterate) -> str:
     return component_generation_iterate.generate(
-            task.task.dict(), task.context, task.tsx
-        )
+        task.task.dict(), task.context, task.tsx
+    )
