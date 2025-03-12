@@ -16,7 +16,7 @@ npm install typescript --save-dev
 ```
 
 # Setting up data:
-1. simple myds db
+1. myds component db
 ```sh
 uv run data/components/extract.py
 ```
@@ -26,15 +26,14 @@ uv run data/components/extract.py
 uv run data/icons/build_icon_vector.py
 ```
 
-# Running in cli:
+# Running in API server:
 ```sh
-uv run main.py
+uv run fastapi dev api/index.py
 ```
+API can be accessed http://127.0.0.1:8000/api/py/docs
 
-# Running marimo app
-```sh
-uv run marimo run marimo.py
-```
+# Example usage of module
+1. [example.ipynb](example.ipynb)
 
 # Workflow
 ![workflow](process.png)
