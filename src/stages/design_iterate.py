@@ -4,13 +4,23 @@ from google import genai
 from google.genai import types
 from src.util.output_schema import ComponentIterateSchema, WireframeSchema
 
+DEP_TYPE = os.getenv("DEP_TYPE")
 GEMINI_API_KEY = os.environ["GEMINI_API_KEY"]
 client = genai.Client(api_key=GEMINI_API_KEY)
 
+if DEP_TYPE == "serverless":
+    import requests
+
+    MYDS_JSON = os.environ["MYDS_JSON"]
+
 
 def design_update(prompt, current_code, current_wireframe, current_component_task):
-    with open("data/components/myds.json") as f:
-        data = json.load(f)
+    if DEP_TYPE == "serverless":
+        response = requests.get(MYDS_JSON)
+        data = response.json()
+    else:
+        with open("data/components/myds.json") as f:
+            data = json.load(f)
     LIBRARY_COMPONENTS_MAP = [
         {"name": e["name"], "description": e["description"]} for e in data
     ]
