@@ -63,7 +63,10 @@ class GenerateComponent:
         )
 
         self.component_string = component_generation_iterate.generate(
-            self.component_task, self.full_context_iter, self.component_string, write_file=True
+            self.component_task,
+            self.full_context_iter,
+            self.component_string,
+            write_file=True,
         )
         self.file_name = self.component_task["name"]
         self.component_string = generation_validation.validate_full(

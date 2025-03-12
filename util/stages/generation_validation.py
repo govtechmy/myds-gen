@@ -41,11 +41,13 @@ The fixed code you generate will be directly written to a .tsx React component f
 
     return gen_code_response.text
 
+
 def get_error_line(line_number, file_name):
     with open(file_name) as f:
         data = f.readlines()
 
-    return data[int(line_number)-1].strip()
+    return data[int(line_number) - 1].strip()
+
 
 def validate_lint(file_name):
     result = subprocess.run(
@@ -55,7 +57,7 @@ def validate_lint(file_name):
         check=False,
     )
     errors = [
-        f"line {i['line']}: `{get_error_line(i['line'],file_name)}`\n- eslint error on line {i['line']}:\n  `{i['ruleId']}: {i['message']}`"
+        f"line {i['line']}: `{get_error_line(i['line'], file_name)}`\n- eslint error on line {i['line']}:\n  `{i['ruleId']}: {i['message']}`"
         for i in json.loads(result.stdout)[0]["messages"]
     ]
     return errors
@@ -137,17 +139,19 @@ def fix_code_gemini(error_text, generated_code, file_name):
         ],
     )
     generated_code = json.loads(gen_code_response.text)
-    
+
     with open(file_name, "w+") as f:
         f.write(generated_code["tsx"].replace("```tsx\n", "").replace("\n```", ""))
-    if os.getenv("WEB_LOCAL_MODULE_PATH") and file_name != os.getenv("WEB_LOCAL_MODULE_PATH"):
+    if os.getenv("WEB_LOCAL_MODULE_PATH") and file_name != os.getenv(
+        "WEB_LOCAL_MODULE_PATH"
+    ):
         with open(os.getenv("WEB_LOCAL_MODULE_PATH"), "w+") as f:
             f.write(generated_code["tsx"].replace("```tsx\n", "").replace("\n```", ""))
 
     return generated_code["tsx"]
 
 
-def validate_full(generated_code, component_name):    
+def validate_full(generated_code, component_name):
     file_name = f"output/{component_name}.tsx"
 
     if not os.path.isfile(file_name):

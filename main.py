@@ -11,6 +11,7 @@ from util.stages import (
 
 load_dotenv()
 
+
 def main(prompt):
     valid_prompt = design.prompt_validation(prompt)
 
@@ -20,11 +21,15 @@ def main(prompt):
         p_bar.update()
         wireframe = design.design_layout(prompt, design_data)
         p_bar.update()
-        component_task, full_context = build_context.generate(prompt, design_data, wireframe)
+        component_task, full_context = build_context.generate(
+            prompt, design_data, wireframe
+        )
         p_bar.update()
         component_string = component_generation.generate(component_task, full_context)
         p_bar.update()
-        component_string = generation_validation.validate_full(component_string, component_task["name"])
+        component_string = generation_validation.validate_full(
+            component_string, component_task["name"]
+        )
         p_bar.update()
         return component_task["name"], component_string
     else:

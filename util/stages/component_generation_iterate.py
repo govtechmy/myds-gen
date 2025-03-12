@@ -54,6 +54,8 @@ def generate(component_task, build_context, current_component_string, write_file
             f.write(generated_code["tsx"].replace("```tsx\n", "").replace("\n```", ""))
         if os.getenv("WEB_LOCAL_MODULE_PATH"):
             with open(os.getenv("WEB_LOCAL_MODULE_PATH"), "w+") as f:
-                f.write(generated_code["tsx"].replace("```tsx\n", "").replace("\n```", ""))
+                f.write(
+                    generated_code["tsx"].replace("```tsx\n", "").replace("\n```", "")
+                )
 
     return generated_code["tsx"]
