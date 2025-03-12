@@ -80,7 +80,7 @@ async def task_planning_iterate(task: ToPlanIterate) -> BaseTaskWthUpdate:
 
 
 @app.post("/api/py/wireframe_iter", tags=["Component Iteration"])
-async def wireframe_iterate(task: ToPlanIterate) -> str:
+async def wireframe_iterate(task: ContextIterate) -> str:
     return design_iterate.design_layout(task.task.dict(), task.wireframe)
 
 

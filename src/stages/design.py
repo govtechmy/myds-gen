@@ -96,7 +96,7 @@ def design_planning(prompt):
     return design_data
 
 
-def design_layout(prompt, component_task):
+def design_layout(component_task):
     # component_task = gen_comp_task(prompt, design_data)
     system_instruction = """You are an expert senior UIUX Designer.\nYour task is to design the wireframe of new React component for a web app, according to the provided task details.\nSpecify the library components and the icons in the wireframe diagram."""
 
