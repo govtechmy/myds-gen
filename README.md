@@ -29,8 +29,8 @@ npm run dev-local
 API can be accessed http://localhost:3000/api/py/docs
 
 # Examples
-1. Python module usage - [example.ipynb](example.ipynb)
-2. API usage - [example-api.ipynb](example-api.ipynb)
+1. Python module usage - [example.ipynb](examples/example.ipynb)
+2. API usage - [example-api.ipynb](examples/example-api.ipynb)
 
 # Workflow
 ![workflow](process.png)
