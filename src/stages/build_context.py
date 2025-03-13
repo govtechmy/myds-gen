@@ -1,6 +1,15 @@
+import os
 import uuid
 import pandas as pd
-from util.util.rag import rag_icon, rag_component
+from src.util.rag import rag_icon, rag_component
+
+DEP_TYPE = os.getenv("DEP_TYPE")
+
+if DEP_TYPE == "serverless":
+    import requests
+
+    DESIGN_DOC = os.environ["DESIGN_DOC"]
+    COLOR_DOC = os.environ["COLOR_DOC"]
 
 
 # ----------------
@@ -164,17 +173,25 @@ def generate(component_task, wireframe):
     # component_task = gen_comp_task(prompt, design_data)
     suggestion_comp_block, suggestion_icon_block = parse_task(component_task)
 
-    with (
-        open("data/foundation/design_doc_min.md") as design_raw
-    ):  # a distilled version of https://myds.vercel.app/en/docs/design foundation tabs
-        design_text = design_raw.readlines()
+    if DEP_TYPE == "serverless":
+        response = requests.get(DESIGN_DOC)
+        design_text = response.text
+    else:
+        with (
+            open("data/foundation/design_doc_min.md") as design_raw
+        ):  # a distilled version of https://myds.vercel.app/en/docs/design foundation tabs
+            design_text = design_raw.readlines()
 
     design_text = "".join(design_text)
 
-    with (
-        open("data/foundation/colour.md") as design_colour
-    ):  # extracted from https://github.com/govtechmy/myds/tree/main/packages/style/styles/theme
-        colour_text = design_colour.readlines()
+    if DEP_TYPE == "serverless":
+        response = requests.get(COLOR_DOC)
+        colour_text = response.text
+    else:
+        with (
+            open("data/foundation/colour.md") as design_colour
+        ):  # extracted from https://github.com/govtechmy/myds/tree/main/packages/style/styles/theme
+            colour_text = design_colour.readlines()
 
     colour_text = "".join(colour_text)
 

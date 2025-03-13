@@ -4,22 +4,40 @@
   "description": "",
   "main": "",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "fastapi-local": "uv sync && uv run uvicorn api.index:app --reload",
+    "fastapi-dev": "pip3 install -r api/requirements.txt && python3 -m uvicorn api.index:app --reload",
+    "next-dev": "next dev",
+    "dev-local": "concurrently \"npm run next-dev\" \"npm run fastapi-local\"",
+    "dev": "concurrently \"npm run next-dev\" \"npm run fastapi-dev\"",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/govtechmy/myds-gen.git"
   },
   "author": "",
-  "license": "ISC",
   "bugs": {
     "url": "https://github.com/govtechmy/myds-gen/issues"
   },
   "homepage": "https://github.com/govtechmy/myds-gen#readme",
   "dependencies": {
-    "@govtechmy/myds-react": "^0.0.14",
-    "@govtechmy/myds-style": "^0.0.5",
+    "@types/node": "22.5.5",
+    "@types/react": "18.3.8",
+    "@types/react-dom": "18.3.0",
+    "autoprefixer": "10.4.20",
+    "concurrently": "^9.0.1",
     "eslint": "^9.21.0",
-    "typescript": "^5.8.2"
+    "eslint-config-next": "15.2.2",
+    "next": "^14.2.13",
+    "postcss": "^8.4.47",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "tailwindcss": "3.4.12",
+    "typescript": "^5.8.2",
+    "@govtechmy/myds-react": "^0.0.15",
+    "@govtechmy/myds-style": "^0.0.6",
+    "@vercel/node": "5.1.12"
   }
 }

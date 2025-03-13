@@ -6,17 +6,13 @@ uv sync
 
 2. create `.env` and add your Gemini API key as in `.env.example`
 
-3. install eslint
+3. install js modules
 ```sh
-npm i eslint --save-dev
-```
-4. install tsc
-```sh
-npm install typescript --save-dev
+npm i
 ```
 
 # Setting up data:
-1. simple myds db
+1. myds component db
 ```sh
 uv run data/components/extract.py
 ```
@@ -26,15 +22,15 @@ uv run data/components/extract.py
 uv run data/icons/build_icon_vector.py
 ```
 
-# Running in cli:
+# Running in local:
 ```sh
-uv run main.py
+npm run dev-local
 ```
+API can be accessed http://localhost:3000/api/py/docs
 
-# Running marimo app
-```sh
-uv run marimo run marimo.py
-```
+# Examples
+1. Python module usage - [example.ipynb](examples/example.ipynb)
+2. API usage - [example-api.ipynb](examples/example-api.ipynb)
 
 # Workflow
 ![workflow](process.png)

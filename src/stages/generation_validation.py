@@ -2,10 +2,9 @@ import json
 import os
 import re
 import subprocess
-from time import sleep
 from google import genai
 from google.genai import types
-from ..util.output_schema import TsxOutput
+from src.util.output_schema import TsxOutput
 
 GEMINI_API_KEY = os.environ["GEMINI_API_KEY"]
 client = genai.Client(api_key=GEMINI_API_KEY)
@@ -152,13 +151,18 @@ def fix_code_gemini(error_text, generated_code, file_name):
 
 
 def validate_full(generated_code, component_name):
-    file_name = f"output/{component_name}.tsx"
-
-    if not os.path.isfile(file_name):
-        if os.getenv("WEB_LOCAL_MODULE_PATH"):
-            file_name = os.getenv("WEB_LOCAL_MODULE_PATH")
+    if os.getenv("DEP_TYPE") == "serverless":
+        file_name = "/tmp/test.tsx"
         with open(file_name, "w+") as f:
             f.write(generated_code.replace("```tsx\n", "").replace("\n```", ""))
+    else:
+        file_name = f"output/{component_name}.tsx"
+
+        if not os.path.isfile(file_name):
+            if os.getenv("WEB_LOCAL_MODULE_PATH"):
+                file_name = os.getenv("WEB_LOCAL_MODULE_PATH")
+            with open(file_name, "w+") as f:
+                f.write(generated_code.replace("```tsx\n", "").replace("\n```", ""))
     # lint_error = validate_lint(file_name)
     lint_error = []
     compile_error = validate_tsc(file_name)
@@ -175,7 +179,7 @@ def validate_full(generated_code, component_name):
     fix_turn = 1
     num_tries = 5
     while total_error and fix_turn <= num_tries:
-        print(f"validation try: {fix_turn}/5")
+        # print(f"validation try: {fix_turn}/5")
         fix_turn += 1
         error_text = "\n".join([f"{i + 1}. {x}" for i, x in enumerate(total_error)])
 
