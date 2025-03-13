@@ -2,7 +2,9 @@
 import { WarningIcon } from "@govtechmy/myds-react/icon";
 import { ThemeProvider } from "@govtechmy/myds-react/hooks";
 import { ThemeSwitch } from "@govtechmy/myds-react/theme-switch";
-
+import { Callout} from "@govtechmy/myds-react/callout";
+ 
+import CompOnet from "./components/test";
 export default function Home() {
   return (
     <main className="bg-bg-white">
@@ -25,6 +27,9 @@ export default function Home() {
             <div className="mt-8">
               <ThemeSwitch />
             </div>
+            <Callout>
+                <CompOnet />
+            </Callout>
           </div>
         </div>
       </ThemeProvider>
