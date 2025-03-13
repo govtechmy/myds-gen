@@ -25,7 +25,7 @@ class GenerateComponent:
         self.design_data = design.design_planning(self.prompt)
         self.component_task = build_context.gen_comp_task(self.prompt, self.design_data)
         p_bar.update()
-        self.wireframe = design.design_layout(self.prompt, self.component_task)
+        self.wireframe = design.design_layout(self.component_task)
         p_bar.update()
         self.full_context = build_context.generate(self.component_task, self.wireframe)
         p_bar.update()
