@@ -13,7 +13,7 @@ def prop_proc(s):
 
 def extract_comp_dict(filename):
     with open(
-        f"data/myds/apps/docs/content/docs/develop/(components)/{filename}.mdx"
+        f"../myds/apps/docs/content/docs/develop/(components)/{filename}.mdx"
     ) as f:
         data = f.readlines()
     full_text = "".join(data)
@@ -105,7 +105,7 @@ def generate_json():
     myds_docs_json = []
     comp_files = [
         i
-        for i in os.listdir("data/myds/apps/docs/content/docs/develop/(components)")
+        for i in os.listdir("../myds/apps/docs/content/docs/develop/(components)")
         if ".ms.mdx" not in i
     ]
     for component in comp_files:

@@ -36,8 +36,8 @@
     "react-dom": "18.3.1",
     "tailwindcss": "3.4.12",
     "typescript": "^5.8.2",
-    "@govtechmy/myds-react": "^0.0.15",
-    "@govtechmy/myds-style": "^0.0.6",
+    "@govtechmy/myds-react": "^0.0.16",
+    "@govtechmy/myds-style": "^0.0.7",
     "@vercel/node": "5.1.12"
   }
 }

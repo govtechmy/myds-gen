@@ -1915,61 +1915,50 @@
         "name": "Masthead",
         "description": "The Masthead component is a standardized header for Malaysian government websites.",
         "docs": {
-            "import": "import {\n  Masthead,\n  MastheadHeader,\n  MastheadContent,\n  MastheadOfficialIndicator,\n  MastheadToggle,\n  MastheadSection,\n  MastheadSectionTitle,\n  MastheadSectionBody,\n} from \"@govtechmy/myds-react/masthead\";\nimport { GovMyIcon, Lock2Icon, LockFillIcon } from \"@govtechmy/myds-react/icon\";",
-            "use": "export default () => (\n  <Masthead>\n    <MastheadHeader>\n      <MastheadOfficialIndicator>\n        Official Malaysia Government Website\n      </MastheadOfficialIndicator>\n      <MastheadToggle>Here's how you know</MastheadToggle>\n    </MastheadHeader>\n    <MastheadContent>\n      <MastheadSection icon={<GovMyIcon />}>\n        <MastheadSectionTitle>\n          Official government websites end with .gov.my\n        </MastheadSectionTitle>\n        <MastheadSectionBody>\n          If the link does not end with\n          <span className=\"font-semibold\"> .gov.my</span>, exit the website\n          immediately even if it looks similar.\n        </MastheadSectionBody>\n      </MastheadSection>\n      <MastheadSection icon={<Lock2Icon height={24} width={24} />}>\n        <MastheadSectionTitle>Secure websites use HTTPS</MastheadSectionTitle>\n        <MastheadSectionBody>\n          Look for a lock (\n          <SolidLockIcon className=\"mb-0.5 inline size-3.5\" />) atau\n          <span className=\"font-semibold\"> https:// </span>\n          as an added precaution. If not present, do not share any sensitive\n          information.\n        </MastheadSectionBody>\n      </MastheadSection>\n    </MastheadContent>\n  </Masthead>\n);",
+            "import": "import {\n  Masthead,\n  MastheadHeader,\n  MastheadContent,\n  MastheadTitle,\n  MastheadTrigger,\n  MastheadSection,\n} from \"@govtechmy/myds-react/masthead\";",
+            "use": "export default () => (\n  <Masthead>\n    <MastheadHeader>\n      <MastheadTitle />\n      <MastheadTrigger />\n    </MastheadHeader>\n    <MastheadContent>\n      <MastheadSection />\n    </MastheadContent>\n  </Masthead>\n);",
             "props": {
                 "Masthead": {
                     "children": {
                         "description": "Content to be displayed inside the Masthead component. Can include a MastheadHeader and MastheadContent.",
-                        "type": "ReactNode",
-                        "default": "<DefaultMastheadHeadHeader/>,<DefaultMastheadContent/>"
+                        "type": "ReactNode"
                     }
                 },
                 "MastheadHeader": {
                     "children": {
-                        "description": "Content for the Masthead header. Typically contains the MastheadOfficialIndicator and MastheadToggle components.",
+                        "description": "Content for the Masthead header. Typically contains the MastheadTitle and MastheadTrigger components.",
                         "type": "ReactNode"
                     }
                 },
-                "MastheadOfficialIndicator": {
+                "MastheadTitle": {
                     "children": {
-                        "description": "Text to display alongside the official Malaysia government flag icon. Defaults to 'Official Malaysia Government Website'.",
-                        "type": "ReactNode",
-                        "default": "Official Malaysia Government Website"
+                        "description": "Text to display alongside the official Malaysia flag.",
+                        "type": "ReactNode"
                     }
                 },
-                "MastheadToggle": {
+                "MastheadTrigger": {
                     "children": {
-                        "description": "Text for the toggle section. Defaults to 'Here's how you know'.",
-                        "type": "ReactNode",
-                        "default": "Here's how you know"
+                        "description": "Text for the trigger action",
+                        "type": "ReactNode"
                     }
                 },
                 "MastheadContent": {
                     "children": {
-                        "description": "Content for the body of the Masthead component, typically containing multiple MastheadSection components.",
+                        "description": "Content for the body of the Masthead component, expecting MastheadSection component.",
                         "type": "ReactNode"
                     }
                 },
                 "MastheadSection": {
+                    "title": {
+                        "description": "Title for the Masthead section. Typically describes the content in the section.",
+                        "type": "ReactNode"
+                    },
                     "icon": {
-                        "description": "Icon to display next to the section content. Typically an icon from the `icons` folder.",
+                        "description": "Icon to display next to the section content",
                         "type": "ReactNode"
                     },
                     "children": {
                         "description": "Content to display within the section, such as a title and body of text.",
-                        "type": "ReactNode"
-                    }
-                },
-                "MastheadSectionTitle": {
-                    "children": {
-                        "description": "Title for the Masthead section. Typically describes the content in the section.",
-                        "type": "ReactNode"
-                    }
-                },
-                "MastheadSectionBody": {
-                    "children": {
-                        "description": "Body text for the Masthead section. Describes the details or additional information related to the section title.",
                         "type": "ReactNode"
                     }
                 }

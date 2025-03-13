@@ -41,7 +41,7 @@ def get_sections(filename, css):
 
 
 def extract_colour_dict(filename):
-    with open(f"data/myds/packages/style/styles/theme/{filename}") as f:
+    with open(f"../myds/packages/style/styles/theme/{filename}") as f:
         data = f.readlines()
     full_text = "".join(data)
 
@@ -56,7 +56,7 @@ MYDS divides the colour palettes into two (2) categories:
 **Colour tokens**: Dynamic colours that adjust according to the mode / theme (light or dark).
 
 """
-    theme_files = os.listdir("data/myds/packages/style/styles/theme")
+    theme_files = os.listdir("../myds/packages/style/styles/theme")
     theme_files.sort()
     for filename in theme_files:
         print(filename)
