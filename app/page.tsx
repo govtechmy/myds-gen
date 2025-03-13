@@ -28,7 +28,9 @@ export default function Home() {
               <ThemeSwitch />
             </div>
             <Callout>
-                <CompOnet />
+                <div className="bg-bg-white rounded-md"> 
+                  <CompOnet />
+                </div>
             </Callout>
           </div>
         </div>
