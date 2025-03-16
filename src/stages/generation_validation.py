@@ -150,7 +150,7 @@ def fix_code_gemini(error_text, generated_code, file_name):
     return generated_code["tsx"]
 
 
-def validate_full(generated_code, component_name):
+def validate_full(generated_code, component_name="test"):
     if os.getenv("DEP_TYPE") == "serverless":
         file_name = "/tmp/test.tsx"
         with open(file_name, "w+") as f:
