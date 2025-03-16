@@ -22,11 +22,12 @@ uv run data/components/extract.py
 uv run data/icons/build_icon_vector.py
 ```
 
-# Running in local:
+# Running locally:
 ```sh
 npm run dev-local
 ```
 **The streamlit preview will be available on http://localhost:8501**
+
 API can be accessed http://localhost:3000/docs
 
 # Examples
