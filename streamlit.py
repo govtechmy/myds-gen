@@ -13,8 +13,8 @@ headers = {"X-API-KEY": MYDS_GEN_API}
 st.set_page_config(page_title="jEN Demo", layout="wide")
 st.title("jEN Demo")
 
-page_height = streamlit_js_eval(js_expressions='screen.height', key = 'SCR')
-container_height = page_height-300
+page_height = streamlit_js_eval(js_expressions="screen.height", key="SCR")
+container_height = page_height - 300
 
 # Initialize chat history
 if "messages" not in st.session_state:
@@ -24,7 +24,7 @@ col1, col2 = st.columns([3, 7])
 # React to user input
 with col1:
     with st.container(height=container_height, border=True):
-        output = st.container(height=container_height-100, border=False)
+        output = st.container(height=container_height - 100, border=False)
         # Display chat messages from history on app rerun
         with output:
             for message in st.session_state.messages:
@@ -237,4 +237,6 @@ with col1:
 
 with col2:
     if st.session_state.messages:
-        components.iframe("http://localhost:3000/preview", height=container_height, scrolling = True)
+        components.iframe(
+            "http://localhost:3000/preview", height=container_height, scrolling=True
+        )
