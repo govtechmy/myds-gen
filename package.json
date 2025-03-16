@@ -5,9 +5,10 @@
   "main": "",
   "scripts": {
     "fastapi-local": "uv sync && uv run uvicorn api.index:app --reload",
+    "streamlit-local": "uv run streamlit run streamlit.py",
     "fastapi-dev": "pip3 install -r api/requirements.txt && python3 -m uvicorn api.index:app --reload",
     "next-dev": "next dev",
-    "dev-local": "concurrently \"npm run next-dev\" \"npm run fastapi-local\"",
+    "dev-local": "concurrently \"npm run next-dev\" \"npm run fastapi-local\" \"npm run streamlit-local\"",
     "dev": "concurrently \"npm run next-dev\" \"npm run fastapi-dev\"",
     "build": "next build",
     "start": "next start",
