@@ -5,10 +5,9 @@
 - danger: red
 - success: green
 - warning: yellow
+- use gray-950 instead of black
 
 ### Primitive Colours
-- `white`
-- `black`
 - `gray-50`
 - `gray-100`
 - `gray-200`
