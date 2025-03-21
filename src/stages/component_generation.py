@@ -15,7 +15,7 @@ def generate(component_task, build_context, write_file=False):
         systemInstruction=system_instruction2,
     )
     gen_code_response = client.models.generate_content(
-        model="gemini-2.0-flash-thinking-exp-01-21",
+        model="gemini-2.0-flash-thinking-exp-1219",
         config=generation_config_part2,
         contents=[
             build_context,
@@ -37,7 +37,7 @@ def generate(component_task, build_context, write_file=False):
             + "- DO NOT GENERATE SVG !\n"
             + "- Only write the code for the component; Do not write extra code to import it! The code will directly be stored in an individual React .tsx file !\n"
             + "- Very important : Your component should be exported as default !\n"
-            + "Write the React component code as the creative genius and React component genius you are - with good ui formatting.\n",
+            + "Think deeply and write the React component code as the creative genius and React component genius you are - with good ui formatting.\n",
         ],
     )
 
