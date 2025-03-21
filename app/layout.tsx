@@ -5,7 +5,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: "MYDS - Jen",
-  description: "404 - Page Not Found",
+  description: "Discover the possibilities of the Malaysian Design System",
 };
 
 export default function RootLayout({

@@ -25,6 +25,7 @@ const nextConfig = {
       },
     ];
   },
+  env: {MYDS_GEN_API :process.env.MYDS_GEN_API}
 };
 
 module.exports = nextConfig;
