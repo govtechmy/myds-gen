@@ -26,9 +26,14 @@ uv run data/icons/build_icon_vector.py
 ```sh
 npm run dev-local
 ```
-**The streamlit preview will be available on http://localhost:8501**
 
-API can be accessed http://localhost:3000/docs
+Access the page on http://localhost:3000/
+
+# Running locally with streamlit:
+```sh
+npm run dev-local-streamlit
+```
+**The streamlit preview will be available on http://localhost:8501**
 
 # Examples
 1. Python module usage - [example.ipynb](examples/example.ipynb)
