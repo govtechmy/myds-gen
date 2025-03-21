@@ -101,7 +101,7 @@ with col1:
                             data = {
                                 "task": taskObject,
                                 "wireframe": wireframe,
-                                "tsx": generatedCode,
+                                "tsx": generatedCode.replace('"', '\\"'),
                             }
                             status.update(
                                 label="Component Generated!",
@@ -188,6 +188,7 @@ with col1:
                             "context": updatedContext,
                             "tsx": updatedPrompt["tsx"],
                         }
+                        # print(component_update_body)
                         update_component_response = re.post(
                             f"{API_ENDPOINT}/api/py/generate_component_iterate",
                             json=component_update_body,
@@ -202,8 +203,8 @@ with col1:
 
                         data = {
                             "task": updatedPrompt["task"],
-                            "wireframe": updatedWireframe,
-                            "tsx": generatedCode,
+                            "wireframe": (updatedWireframe if updatedWireframe else updatedPrompt["wireframe"]).replace('"', '\\"'),
+                            "tsx": generatedCode.replace('"', '\\"'),
                         }
                         status.update(
                             label="Component Generated!",
