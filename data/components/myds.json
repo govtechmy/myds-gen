@@ -224,36 +224,61 @@
         "name": "Cookies Banner",
         "description": "Notifies users that the website uses cookies to improve their experience and gives them the option to manage their consent preferences through cookie settings. It typically appears when a user lands on the website for the first time.",
         "docs": {
-            "import": "import {\n  CookieBanner,\n  CookieBannerClose,\n  CookieBannerPreferencesToggle,\n  CookieBannerPreferencesDisplay,\n  CookieBannerDescription,\n  CookieBannerFooter,\n  CookieBannerHeader,\n  CookieBannerPreferences,\n  CookieBannerTitle,\n} from \"@govtechmy/myds-react/cookie-banner\";",
-            "use": "export default () => (\n  <CookieBanner>\n    <CookieBannerHeader>\n      <CookieBannerTitle />\n      <CookieBannerDescription />\n    </CookieBannerHeader>\n    <CookieBannerPreferences />\n    <CookieBannerFooter>\n      <CookieBannerPreferencesToggle>\n        <CookieBannerPreferencesDisplay>\n          <CookieBannerClose />\n        </CookieBannerPreferencesDisplay>\n      </CookieBannerPreferencesToggle>\n    </CookieBannerFooter>\n  </CookieBanner>\n);",
+            "import": "import {\n  CookieBanner,\n  CookieBannerClose,\n  CookieBannerDescription,\n  CookieBannerAction,\n  CookieBannerPreferences,\n  CookieBannerTitle,\n  CookieBannerPreferencesTrigger,\n} from \"@govtechmy/myds-react/cookie-banner\";",
+            "use": "export default () => (\n  <CookieBanner>\n    <CookieBannerTitle />\n    <CookieBannerDescription />\n    <CookieBannerPreferences />\n    <CookieBannerAction>\n      <CookieBannerClose />\n    </CookieBannerAction>\n  </CookieBanner>\n);",
             "props": {
                 "CookieBanner": {
-                    "open": {
-                        "description": "State to control cookie banners open or close",
+                    "defaultOpen": {
                         "type": "boolean",
-                        "typeDescription": "true | false",
                         "default": "false"
                     },
-                    "dismissible": {
-                        "description": "To control whether the cookie banner should have a close button",
+                    "open": {
                         "type": "boolean",
-                        "default": "true"
-                    },
-                    "onDismiss": {
-                        "description": "Event listener for when the cookie banner is dismissed",
-                        "type": "() => void"
+                        "default": "false"
                     },
                     "onOpenChange": {
-                        "description": "Event listener for when the cookie banner is opened or closed (controlled)",
-                        "type": "(open: boolean) => void"
+                        "type": "(value: boolean) => void"
                     }
                 },
-                "CookieBannerPreferencesDisplay": {
-                    "showWhen": {
-                        "description": "The visibility of the component depends on the value of 'showPreferences' props.",
-                        "type": "enum",
-                        "typeDescription": "preferences-hidden | preferences-shown",
-                        "default": "preferences-hidden"
+                "CookieBannerTitle": {
+                    "children": {
+                        "type": "ReactNode"
+                    }
+                },
+                "CookieBannerDescription": {
+                    "children": {
+                        "type": "ReactNode"
+                    }
+                },
+                "CookieBannerPreferences": {
+                    "children": {
+                        "type": "ReactNode"
+                    }
+                },
+                "CookieBannerPreferencesTrigger": {
+                    "asChild": {
+                        "type": "boolean",
+                        "description": "Overrides to use the child component as base DOM element."
+                    },
+                    "children": {
+                        "type": "ReactNode"
+                    }
+                },
+                "CookieBannerAction": {
+                    "preferences": {
+                        "type": "boolean"
+                    },
+                    "children": {
+                        "type": "ReactNode"
+                    }
+                },
+                "CookieBannerClose": {
+                    "asChild": {
+                        "type": "boolean",
+                        "description": "Overrides to use the child component as base DOM element."
+                    },
+                    "children": {
+                        "type": "ReactNode"
                     }
                 }
             },
@@ -1785,12 +1810,30 @@
             "import": "import {\n  AnnounceBar,\n  AnnounceBarTag,\n  AnnounceBarDescription,\n} from \"@govtechmy/myds-react/announce-bar\";",
             "use": "export default () => (\n  <AnnounceBar>\n    <AnnounceBarTag />\n    <AnnounceBarDescription />\n  </AnnounceBar>\n);",
             "props": {
+                "AnnounceBar": {
+                    "border": {
+                        "description": "Whether to show a border at the bottom of the AnnounceBar",
+                        "type": "boolean",
+                        "default": "true"
+                    },
+                    "children": {
+                        "type": "ReactNode"
+                    }
+                },
                 "AnnounceBarTag": {
                     "variant": {
                         "description": "Style variant of the button",
                         "type": "enum",
-                        "typeDescription": "primary-fill | primary-outline | primary-ghost | danger-fill | danger-outline | danger-ghost | default-outline | default-ghost",
-                        "default": "default-outline"
+                        "typeDescription": "default | primary | success | warning | danger",
+                        "default": "default"
+                    },
+                    "children": {
+                        "type": "ReactNode"
+                    }
+                },
+                "AnnounceBarDescription": {
+                    "children": {
+                        "type": "ReactNode"
                     }
                 }
             },
