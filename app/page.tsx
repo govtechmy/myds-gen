@@ -181,15 +181,15 @@ export default function App() {
   return (
     <main className="bg-bg-white">
       <ThemeProvider>
-        <div>
-          <div className="flex items-center pt-4 mt-8 px-6 mb-0">
-            <h1 className="text-txt-black-900 text-3xl mt-auto px-6">MYDS GEN</h1>
-            <div className="ml-auto mt-auto px-6">
+        <div className="mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 2xl:px-12">
+          <div className="flex flex-wrap items-center pt-4 mt-8 mb-0">
+            <h1 className="text-txt-black-900 text-3xl mt-auto px-2 sm:px-6 xl:px-8 2xl:px-10">MYDS GEN</h1>
+            <div className="ml-auto mt-auto px-2 sm:px-6 xl:px-8 2xl:px-10">
               <ThemeSwitch />
             </div>
           </div>
-          <div className="p-4 flex gap-10">
-            <div className="flex-[1] space-y-4 rounded-lg shadow-card px-6 py-6 ">
+          <div className="p-4 flex flex-col lg:flex-row gap-6 xl:gap-8 2xl:gap-10">
+            <div className="lg:flex-[1] space-y-4 rounded-lg shadow-card p-6 w-full lg:w-auto xl:w-1/3 2xl:w-1/4">
               <Callout className="p-2 mb-4" variant="warning" dismissible>
                 <CalloutTitle>Known Issue</CalloutTitle>
                 <CalloutContent>
@@ -202,27 +202,26 @@ export default function App() {
                   Sandbox crashes when generated code is too long.
                 </CalloutContent>
               </Callout>
-              <div className={`border rounded-md px-6 py-6 ${completed ? 'bg-bg-white-disabled' : 'bg-bg-white'}`} >
-                <h2 className={`flex ${completed ? 'text-txt-black-disabled' : 'text-txt-black-900'}  text-xl mb-4`}>
+              <div className={`border rounded-md p-6 ${completed ? 'bg-bg-white-disabled' : 'bg-bg-white'}`}>
+                <h2 className={`flex ${completed ? 'text-txt-black-disabled' : 'text-txt-black-900'} text-xl mb-4`}>
                   Describe a component
                 </h2>
                 <TextArea
-                  className="h-50  min-h-[50px] mb-4"
+                  className="h-50 min-h-[50px] mb-4 w-full"
                   size="small"
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   placeholder="Describe your desired component..."
                   disabled={completed}
                 />
-                <Button className="ml-auto" onClick={handleRun} disabled={loading || completed || !input}>
-                  {loading ?
-                    <><span>Processing...</span><Spinner color={"white"} /></> : "Submit"}
+                <Button className="ml-auto w-full sm:w-auto xl:w-auto 2xl:w-auto" onClick={handleRun} disabled={loading || completed || !input}>
+                  {loading ? <><span>Processing...</span><Spinner color="white" /></> : "Submit"}
                 </Button>
               </div>
               {loading && (
                 <Callout className="p-2">
                   <CalloutTitle>
-                    {status}<span> </span>
+                    {status}
                     <span className="inline-block animate-bounce 500ms">.</span>
                     <span className="inline-block animate-bounce 500ms [animation-delay:200ms]">.</span>
                     <span className="inline-block animate-bounce 500ms [animation-delay:400ms]">.</span>
@@ -232,20 +231,19 @@ export default function App() {
               {completed && (
                 <>
                   <div className="w-[1px] bg-bg-black-400 h-10 mx-auto"></div>
-                  <div className="border rounded-md px-6 py-6" >
+                  <div className="border rounded-md p-6">
                     <h2 className="flex text-txt-black-900 text-xl mb-4">
                       Describe an update or modification
                     </h2>
                     <TextArea
-                      className="h-50  min-h-[50px] mb-4"
+                      className="h-50 min-h-[50px] mb-4 w-full"
                       size="small"
                       value={newInput}
                       onChange={(e) => setNewInput(e.target.value)}
                       placeholder="Enter an update for the component..."
                     />
-                    <Button className="ml-auto" onClick={handleRunIter} disabled={loading_iter || !newInput}>
-                      {loading_iter ?
-                        <><span>Processing...</span><Spinner color={"white"} /></> : "Submit"}
+                    <Button className="ml-auto w-full sm:w-auto xl:w-auto 2xl:w-auto" onClick={handleRunIter} disabled={loading_iter || !newInput}>
+                      {loading_iter ? <><span>Processing...</span><Spinner color="white" /></> : "Submit"}
                     </Button>
                   </div>
                   {loading_iter && (
@@ -258,11 +256,10 @@ export default function App() {
                       </CalloutTitle>
                     </Callout>
                   )}
-
                 </>
               )}
             </div>
-            <div className="flex-[3] rounded-lg shadow-card ">
+            <div className="lg:flex-[3] rounded-lg shadow-card w-full xl:w-2/3 2xl:w-3/4">
               <Sandpackeditor code={code} />
             </div>
           </div>
