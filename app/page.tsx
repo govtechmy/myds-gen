@@ -181,74 +181,92 @@ export default function App() {
   return (
     <main className="bg-bg-white">
       <ThemeProvider>
-        <div className="flex items-center pt-4 mt-8 px-6 mb-0">
-          <h1 className="text-txt-black-900 text-3xl mt-auto px-6">MYDS GEN</h1>
-          <div className="ml-auto mt-auto px-6">
-          <ThemeSwitch />
-          </div>
-        </div>
-        <div className="p-4 flex gap-10">
-          <div className="flex-[1] space-y-4 rounded-lg shadow-card px-6 py-6 ">
-            <Callout className="p-2 mb-4" variant="warning" dismissible>
-              <CalloutTitle>Known Issue</CalloutTitle>
-              <CalloutContent>
-                Theme Switcher is not working as intended in the sandbox. Please click on the <a className="font-mono bg-bg-white px-1.5 border">Open Sandbox</a> button to get the most accurate rendering
-              </CalloutContent>
-            </Callout>
-            <div className={`border rounded-md px-6 py-6 ${completed ? 'bg-bg-white-disabled' : 'bg-bg-white'}`} >
-              <h2 className={`flex ${completed ? 'text-txt-black-disabled' : 'text-txt-black-900'}  text-xl mb-4`}>
-                Describe a component
-              </h2>
-              <TextArea
-                className="h-50  min-h-[50px] mb-4"
-                size="small"
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                placeholder="Describe your desired component..."
-                disabled={completed}
-              />
-              <Button className="ml-auto" onClick={handleRun} disabled={loading || completed || !input}>
-                {loading ?
-                  <><span>Processing...</span><Spinner color={"white"} /></> : "Submit"}
-              </Button>
+        <div>
+          <div className="flex items-center pt-4 mt-8 px-6 mb-0">
+            <h1 className="text-txt-black-900 text-3xl mt-auto px-6">MYDS GEN</h1>
+            <div className="ml-auto mt-auto px-6">
+              <ThemeSwitch />
             </div>
-            {loading && (
-              <Callout className="p-2">
-                <CalloutTitle>{status}</CalloutTitle>
+          </div>
+          <div className="p-4 flex gap-10">
+            <div className="flex-[1] space-y-4 rounded-lg shadow-card px-6 py-6 ">
+              <Callout className="p-2 mb-4" variant="warning" dismissible>
+                <CalloutTitle>Known Issue</CalloutTitle>
+                <CalloutContent>
+                  Themes might not be working as intended in the sandbox. Please click on the <span className="font-mono bg-bg-white px-1.5 border">Open Sandbox</span> button to get the most accurate rendering.
+                </CalloutContent>
               </Callout>
-            )}
-            {completed && (
-              <>
-              <div className="w-[1px] bg-bg-black-400 h-10 mx-auto"></div>
-              <div className="border rounded-md px-6 py-6" >
-                <h2 className="flex text-txt-black-900 text-xl mb-4">
-                  Describe an update or modification
+              <Callout className="p-2 mb-4" variant="warning" dismissible>
+                <CalloutTitle>Known Issue</CalloutTitle>
+                <CalloutContent>
+                  Sandbox crashes when generated code is too long.
+                </CalloutContent>
+              </Callout>
+              <div className={`border rounded-md px-6 py-6 ${completed ? 'bg-bg-white-disabled' : 'bg-bg-white'}`} >
+                <h2 className={`flex ${completed ? 'text-txt-black-disabled' : 'text-txt-black-900'}  text-xl mb-4`}>
+                  Describe a component
                 </h2>
                 <TextArea
                   className="h-50  min-h-[50px] mb-4"
                   size="small"
-                  value={newInput}
-                  onChange={(e) => setNewInput(e.target.value)}
-                  placeholder="Enter an update for the component..."
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  placeholder="Describe your desired component..."
+                  disabled={completed}
                 />
-                <Button className="ml-auto" onClick={handleRunIter} disabled={loading_iter || !newInput}>
-                  {loading_iter ?
+                <Button className="ml-auto" onClick={handleRun} disabled={loading || completed || !input}>
+                  {loading ?
                     <><span>Processing...</span><Spinner color={"white"} /></> : "Submit"}
                 </Button>
-                {loading_iter && (
-                  <Callout className="p-2">
-                    <CalloutTitle>{status}</CalloutTitle>
-                  </Callout>
-                )}
               </div>
-              </>
-            )}
-          </div>
-          <div className="flex-[3] rounded-lg shadow-card ">
-            <Sandpackeditor code={code} />
+              {loading && (
+                <Callout className="p-2">
+                  <CalloutTitle>
+                    {status}<span> </span>
+                    <span className="inline-block animate-bounce 500ms">.</span>
+                    <span className="inline-block animate-bounce 500ms [animation-delay:200ms]">.</span>
+                    <span className="inline-block animate-bounce 500ms [animation-delay:400ms]">.</span>
+                  </CalloutTitle>
+                </Callout>
+              )}
+              {completed && (
+                <>
+                  <div className="w-[1px] bg-bg-black-400 h-10 mx-auto"></div>
+                  <div className="border rounded-md px-6 py-6" >
+                    <h2 className="flex text-txt-black-900 text-xl mb-4">
+                      Describe an update or modification
+                    </h2>
+                    <TextArea
+                      className="h-50  min-h-[50px] mb-4"
+                      size="small"
+                      value={newInput}
+                      onChange={(e) => setNewInput(e.target.value)}
+                      placeholder="Enter an update for the component..."
+                    />
+                    <Button className="ml-auto" onClick={handleRunIter} disabled={loading_iter || !newInput}>
+                      {loading_iter ?
+                        <><span>Processing...</span><Spinner color={"white"} /></> : "Submit"}
+                    </Button>
+                  </div>
+                  {loading_iter && (
+                    <Callout className="p-2">
+                      <CalloutTitle>
+                        {status}<span> </span>
+                        <span className="inline-block animate-bounce 500ms">.</span>
+                        <span className="inline-block animate-bounce 500ms [animation-delay:200ms]">.</span>
+                        <span className="inline-block animate-bounce 500ms [animation-delay:400ms]">.</span>
+                      </CalloutTitle>
+                    </Callout>
+                  )}
+
+                </>
+              )}
+            </div>
+            <div className="flex-[3] rounded-lg shadow-card ">
+              <Sandpackeditor code={code} />
+            </div>
           </div>
         </div>
-
       </ThemeProvider>
     </main>
   );
