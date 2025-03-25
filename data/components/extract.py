@@ -92,7 +92,7 @@ def extract_comp_dict(filename):
         "description": description,
         "docs": {
             "import": usage_doc[0],
-            "use": usage_doc[1].replace(
+            "anatomy": usage_doc[1].replace(
                 "<AlertDialog>", '<AlertDialog variant="default">'
             ),  # force usage of variant param on alert dialog
             "props": prop_dict,

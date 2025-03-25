@@ -14,11 +14,11 @@ def generate(component_task, build_context, current_component_string, write_file
     generation_config_part2 = types.GenerateContentConfig(
         temperature=0.2,
         systemInstruction=system_instruction2,
-        responseMimeType="application/json",
-        responseSchema=TsxOutput,
+        # responseMimeType="application/json",
+        # responseSchema=TsxOutput,
     )
     gen_code_response = client.models.generate_content(
-        model="gemini-2.0-flash",
+        model="gemini-2.0-flash-thinking-exp-1219",
         config=generation_config_part2,
         contents=[
             build_context,
@@ -48,15 +48,17 @@ def generate(component_task, build_context, current_component_string, write_file
         ],
     )
 
-    generated_code = json.loads(gen_code_response.text)
+    # generated_code = json.loads(gen_code_response.text)
 
-    if write_file:
-        with open(f"output/{component_task['name']}.tsx", "w+") as f:
-            f.write(generated_code["tsx"].replace("```tsx\n", "").replace("\n```", ""))
-        if os.getenv("WEB_LOCAL_MODULE_PATH"):
-            with open(os.getenv("WEB_LOCAL_MODULE_PATH"), "w+") as f:
-                f.write(
-                    generated_code["tsx"].replace("```tsx\n", "").replace("\n```", "")
-                )
+    # if write_file:
+    #     with open(f"output/{component_task['name']}.tsx", "w+") as f:
+    #         f.write(generated_code["tsx"].replace("```tsx\n", "").replace("\n```", ""))
+    #     if os.getenv("WEB_LOCAL_MODULE_PATH"):
+    #         with open(os.getenv("WEB_LOCAL_MODULE_PATH"), "w+") as f:
+    #             f.write(
+    #                 generated_code["tsx"].replace("```tsx\n", "").replace("\n```", "")
+    #             )
 
-    return generated_code["tsx"]
+    # return generated_code["tsx"]
+    return gen_code_response.text
+
