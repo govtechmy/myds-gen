@@ -202,8 +202,6 @@ def generate(component_task, wireframe):
     build_context = f"""<wireframe>
 # Wireframe Design of the component
 
-**Adhere fully to the wireframe, crafted by an expert UIUX Designer when building the component !**
-
 {wireframe}
 </wireframe>
 

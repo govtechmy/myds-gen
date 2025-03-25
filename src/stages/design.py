@@ -44,7 +44,7 @@ def prompt_improve(prompt):
     )
 
     improve_response = client.models.generate_content(
-        model="gemini-2.0-flash",
+        model="gemini-2.0-flash-exp",
         config=generation_config,
         contents=[prompt]
     )
@@ -116,7 +116,7 @@ def design_planning(prompt):
     ]
 
     design_response = client.models.generate_content(
-        model="gemini-2.0-flash",
+        model="gemini-2.0-flash-exp",
         config=generation_config,
         contents=contents,
     )
@@ -137,7 +137,7 @@ def design_layout(component_task):
     )
 
     design_response = client.models.generate_content(
-        model="gemini-2.0-flash",
+        model="gemini-2.0-flash-exp",
         config=generation_config,
         contents=[
             f"- COMPONENT NAME : {component_task['name']}\n\n"

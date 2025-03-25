@@ -15,7 +15,7 @@ client = genai.Client(api_key=GEMINI_API_KEY)
 #     MYDS_JSON = os.environ["MYDS_JSON"]
 
 def prompt_improve(prompt, current_code):
-    system_instruction = "You are a senior UIUX Designer for designing developments of web components in the React framework. The user is requesting for an update to a React web component. Revise the user's request to be more descriptive by including the shadcn components that will be needed. Do not mention the library in your output. If you judge it is relevant to do so, you can specify pre-made library components to use in the component update."
+    system_instruction = "You are a senior UIUX Designer for designing developments of web components in the React framework. The user is requesting for an update to a React web component. Revise the user's request to be more descriptive by including the shadcn components that will be needed. Do not mention the library in your output. If you judge it is relevant to do so, you can specify pre-made library components to use in the component update. Remember that card component is not available! Do not suggest card component!"
 
     generation_config = types.GenerateContentConfig(
         temperature=0.6,
@@ -41,7 +41,7 @@ def prompt_improve(prompt, current_code):
         )
     ]
     prompt_improve_response = client.models.generate_content(
-        model="gemini-2.0-flash",
+        model="gemini-2.0-flash-exp",
         config=generation_config,
         contents=contents,
     )
@@ -62,13 +62,22 @@ def design_update(prompt, current_code, current_wireframe, current_component_tas
     new_prompt = prompt_improve(prompt, current_code)
 
     prompt = new_prompt["improved_request"]
-    comp_include = [rag_component(f"{i['library_component_name']} - {i['library_component_usage_reason']}") for i in new_prompt["additional_components"]]
-    comp_include = [x for i in comp_include for x in i]
-    comp_include = [
-            i
-            for n, i in enumerate(comp_include)
-            if i not in comp_include[:n]
-        ]
+    if new_prompt["additional_components"]:
+        comp_include = [rag_component(f"{i['library_component_name']} - {i['library_component_usage_reason']}") for i in new_prompt["additional_components"]]
+        comp_include = [x for i in comp_include for x in i]
+        comp_include = [
+                i
+                for n, i in enumerate(comp_include)
+                if i not in comp_include[:n]
+            ]
+        comp_include = "\n".join(
+                        [
+                            f"`{i['name']}` : {i['description']}"
+                            for i in comp_include
+                        ]
+                    )
+    else:
+        comp_include = ""
     system_instruction = """Your task is to modify a React component for a web app, according to the user's request.
 If you judge it is relevant to do so, you can specify pre-made library components to use in the component update.
 You must also specify the use of icons if you see that the user's update request requires it."""
@@ -87,12 +96,7 @@ You must also specify the use of icons if you see that the user's update request
                     text="Multiple library components can be used while creating a new component update in order to help you do a better design job, faster.\n"
                     + "Be creative and only utilize the limited set of components to update the component.\n\n"
                     + "AVAILABLE LIBRARY COMPONENTS:\n\n"
-                    + "\n".join(
-                        [
-                            f"`{i['name']}` : {i['description']}"
-                            for i in comp_include
-                        ]
-                    )
+                    + comp_include
                     + "\n\nWhen suggesting icons, use common icon names used in Lucide icon library."
                     + "\n**IMPORTANT:**"
                     + "\n**Use CrossIcon when the cross or closing or cancel icon is needed.**"
@@ -130,7 +134,7 @@ You must also specify the use of icons if you see that the user's update request
     ]
     print("\n".join([x.text for i in contents for x in i.parts]))
     design_response = client.models.generate_content(
-        model="gemini-2.0-flash",
+        model="gemini-2.0-flash-exp",
         config=generation_config,
         contents=contents,
     )
@@ -149,7 +153,7 @@ def design_layout(component_task, current_wireframe):
     )
 
     design_response = client.models.generate_content(
-        model="gemini-2.0-flash",
+        model="gemini-2.0-flash-exp",
         config=generation_config,
         contents=[
             f"- COMPONENT NAME : {component_task['name']}\n\n"

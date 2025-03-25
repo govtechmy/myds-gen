@@ -131,7 +131,7 @@ def fix_code_gemini(error_text, generated_code, file_name):
         responseSchema=TsxOutput,
     )
     gen_code_response = client.models.generate_content(
-        model="gemini-2.0-flash",
+        model="gemini-2.0-flash-exp",
         config=generation_config_part2,
         contents=[
             "**Color tokens**\n"
