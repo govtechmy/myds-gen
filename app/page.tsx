@@ -6,7 +6,7 @@ import { ThemeSwitch } from "@govtechmy/myds-react/theme-switch";
 import { ThemeProvider } from "@govtechmy/myds-react/hooks";
 import { Spinner } from "@govtechmy/myds-react/spinner";
 import { Callout, CalloutTitle, CalloutContent } from "@govtechmy/myds-react/callout";
-
+import { Tag } from "@govtechmy/myds-react/tag";
 import dotenv from 'dotenv';
 import Sandpackeditor from "./components/LiveEditor"
 
@@ -183,13 +183,14 @@ export default function App() {
       <ThemeProvider>
         <div className="mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 2xl:px-12">
           <div className="flex flex-wrap items-center pt-4 mt-8 mb-0">
-            <h1 className="text-txt-black-900 text-3xl mt-auto px-2 sm:px-6 xl:px-8 2xl:px-10">MYDS GEN</h1>
+            <h1 className="text-txt-black-900 text-3xl mt-auto px-2 sm:px-6 xl:px-8 2xl:px-10 font-bold tracking-tight">MYDS Gen</h1>
             <div className="ml-auto mt-auto px-2 sm:px-6 xl:px-8 2xl:px-10">
               <ThemeSwitch />
             </div>
           </div>
           <div className="p-4 flex flex-col lg:flex-row gap-6 xl:gap-8 2xl:gap-10">
             <div className="lg:flex-[1] space-y-4 rounded-lg shadow-card p-6 w-full lg:w-auto xl:w-1/3 2xl:w-1/4">
+              <Tag size="small" dot={true} variant="danger">dev Build</Tag>
               <Callout className="p-2 mb-4" variant="warning" dismissible>
                 <CalloutTitle>Known Issue</CalloutTitle>
                 <CalloutContent>
@@ -203,7 +204,7 @@ export default function App() {
                 </CalloutContent>
               </Callout>
               <div className={`border rounded-md p-6 ${completed ? 'bg-bg-white-disabled' : 'bg-bg-white'}`}>
-                <h2 className={`flex ${completed ? 'text-txt-black-disabled' : 'text-txt-black-900'} text-xl mb-4`}>
+                <h2 className={`flex ${completed ? 'text-txt-black-disabled' : 'text-txt-black-900'} text-xl mb-4 justify-center`}>
                   Describe a component
                 </h2>
                 <TextArea
@@ -232,7 +233,7 @@ export default function App() {
                 <>
                   <div className="w-[1px] bg-bg-black-400 h-10 mx-auto"></div>
                   <div className="border rounded-md p-6">
-                    <h2 className="flex text-txt-black-900 text-xl mb-4">
+                    <h2 className="flex text-txt-black-900 text-xl mb-4 justify-center">
                       Describe an update or modification
                     </h2>
                     <TextArea
