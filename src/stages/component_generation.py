@@ -15,17 +15,19 @@ def generate(component_task, build_context, write_file=False):
         systemInstruction=system_instruction2,
     )
     gen_code_response = client.models.generate_content(
-        model="gemini-2.0-flash-thinking-exp-01-21",
+        model="gemini-2.0-flash-thinking-exp-1219",
         config=generation_config_part2,
         contents=[
-            build_context,
-            f"- COMPONENT NAME : {component_task['name']}\n\n"
+            "<task_details>\n"
+            + f"- COMPONENT NAME : {component_task['name']}\n\n"
             + "- COMPONENT DESCRIPTION :\n```\n"
             + component_task["description"]["user"]
             + "\n```\n\n"
             + "- additional component suggestions :\n```\n"
             + component_task["description"]["llm"]
-            + "\n```\n\n\nWrite the full code for the new React web component, which uses Tailwind classes if needed (add tailwind dark: classes too if you can; backgrounds in dark: classes should be black), and, library components and icons, based on the provided design task.\n"
+            + build_context
+            + "</task_details>\n"
+            + "\nWrite the full code for the new React web component, which uses Tailwind classes if needed (add tailwind dark: classes too if you can; backgrounds in dark: classes should be black), and, library components and icons, based on the provided design task.\n"
             + "When using flexbox, use the `gap` property instead of `space-x`\n"
             + "The full code of the new React component that you write will be written directly to a .tsx file inside the React project. Make sure all necessary imports are done, and that your full code is enclosed with ```tsx blocks.\n"
             + "Answer with generated code only. DO NOT ADD ANY EXTRA TEXT DESCRIPTION OR COMMENTS BESIDES THE CODE. Your answer contains code only ! component code only !\nImportant :\n"

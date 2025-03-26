@@ -9,6 +9,14 @@ from src.util.output_schema import TsxOutput
 GEMINI_API_KEY = os.environ["GEMINI_API_KEY"]
 client = genai.Client(api_key=GEMINI_API_KEY)
 
+DEP_TYPE = os.getenv("DEP_TYPE")
+
+if DEP_TYPE == "serverless":
+    import requests
+
+    DESIGN_DOC = os.environ["DESIGN_DOC"]
+    COLOR_DOC = os.environ["COLOR_DOC"]
+
 
 def validate_only_gemini(generated_code):
     system_instruction = """You are an expert at writing React components and fixing React code with errors.
@@ -101,10 +109,19 @@ def validate_tsc(file_name):
             ]
         )
     )
+    print(errors)
     return errors
 
 
 def fix_code_gemini(error_text, generated_code, file_name):
+    if DEP_TYPE == "serverless":
+        response = requests.get(COLOR_DOC)
+        colour_text = response.text
+    else:
+        with (
+            open("data/foundation/colour.md") as design_colour
+        ):  # extracted from https://github.com/govtechmy/myds/tree/main/packages/style/styles/theme
+            colour_text = design_colour.readlines()
     system_instruction = "You are an expert at writing React components and fixing React code with errors\nYour task is to fix the code of a React component for a web app, according to the provided detected component errors.\nAlso, the React component you write can make use of Tailwind classes for styling.\nYou will write the full React component code, which should include all imports. The fixed code you generate will be directly written to a .tsx React component file and used directly in production."
 
     generation_config_part2 = types.GenerateContentConfig(
@@ -114,9 +131,12 @@ def fix_code_gemini(error_text, generated_code, file_name):
         responseSchema=TsxOutput,
     )
     gen_code_response = client.models.generate_content(
-        model="gemini-2.0-flash",
+        model="gemini-2.0-flash-exp",
         config=generation_config_part2,
         contents=[
+            "**Color tokens**\n"
+            + "".join(colour_text)
+            + "\n\n"
             "**Component Errors**\n" + error_text,
             "\n\n**Current React component code which has errors :**\n\n"
             + generated_code
@@ -133,7 +153,7 @@ def fix_code_gemini(error_text, generated_code, file_name):
             # + "- You are allowed to remove any problematic part of the code and replace it\n"
             # + "- Only use the `@govtechmy/myds-react` and `@govtechmy/myds-style` libraries !\n"
             # + "- Only write the code for the component; Do not write extra code to import it! The code will directly be stored in an individual React .tsx file\n"
-            # + "- Very important : Your component should be exported as default !\n"
+            + "- Very important : Your component should be exported as default !\n"
             + "Fix and write the updated version of the React component code as the creative genius and React component genius you are.",
         ],
     )
@@ -150,7 +170,7 @@ def fix_code_gemini(error_text, generated_code, file_name):
     return generated_code["tsx"]
 
 
-def validate_full(generated_code, component_name):
+def validate_full(generated_code, component_name="test"):
     if os.getenv("DEP_TYPE") == "serverless":
         file_name = "/tmp/test.tsx"
         with open(file_name, "w+") as f:

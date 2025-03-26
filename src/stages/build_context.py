@@ -133,8 +133,8 @@ def parse_task(component_task):
             f"# Suggested library component ({i}/{total_suggestion}) : {x[1]['name']}\n- {x[1]['description']}\n"
             # + f"Suggested usage : {design_task['components'][x[0]]['usage']}\n\n\n"
             + f"## {x[1]['name']} can be imported into the new component like this:\n"
-            + f"```tsx\n{x[1]['docs']['import'].strip()}\n```\n\n---\n\n## examples of how `{x[1]['name']}` can be used inside the new component:\n"
-            + f"```tsx\n{x[1]['docs']['use']}\n```\n"
+            + f"```tsx\n{x[1]['docs']['import'].strip()}\n```\n\n---\n\n## Usage anatomy of `{x[1]['name']}`:\n"
+            + f"```tsx\n{x[1]['docs']['anatomy']}\n```\n"
             + example_block(
                 x[1]["name"],
                 x[1]["docs"]["examples"],
@@ -199,20 +199,23 @@ def generate(component_task, wireframe):
 
     design_block = f"**When creating components you are to adhere to the Malaysian Design System**\nKeeep in mind components created should have neat and organized layout !\n\n{design_text}"
 
-    build_context = f"""# Wireframe Design of the component
-
-**Adhere fully to the wireframe, crafted by an expert UIUX Designer when building the component !**
+    build_context = f"""<wireframe>
+# Wireframe Design of the component
 
 {wireframe}
+</wireframe>
 
----
+<library_component>
 **Library components to be used while making the new React component.**
 
 {suggestion_comp_block}
 
 {suggestion_icon_block}
+</library_component>
 
+<design philosophy>
 {design_block}
+</design philosophy>
 """
 
     return build_context
@@ -255,8 +258,8 @@ def parse_task_iter(component_task):
                 f"# Suggested library component ({i}/{total_suggestion}) : {x[1]['name']}\n- {x[1]['description']}\n"
                 # + f"Suggested usage : {design_task['components'][x[0]]['usage']}\n\n\n"
                 + f"## {x[1]['name']} can be imported into the new component like this:\n"
-                + f"```tsx\n{x[1]['docs']['import'].strip()}\n```\n\n---\n\n## examples of how `{x[1]['name']}` can be used inside the new component:\n"
-                + f"```tsx\n{x[1]['docs']['use']}\n```\n"
+                + f"```tsx\n{x[1]['docs']['import'].strip()}\n```\n\n---\n\n## Usage anatomy of `{x[1]['name']}`:"
+                + f"```tsx\n{x[1]['docs']['anatomy']}\n```\n"
                 + example_block(
                     x[1]["name"],
                     x[1]["docs"]["examples"],

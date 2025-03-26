@@ -4,7 +4,7 @@
         "description": "Allows users to select a date range from an interactive calendar.",
         "docs": {
             "import": "import { DateRangePicker } from \"@govtechmy/myds-react/date-picker\";",
-            "use": "export default () => <DateRangePicker />;",
+            "anatomy": "export default () => <DateRangePicker />;",
             "props": {
                 "DateRangePicker": {
                     "size": {
@@ -74,7 +74,7 @@
         "description": "This component enables users to bypass repetitive navigation links and jumps directly to the main content. It enhances accessibility for keyboard and screen reader users by improving navigation efficiency and is typically hidden until focused.",
         "docs": {
             "import": "import { Skiplink } from \"@govtechmy/myds-react/skiplink\";",
-            "use": "export default () => (\n  <Skiplink href=\"#main-content\">\n    <span>Skip to main content</span>\n  </Skiplink>\n  <main id=\"main-content\">\n    <span className=\"text-slate-600\">\n      Main content here\n    </span>\n  </main>\n);",
+            "anatomy": "export default () => (\n  <Skiplink href=\"#main-content\">\n    <span>Skip to main content</span>\n  </Skiplink>\n  <main id=\"main-content\">\n    <span className=\"text-slate-600\">\n      Main content here\n    </span>\n  </main>\n);",
             "props": {
                 "Skiplink": {
                     "href": {
@@ -93,7 +93,7 @@
         "description": "This component offers brief, contextual info when users hover or focus on an element, enhancing clarity without cluttering the interface. Typically used to explain icons, buttons, or any interactive elements where the meaning might not be immediately clear.",
         "docs": {
             "import": "import {\n  Tooltip,\n  TooltipTrigger,\n  TooltipContent,\n} from \"@govtechmy/myds-react/tooltip\";",
-            "use": "<Tooltip>\n  <TooltipTrigger />\n  <TooltipContent />\n</Tooltip>",
+            "anatomy": "<Tooltip>\n  <TooltipTrigger />\n  <TooltipContent />\n</Tooltip>",
             "props": {
                 "Tooltip": {
                     "defaultOpen": {
@@ -153,7 +153,7 @@
         "description": "Tag is a visual indicator. It can be used to show the current state or status of an item, process, or entity. It likely comes in various styles to represent different states. Available in multiple sizes to fit your design needs. Use the appropriate variant to effectively communicate status at a glance.",
         "docs": {
             "import": "import { Tag } from \"@govtechmy/myds-react/tag\";",
-            "use": "export default () => (\n  <Tag size=\"medium\" dot={true}>Default</Tag>\n  <Tag size=\"small\" dot={false} variant=\"warning\" mode=\"default\">\n    <span>Default</span>\n  </Tag>\n);",
+            "anatomy": "export default () => (\n  <Tag size=\"medium\" dot={true}>Default</Tag>\n  <Tag size=\"small\" dot={false} variant=\"warning\" mode=\"default\">\n    <span>Default</span>\n  </Tag>\n);",
             "props": {
                 "Tag": {
                     "variant": {
@@ -194,7 +194,7 @@
         "description": "The Label component is a standardized form element used to associate descriptive text with controls such as checkboxes and toggles. This component ensures accessibility and consistent styling for Malaysian government websites.",
         "docs": {
             "import": "import { Label } from \"@govtechmy/myds-react/label\";\nimport { Checkbox } from \"@govtechmy/myds-react/checkbox\";\nimport { Toggle, ToggleThumb } from \"@govtechmy/myds-react/toggle\";",
-            "use": "export default () => (\n  <>\n    <div className=\"flex items-center justify-between\">\n      <Label htmlFor=\"checkbox\">Auto-delete notifications</Label>\n      <Checkbox id=\"checkbox\"></Checkbox>\n    </div>\n    <div className=\"flex items-center justify-between\">\n      <Label htmlFor=\"toggle\">Enable 2FA security?</Label>\n      <Toggle id=\"toggle\">\n        <ToggleThumb />\n      </Toggle>\n    </div>\n  </>\n);",
+            "anatomy": "export default () => (\n  <>\n    <div className=\"flex items-center justify-between\">\n      <Label htmlFor=\"checkbox\">Auto-delete notifications</Label>\n      <Checkbox id=\"checkbox\"></Checkbox>\n    </div>\n    <div className=\"flex items-center justify-between\">\n      <Label htmlFor=\"toggle\">Enable 2FA security?</Label>\n      <Toggle id=\"toggle\">\n        <ToggleThumb />\n      </Toggle>\n    </div>\n  </>\n);",
             "props": {
                 "LabelProps": {
                     "asChild": {
@@ -224,36 +224,61 @@
         "name": "Cookies Banner",
         "description": "Notifies users that the website uses cookies to improve their experience and gives them the option to manage their consent preferences through cookie settings. It typically appears when a user lands on the website for the first time.",
         "docs": {
-            "import": "import {\n  CookieBanner,\n  CookieBannerClose,\n  CookieBannerPreferencesToggle,\n  CookieBannerPreferencesDisplay,\n  CookieBannerDescription,\n  CookieBannerFooter,\n  CookieBannerHeader,\n  CookieBannerPreferences,\n  CookieBannerTitle,\n} from \"@govtechmy/myds-react/cookie-banner\";",
-            "use": "export default () => (\n  <CookieBanner>\n    <CookieBannerHeader>\n      <CookieBannerTitle />\n      <CookieBannerDescription />\n    </CookieBannerHeader>\n    <CookieBannerPreferences />\n    <CookieBannerFooter>\n      <CookieBannerPreferencesToggle>\n        <CookieBannerPreferencesDisplay>\n          <CookieBannerClose />\n        </CookieBannerPreferencesDisplay>\n      </CookieBannerPreferencesToggle>\n    </CookieBannerFooter>\n  </CookieBanner>\n);",
+            "import": "import {\n  CookieBanner,\n  CookieBannerClose,\n  CookieBannerDescription,\n  CookieBannerAction,\n  CookieBannerPreferences,\n  CookieBannerTitle,\n  CookieBannerPreferencesTrigger,\n} from \"@govtechmy/myds-react/cookie-banner\";",
+            "anatomy": "export default () => (\n  <CookieBanner>\n    <CookieBannerTitle />\n    <CookieBannerDescription />\n    <CookieBannerPreferences />\n    <CookieBannerAction>\n      <CookieBannerClose />\n    </CookieBannerAction>\n  </CookieBanner>\n);",
             "props": {
                 "CookieBanner": {
-                    "open": {
-                        "description": "State to control cookie banners open or close",
+                    "defaultOpen": {
                         "type": "boolean",
-                        "typeDescription": "true | false",
                         "default": "false"
                     },
-                    "dismissible": {
-                        "description": "To control whether the cookie banner should have a close button",
+                    "open": {
                         "type": "boolean",
-                        "default": "true"
-                    },
-                    "onDismiss": {
-                        "description": "Event listener for when the cookie banner is dismissed",
-                        "type": "() => void"
+                        "default": "false"
                     },
                     "onOpenChange": {
-                        "description": "Event listener for when the cookie banner is opened or closed (controlled)",
-                        "type": "(open: boolean) => void"
+                        "type": "(value: boolean) => void"
                     }
                 },
-                "CookieBannerPreferencesDisplay": {
-                    "showWhen": {
-                        "description": "The visibility of the component depends on the value of 'showPreferences' props.",
-                        "type": "enum",
-                        "typeDescription": "preferences-hidden | preferences-shown",
-                        "default": "preferences-hidden"
+                "CookieBannerTitle": {
+                    "children": {
+                        "type": "ReactNode"
+                    }
+                },
+                "CookieBannerDescription": {
+                    "children": {
+                        "type": "ReactNode"
+                    }
+                },
+                "CookieBannerPreferences": {
+                    "children": {
+                        "type": "ReactNode"
+                    }
+                },
+                "CookieBannerPreferencesTrigger": {
+                    "asChild": {
+                        "type": "boolean",
+                        "description": "Overrides to use the child component as base DOM element."
+                    },
+                    "children": {
+                        "type": "ReactNode"
+                    }
+                },
+                "CookieBannerAction": {
+                    "preferences": {
+                        "type": "boolean"
+                    },
+                    "children": {
+                        "type": "ReactNode"
+                    }
+                },
+                "CookieBannerClose": {
+                    "asChild": {
+                        "type": "boolean",
+                        "description": "Overrides to use the child component as base DOM element."
+                    },
+                    "children": {
+                        "type": "ReactNode"
                     }
                 }
             },
@@ -265,7 +290,7 @@
         "description": "Organize and display content in a compact, collapsible format, commonly used for FAQ sections.",
         "docs": {
             "import": "import {\n  Accordion,\n  AccordionTrigger,\n  AccordionContent,\n  AccordionItem,\n} from \"@govtechmy/myds-react/accordion\";",
-            "use": "export default () => (\n  <Accordion>\n    <AccordionItem>\n      <AccordionTrigger />\n      <AccordionContent />\n    </AccordionItem>\n  </Accordion>\n);",
+            "anatomy": "export default () => (\n  <Accordion>\n    <AccordionItem>\n      <AccordionTrigger />\n      <AccordionContent />\n    </AccordionItem>\n  </Accordion>\n);",
             "props": {
                 "Accordion": {
                     "type": {
@@ -336,7 +361,7 @@
         "description": "Allow users to enter a query or keyword to search through content within a website.",
         "docs": {
             "import": "import {\n  SearchBar,\n  SearchBarInput,\n  SearchBarInputContainer,\n  SearchBarSearchButton,\n  SearchBarResults,\n  SearchBarResultsList,\n  SearchBarResultsItem,\n  SearchBarClearButton,\n  SearchBarHint,\n} from \"@govtechmy/myds-react/search-bar\";",
-            "use": "export default () => (\n  <SearchBar size=\"large\">\n    <SearchBarInputContainer>\n      <SearchBarInput value={query} onValueChange={setQuery} />\n      <SearchBarHint>\n        Press <Pill size=\"small\">/</Pill> to search\n      </SearchBarHint>\n      <SearchBarClearButton />\n      <SearchBarSearchButton />\n    </SearchBarInputContainer>\n    <SearchBarResults open={true}>\n      <SearchBarResultsList>\n        <SearchBarResultsItem value=\"foo\" onSelect={...} >\n          Foo\n        </SearchBarResultsItem>\n        <SearchBarResultsItem value=\"bar\" onSelect={...} >\n          Bar\n        </SearchBarResultsItem>\n      </SearchBarResultsList>\n    </SearchBarResults>\n  </SearchBar>\n);",
+            "anatomy": "export default () => (\n  <SearchBar size=\"large\">\n    <SearchBarInputContainer>\n      <SearchBarInput value={query} onValueChange={setQuery} />\n      <SearchBarHint>\n        Press <Pill size=\"small\">/</Pill> to search\n      </SearchBarHint>\n      <SearchBarClearButton />\n      <SearchBarSearchButton />\n    </SearchBarInputContainer>\n    <SearchBarResults open={true}>\n      <SearchBarResultsList>\n        <SearchBarResultsItem value=\"foo\" onSelect={...} >\n          Foo\n        </SearchBarResultsItem>\n        <SearchBarResultsItem value=\"bar\" onSelect={...} >\n          Bar\n        </SearchBarResultsItem>\n      </SearchBarResultsList>\n    </SearchBarResults>\n  </SearchBar>\n);",
             "props": {
                 "SearchBar": {
                     "size": {
@@ -379,7 +404,7 @@
         "description": "Allows users to navigate through a large set of content divided into discrete pages.",
         "docs": {
             "import": "import { AutoPagination } from \"@govtechmy/myds-react/pagination\";",
-            "use": "<AutoPagination />",
+            "anatomy": "<AutoPagination />",
             "props": {
                 "AutoPagination": {
                     "count": {
@@ -465,7 +490,7 @@
         "description": "The summary list component displays information in a structured key-value format, making it ideal for presenting form summaries, application details, or any data that needs to be reviewed. It supports headers, action buttons, and custom styling.",
         "docs": {
             "import": "import {\n  SummaryList,\n  SummaryListAction,\n  SummaryListBody,\n  SummaryListHeader,\n  SummaryListTerm,\n  SummaryListDetail,\n  SummaryListRow,\n} from \"@govtechmy/myds-react/summary-list\";",
-            "use": "export default () => (\n  <SummaryList>\n    <SummaryListHeader />\n    <SummaryListBody>\n      <SummaryListRow>\n        <SummaryListTerm />\n        <SummaryListDetail />\n        <SummaryListAction />\n      </SummaryListRow>\n    </SummaryListBody>\n  </SummaryList>\n);",
+            "anatomy": "export default () => (\n  <SummaryList>\n    <SummaryListHeader />\n    <SummaryListBody>\n      <SummaryListRow>\n        <SummaryListTerm />\n        <SummaryListDetail />\n        <SummaryListAction />\n      </SummaryListRow>\n    </SummaryListBody>\n  </SummaryList>\n);",
             "props": {
                 "SummaryList": {
                     "className": {
@@ -558,7 +583,7 @@
         "description": "A modal pop-up designed to capture user attention for important actions or messages. It consists of three main components, which are Header, Content, and Footer. These elements together form a flexible and cohesive dialog structure that can accommodate different types of alerts or forms.",
         "docs": {
             "import": "import {\n  AlertDialog,\n  AlertDialogContent,\n  AlertDialogDescription,\n  AlertDialogTitle,\n  AlertDialogTrigger,\n  AlertDialogAction,\n  AlertDialogClose,\n} from \"@govtechmy/myds-react/alert-dialog\";",
-            "use": "export default () => (\n  <AlertDialog variant=\"default\">\n    <AlertDialogTrigger />\n    <AlertDialogBody>\n      <AlertDialogHeader>\n        <AlertDialogTitle />\n      </AlertDialogHeader>\n      <AlertDialogContent>\n        <AlertDialogDescription />\n      </AlertDialogContent>\n      <AlertDialogFooter>\n        <AlertDialogClose />\n      </AlertDialogFooter>\n    </AlertDialogBody>\n  </AlertDialog>\n);",
+            "anatomy": "export default () => (\n  <AlertDialog variant=\"default\">\n    <AlertDialogTrigger />\n    <AlertDialogBody>\n      <AlertDialogHeader>\n        <AlertDialogTitle />\n      </AlertDialogHeader>\n      <AlertDialogContent>\n        <AlertDialogDescription />\n      </AlertDialogContent>\n      <AlertDialogFooter>\n        <AlertDialogClose />\n      </AlertDialogFooter>\n    </AlertDialogBody>\n  </AlertDialog>\n);",
             "props": {
                 "AlertDialog": {
                     "variant": {
@@ -620,7 +645,7 @@
         "description": "Organizes information into rows and columns for easy readability. It accommodates various data types, including text, numbers, codes, call-to-action and links, enabling efficient presentation and comparison.",
         "docs": {
             "import": "import { DataTable } from \"@govtechmy/myds-react/data-table\";",
-            "use": "export default () => <DataTable />;",
+            "anatomy": "export default () => <DataTable />;",
             "props": {
                 "DataTable": {
                     "columns": {
@@ -704,7 +729,7 @@
         "description": "This component extends the <a> HTML element (or anchor element) and is used to display hyperlinks.",
         "docs": {
             "import": "import { Link } from \"@govtechmy/myds-react/link\";",
-            "use": "export default () => (\n  <Link href=\"/\" primary>\n    {/* The link's destination should be indicated here. */}\n    Malaysia's Official Design System\n  </Link>\n);",
+            "anatomy": "export default () => (\n  <Link href=\"/\" primary>\n    {/* The link's destination should be indicated here. */}\n    Malaysia's Official Design System\n  </Link>\n);",
             "props": {
                 "Link": {
                     "asChild": {
@@ -747,7 +772,7 @@
         "description": "The Navbar component establishes a clear navigation menu for users to browse the site.",
         "docs": {
             "import": "import {\n  Navbar,\n  NavbarLogo,\n  NavbarMenu,\n  NavbarMenuItem,\n  NavbarMenuDropdown,\n  NavbarAction,\n} from \"@govtechmy/myds-react/navbar\";",
-            "use": "export default () => {\n  return (\n    <Navbar>\n      <NavbarLogo />\n      <NavbarMenu>\n        <NavbarMenuItem />\n        <NavbarMenuDropdown>\n          <NavbarMenuItem />\n        </NavbarMenuDropdown>\n      </NavbarMenu>\n      <NavbarActionGroup />\n    </Navbar>\n  );\n};",
+            "anatomy": "export default () => {\n  return (\n    <Navbar>\n      <NavbarLogo />\n      <NavbarMenu>\n        <NavbarMenuItem />\n        <NavbarMenuDropdown>\n          <NavbarMenuItem />\n        </NavbarMenuDropdown>\n      </NavbarMenu>\n      <NavbarActionGroup />\n    </Navbar>\n  );\n};",
             "props": {
                 "Navbar": {
                     "children": {
@@ -832,7 +857,7 @@
         "description": "This component is a multi-line text input component designed for longer form content. Unlike the Input component which is limited to a single line, it expands vertically to accommodate multiple lines of text.",
         "docs": {
             "import": "import { TextArea } from \"@govtechmy/myds-react/textarea\";",
-            "use": "export default () => (\n  <TextArea\n    placeholder=\"Placeholder text displayed when the text area is empty.\"\n    size={\"small\"}\n    disabled={false}\n  />\n);",
+            "anatomy": "export default () => (\n  <TextArea\n    placeholder=\"Placeholder text displayed when the text area is empty.\"\n    size={\"small\"}\n    disabled={false}\n  />\n);",
             "props": {
                 "TextArea": {
                     "size": {
@@ -866,7 +891,7 @@
         "description": "Allows users to select a date from an interactive calendar.",
         "docs": {
             "import": "import { DatePicker } from \"@govtechmy/myds-react/date-picker\";",
-            "use": "export default () => <DatePicker />;",
+            "anatomy": "export default () => <DatePicker />;",
             "props": {
                 "DatePicker": {
                     "size": {
@@ -936,7 +961,7 @@
         "description": "Allows users to input a date in a structured format using separate fields for day, month, and year.",
         "docs": {
             "import": "import { DateField } from \"@govtechmy/myds-react/date-field\";",
-            "use": "export default () => <DateField />;",
+            "anatomy": "export default () => <DateField />;",
             "props": {
                 "DateField": {
                     "size": {
@@ -984,7 +1009,7 @@
         "description": "Radio buttons allow users to select exactly one choice from a group",
         "docs": {
             "import": "import {\n  Radio,\n  RadioButton,\n  RadioHintText,\n  RadioItem,\n  RadioLabel,\n} from \"@govtechmy/myds-react/radio\";",
-            "use": "<Radio>\n  <RadioItem>\n    <RadioButton value=\"apple\" id=\"apple\" />\n    <RadioLabel htmlFor=\"apple\">Apple</RadioLabel>\n  </RadioItem>\n  <RadioItem>\n    <RadioButton value=\"banana\" id=\"banana\" />\n    <div>\n      <RadioLabel htmlFor=\"banana\">Banana</RadioLabel>\n      <RadioHintText htmlFor=\"banana\">Comes pre-packaged.</RadioHintText>\n    </div>\n  </RadioItem>\n</Radio>",
+            "anatomy": "<Radio>\n  <RadioItem>\n    <RadioButton value=\"apple\" id=\"apple\" />\n    <RadioLabel htmlFor=\"apple\">Apple</RadioLabel>\n  </RadioItem>\n  <RadioItem>\n    <RadioButton value=\"banana\" id=\"banana\" />\n    <div>\n      <RadioLabel htmlFor=\"banana\">Banana</RadioLabel>\n      <RadioHintText htmlFor=\"banana\">Comes pre-packaged.</RadioHintText>\n    </div>\n  </RadioItem>\n</Radio>",
             "props": {
                 "Radio": {
                     "value": {
@@ -1029,7 +1054,7 @@
         "description": "The Input OTP (One-Time Password) component allows users to enter a code sent to their email or phone to verify their identity. This component is commonly used in two-factor authentication (2FA) and account recovery processes.",
         "docs": {
             "import": "import { InputOTP, InputOTPSlot } from \"@/components/myds\";",
-            "use": "<InputOTP maxLength={4}>\n  <InputOTPSlot index={0} />\n  <InputOTPSlot index={1} />\n  <InputOTPSlot index={2} />\n  <InputOTPSlot index={3} />\n</InputOTP>",
+            "anatomy": "<InputOTP maxLength={4}>\n  <InputOTPSlot index={0} />\n  <InputOTPSlot index={1} />\n  <InputOTPSlot index={2} />\n  <InputOTPSlot index={3} />\n</InputOTP>",
             "props": {
                 "InputOTP": {
                     "maxLength": {
@@ -1082,7 +1107,7 @@
         "description": "Allows users to navigate between different views or content sections within the same context by clicking on tab.",
         "docs": {
             "import": "import {\n  Tabs,\n  TabsList,\n  TabsTrigger,\n  TabsContent,\n  TabsCounter,\n} from \"@govtechmy/myds-react/tabs\";",
-            "use": "export default () => (\n  <Tabs>\n    <TabsList>\n      <TabsTrigger />\n    </TabsList>\n    <TabsContent />\n  </Tabs>\n);",
+            "anatomy": "export default () => (\n  <Tabs>\n    <TabsList>\n      <TabsTrigger />\n    </TabsList>\n    <TabsContent />\n  </Tabs>\n);",
             "props": {
                 "Tabs": {
                     "variant": {
@@ -1120,7 +1145,7 @@
         "description": "A fundamental UI element used to trigger actions or events. It ensures consistency, accessibility, and a clear call to action.",
         "docs": {
             "import": "import {\n  Button,\n  ButtonIcon,\n  ButtonCounter,\n} from \"@govtechmy/myds-react/button\";",
-            "use": "export default () => (\n  <Button>\n    <ButtonIcon />\n    <ButtonCounter />\n  </Button>\n);",
+            "anatomy": "export default () => (\n  <Button>\n    <ButtonIcon />\n    <ButtonCounter />\n  </Button>\n);",
             "props": {
                 "Button": {
                     "variant": {
@@ -1184,7 +1209,7 @@
         "description": "The Toggle component is a versatile switch that allows users to toggle between two states.",
         "docs": {
             "import": "import { Toggle, ToggleThumb } from \"@govtechmy/myds-react/toggle\";",
-            "use": "export default () => (\n  <Toggle>\n    <ToggleThumb />\n  </Toggle>\n);",
+            "anatomy": "export default () => (\n  <Toggle>\n    <ToggleThumb />\n  </Toggle>\n);",
             "props": {
                 "Toggle": {
                     "size": {
@@ -1214,7 +1239,7 @@
         "description": "Non-intrusive notification that appears temporarily on the screen to provide feedback or alert the user of an event.",
         "docs": {
             "import": "import { AutoToast } from \"@govtechmy/myds-react/toast\";\n\n// Put the component high up in the DOM tree\n<AutoToast />;",
-            "use": "// Then, publish or emit a new event to the Toast\nimport { useToast } from \"@govtechmy/myds-react/hooks\";\n\nexport default () => {\n  const { toast } = useToast();\n  return (\n    <button\n      onClick={() => {\n        toast({\n          variant: \"message\",\n          title: \"Hello, world!\",\n          description: \"this is a message toast description\",\n        });\n      }}\n    >\n      Message\n    </button>\n  );\n};",
+            "anatomy": "// Then, publish or emit a new event to the Toast\nimport { useToast } from \"@govtechmy/myds-react/hooks\";\n\nexport default () => {\n  const { toast } = useToast();\n  return (\n    <button\n      onClick={() => {\n        toast({\n          variant: \"message\",\n          title: \"Hello, world!\",\n          description: \"this is a message toast description\",\n        });\n      }}\n    >\n      Message\n    </button>\n  );\n};",
             "props": {
                 "ToastRoot": {
                     "variant": {
@@ -1240,7 +1265,7 @@
         "description": "The Input OTP (One-Time Password) component allows users to enter a code sent to their email or phone to verify their identity. This component is commonly used in two-factor authentication (2FA) and account recovery processes.",
         "docs": {
             "import": "import { InputOTP, InputOTPSlot } from \"@/components/myds\";",
-            "use": "<InputOTP maxLength={4}>\n  <InputOTPSlot index={0} />\n  <InputOTPSlot index={1} />\n  <InputOTPSlot index={2} />\n  <InputOTPSlot index={3} />\n</InputOTP>",
+            "anatomy": "<InputOTP maxLength={4}>\n  <InputOTPSlot index={0} />\n  <InputOTPSlot index={1} />\n  <InputOTPSlot index={2} />\n  <InputOTPSlot index={3} />\n</InputOTP>",
             "props": {
                 "InputOTP": {
                     "maxLength": {
@@ -1293,7 +1318,7 @@
         "description": "Radio buttons allow users to select exactly one choice from a group",
         "docs": {
             "import": "import {\n  Radio,\n  RadioButton,\n  RadioHintText,\n  RadioItem,\n  RadioLabel,\n} from \"@govtechmy/myds-react/radio\";",
-            "use": "<Radio>\n  <RadioItem>\n    <RadioButton value=\"apple\" id=\"apple\" />\n    <RadioLabel htmlFor=\"apple\">Apple</RadioLabel>\n  </RadioItem>\n  <RadioItem>\n    <RadioButton value=\"banana\" id=\"banana\" />\n    <div>\n      <RadioLabel htmlFor=\"banana\">Banana</RadioLabel>\n      <RadioHintText htmlFor=\"banana\">Comes pre-packaged.</RadioHintText>\n    </div>\n  </RadioItem>\n</Radio>",
+            "anatomy": "<Radio>\n  <RadioItem>\n    <RadioButton value=\"apple\" id=\"apple\" />\n    <RadioLabel htmlFor=\"apple\">Apple</RadioLabel>\n  </RadioItem>\n  <RadioItem>\n    <RadioButton value=\"banana\" id=\"banana\" />\n    <div>\n      <RadioLabel htmlFor=\"banana\">Banana</RadioLabel>\n      <RadioHintText htmlFor=\"banana\">Comes pre-packaged.</RadioHintText>\n    </div>\n  </RadioItem>\n</Radio>",
             "props": {
                 "Radio": {
                     "value": {
@@ -1338,7 +1363,7 @@
         "description": "Allow users to enter a query or keyword to search through content within a website.",
         "docs": {
             "import": "import {\n  SearchBar,\n  SearchBarInput,\n  SearchBarInputContainer,\n  SearchBarSearchButton,\n  SearchBarResults,\n  SearchBarResultsList,\n  SearchBarResultsItem,\n  SearchBarClearButton,\n  SearchBarHint,\n} from \"@govtechmy/myds-react/search-bar\";",
-            "use": "export default () => (\n  <SearchBar size=\"large\">\n    <SearchBarInputContainer>\n      <SearchBarInput value={query} onValueChange={setQuery} />\n      <SearchBarHint>\n        Press <Pill size=\"small\">/</Pill> to search\n      </SearchBarHint>\n      <SearchBarClearButton />\n      <SearchBarSearchButton />\n    </SearchBarInputContainer>\n    <SearchBarResults open={true}>\n      <SearchBarResultsList>\n        <SearchBarResultsItem value=\"foo\" onSelect={...} >\n          Foo\n        </SearchBarResultsItem>\n        <SearchBarResultsItem value=\"bar\" onSelect={...} >\n          Bar\n        </SearchBarResultsItem>\n      </SearchBarResultsList>\n    </SearchBarResults>\n  </SearchBar>\n);",
+            "anatomy": "export default () => (\n  <SearchBar size=\"large\">\n    <SearchBarInputContainer>\n      <SearchBarInput value={query} onValueChange={setQuery} />\n      <SearchBarHint>\n        Press <Pill size=\"small\">/</Pill> to search\n      </SearchBarHint>\n      <SearchBarClearButton />\n      <SearchBarSearchButton />\n    </SearchBarInputContainer>\n    <SearchBarResults open={true}>\n      <SearchBarResultsList>\n        <SearchBarResultsItem value=\"foo\" onSelect={...} >\n          Foo\n        </SearchBarResultsItem>\n        <SearchBarResultsItem value=\"bar\" onSelect={...} >\n          Bar\n        </SearchBarResultsItem>\n      </SearchBarResultsList>\n    </SearchBarResults>\n  </SearchBar>\n);",
             "props": {
                 "SearchBar": {
                     "size": {
@@ -1381,7 +1406,7 @@
         "description": "Organizes information into rows and columns for easy readability. It accommodates various data types, including text, numbers, codes, call-to-action and links, enabling efficient presentation and comparison.",
         "docs": {
             "import": "import {\n  Table,\n  TableBody,\n  TableCaption,\n  TableCell,\n  TableFooter,\n  TableHead,\n  TableHeader,\n  TableRow,\n} from \"@govtechmy/myds-react/table\";",
-            "use": "export default () => (\n  <Table>\n    <TableHeader>\n      <TableRow>\n        <TableHead />\n      </TableRow>\n    </TableHeader>\n    <TableBody>\n      <TableRow>\n        <TableCell />\n      </TableRow>\n    </TableBody>\n    <TableCaption />\n  </Table>\n);",
+            "anatomy": "export default () => (\n  <Table>\n    <TableHeader>\n      <TableRow>\n        <TableHead />\n      </TableRow>\n    </TableHeader>\n    <TableBody>\n      <TableRow>\n        <TableCell />\n      </TableRow>\n    </TableBody>\n    <TableCaption />\n  </Table>\n);",
             "props": {
                 "TableHead": {
                     "rowSpan": {
@@ -1430,7 +1455,7 @@
         "description": "A customizable loading spinner component that provides visual feedback for loading states.",
         "docs": {
             "import": "import { Spinner } from \"@govtechmy/myds-react/spinner\";",
-            "use": "export default () => <Spinner />;",
+            "anatomy": "export default () => <Spinner />;",
             "props": {
                 "Spinner": {
                     "color": {
@@ -1465,7 +1490,7 @@
         "description": "Allows users to make a binary choice, such as selecting or not selecting an option. It is commonly used in forms, settings, and filters to capture user input and preferences.",
         "docs": {
             "import": "import { Checkbox } from \"@govtechmy/myds-react/checkbox\";",
-            "use": "export default () => <Checkbox />;",
+            "anatomy": "export default () => <Checkbox />;",
             "props": {
                 "Checkbox": {
                     "size": {
@@ -1504,7 +1529,7 @@
         "description": "Notifies users about important information related to their actions inside a Forms. Callouts can indicate success, warnings, errors, or provide additional information depending on the context inside a form.",
         "docs": {
             "import": "import {\n  Callout,\n  CalloutAction,\n  CalloutTitle,\n  CalloutContent,\n} from \"@govtechmy/myds-react/callout\";",
-            "use": "export default () => (\n  <Callout>\n    <CalloutTitle />\n    <CalloutContent />\n    <CalloutAction>\n      <CalloutClose />\n    </CalloutAction>\n  </Callout>\n);",
+            "anatomy": "export default () => (\n  <Callout>\n    <CalloutTitle />\n    <CalloutContent />\n    <CalloutAction>\n      <CalloutClose />\n    </CalloutAction>\n  </Callout>\n);",
             "props": {
                 "Callout": {
                     "variant": {
@@ -1535,7 +1560,7 @@
         "description": "The input component is a text input field that allows users to input text.",
         "docs": {
             "import": "import { Input } from \"@govtechmy/myds-react/input\";",
-            "use": "<Input />",
+            "anatomy": "<Input />",
             "props": {
                 "Input": {
                     "size": {
@@ -1597,7 +1622,7 @@
         "description": "Allowing users to choose from a list of options. The component often appears as a popup menu where user clicks on the select button, to make a list of options appear.",
         "docs": {
             "import": "import {\n  Select,\n  SelectGroup,\n  SelectGroupTitle,\n  SelectValue,\n  SelectTrigger,\n  SelectLabel,\n  SelectContent,\n  SelectHeader,\n  SelectFooter,\n  SelectItem,\n  SelectSeparator,\n} from \"@govtechmy/myds-react/select\";",
-            "use": "export default () => (\n  <Select>\n    <SelectTrigger>\n      <SelectValue />\n    </SelectTrigger>\n    <SelectContent>\n      <SelectHeader />\n      <SelectGroup>\n        <SelectGroupTitle />\n        <SelectItem />\n      </SelectGroup>\n      <SelectSeparator />\n      <SelectFooter />\n    </SelectContent>\n  </Select>\n);",
+            "anatomy": "export default () => (\n  <Select>\n    <SelectTrigger>\n      <SelectValue />\n    </SelectTrigger>\n    <SelectContent>\n      <SelectHeader />\n      <SelectGroup>\n        <SelectGroupTitle />\n        <SelectItem />\n      </SelectGroup>\n      <SelectSeparator />\n      <SelectFooter />\n    </SelectContent>\n  </Select>\n);",
             "props": {
                 "Select": {
                     "multiple": {
@@ -1681,7 +1706,7 @@
         "description": "Dropdowns are toggleable, contextual overlays for displaying lists of links and more.",
         "docs": {
             "import": "import {\n  Dropdown,\n  DropdownContent,\n  DropdownItem,\n  DropdownItemIcon,\n  DropdownTrigger,\n} from \"@govtechmy/myds-react/dropdown\";",
-            "use": "export default () => (\n  <Dropdown>\n    <DropdownTrigger />\n    <DropdownContent>\n      <DropdownItem>\n        <DropdownItemIcon />\n      </DropdownItem>\n    </DropdownContent>\n  </Dropdown>\n);",
+            "anatomy": "export default () => (\n  <Dropdown>\n    <DropdownTrigger />\n    <DropdownContent>\n      <DropdownItem>\n        <DropdownItemIcon />\n      </DropdownItem>\n    </DropdownContent>\n  </Dropdown>\n);",
             "props": {
                 "Dropdown": {
                     "open": {
@@ -1753,7 +1778,7 @@
         "description": "Represent tags or categories in a textfield. Pills can contain text and may include an \"x\" button to allow for easy removal.",
         "docs": {
             "import": "import { Pill } from \"@govtechmy/myds-react/pill\";",
-            "use": "export default () => <Pill>Trending</Pill>;",
+            "anatomy": "export default () => <Pill>Trending</Pill>;",
             "props": {
                 "Pill": {
                     "size": {
@@ -1783,14 +1808,32 @@
         "description": "Informs users about the service's development stage and includes a link for submitting feedback. The phase banner is typically placed below the navigation menu to display the current status of the service, such as Alpha, Beta, or Maintenance.",
         "docs": {
             "import": "import {\n  AnnounceBar,\n  AnnounceBarTag,\n  AnnounceBarDescription,\n} from \"@govtechmy/myds-react/announce-bar\";",
-            "use": "export default () => (\n  <AnnounceBar>\n    <AnnounceBarTag />\n    <AnnounceBarDescription />\n  </AnnounceBar>\n);",
+            "anatomy": "export default () => (\n  <AnnounceBar>\n    <AnnounceBarTag />\n    <AnnounceBarDescription />\n  </AnnounceBar>\n);",
             "props": {
+                "AnnounceBar": {
+                    "border": {
+                        "description": "Whether to show a border at the bottom of the AnnounceBar",
+                        "type": "boolean",
+                        "default": "true"
+                    },
+                    "children": {
+                        "type": "ReactNode"
+                    }
+                },
                 "AnnounceBarTag": {
                     "variant": {
                         "description": "Style variant of the button",
                         "type": "enum",
-                        "typeDescription": "primary-fill | primary-outline | primary-ghost | danger-fill | danger-outline | danger-ghost | default-outline | default-ghost",
-                        "default": "default-outline"
+                        "typeDescription": "default | primary | success | warning | danger",
+                        "default": "default"
+                    },
+                    "children": {
+                        "type": "ReactNode"
+                    }
+                },
+                "AnnounceBarDescription": {
+                    "children": {
+                        "type": "ReactNode"
                     }
                 }
             },
@@ -1804,7 +1847,7 @@
         "description": "The Footer component is a standardized footer for Malaysian government websites.",
         "docs": {
             "import": "import {\n  Footer,\n  SiteInfo,\n  FooterSection,\n  SiteLinkGroup,\n  SiteLink,\n  FooterLogo,\n} from \"@govtechmy/myds-react/footer\";",
-            "use": "export default () => (\n  <Footer>\n    <FooterSection>\n      <SiteInfo>\n        <FooterLogo />\n      </SiteInfo>\n      <SiteLinkGroup>\n        <SiteLink />\n      </SiteLinkGroup>\n    </FooterSection>\n  </Footer>\n);",
+            "anatomy": "export default () => (\n  <Footer>\n    <FooterSection>\n      <SiteInfo>\n        <FooterLogo />\n      </SiteInfo>\n      <SiteLinkGroup>\n        <SiteLink />\n      </SiteLinkGroup>\n    </FooterSection>\n  </Footer>\n);",
             "props": {
                 "Footer": {
                     "children": {
@@ -1893,7 +1936,7 @@
         "description": "A navigation aid that helps users understand their current location within a website or application and allows them to easily navigate back to previous levels.",
         "docs": {
             "import": "import {\n  Breadcrumb,\n  BreadcrumbItem,\n  BreadcrumbLink,\n  BreadcrumbSeparator,\n  BreadcrumbPage,\n} from \"@govtechmy/myds-react/breadcrumb\";",
-            "use": "export default () => (\n  <Breadcrumb>\n    <BreadcrumbItem>\n      <BreadcrumbLink />\n      <BreadcrumbPage />\n    </BreadcrumbItem>\n    <BreadcrumbSeparator />\n  </Breadcrumb>\n);",
+            "anatomy": "export default () => (\n  <Breadcrumb>\n    <BreadcrumbItem>\n      <BreadcrumbLink />\n      <BreadcrumbPage />\n    </BreadcrumbItem>\n    <BreadcrumbSeparator />\n  </Breadcrumb>\n);",
             "props": {
                 "Breadcrumb": {
                     "variant": {
@@ -1915,61 +1958,50 @@
         "name": "Masthead",
         "description": "The Masthead component is a standardized header for Malaysian government websites.",
         "docs": {
-            "import": "import {\n  Masthead,\n  MastheadHeader,\n  MastheadContent,\n  MastheadOfficialIndicator,\n  MastheadToggle,\n  MastheadSection,\n  MastheadSectionTitle,\n  MastheadSectionBody,\n} from \"@govtechmy/myds-react/masthead\";\nimport { GovMyIcon, Lock2Icon, LockFillIcon } from \"@govtechmy/myds-react/icon\";",
-            "use": "export default () => (\n  <Masthead>\n    <MastheadHeader>\n      <MastheadOfficialIndicator>\n        Official Malaysia Government Website\n      </MastheadOfficialIndicator>\n      <MastheadToggle>Here's how you know</MastheadToggle>\n    </MastheadHeader>\n    <MastheadContent>\n      <MastheadSection icon={<GovMyIcon />}>\n        <MastheadSectionTitle>\n          Official government websites end with .gov.my\n        </MastheadSectionTitle>\n        <MastheadSectionBody>\n          If the link does not end with\n          <span className=\"font-semibold\"> .gov.my</span>, exit the website\n          immediately even if it looks similar.\n        </MastheadSectionBody>\n      </MastheadSection>\n      <MastheadSection icon={<Lock2Icon height={24} width={24} />}>\n        <MastheadSectionTitle>Secure websites use HTTPS</MastheadSectionTitle>\n        <MastheadSectionBody>\n          Look for a lock (\n          <SolidLockIcon className=\"mb-0.5 inline size-3.5\" />) atau\n          <span className=\"font-semibold\"> https:// </span>\n          as an added precaution. If not present, do not share any sensitive\n          information.\n        </MastheadSectionBody>\n      </MastheadSection>\n    </MastheadContent>\n  </Masthead>\n);",
+            "import": "import {\n  Masthead,\n  MastheadHeader,\n  MastheadContent,\n  MastheadTitle,\n  MastheadTrigger,\n  MastheadSection,\n} from \"@govtechmy/myds-react/masthead\";",
+            "anatomy": "export default () => (\n  <Masthead>\n    <MastheadHeader>\n      <MastheadTitle />\n      <MastheadTrigger />\n    </MastheadHeader>\n    <MastheadContent>\n      <MastheadSection />\n    </MastheadContent>\n  </Masthead>\n);",
             "props": {
                 "Masthead": {
                     "children": {
                         "description": "Content to be displayed inside the Masthead component. Can include a MastheadHeader and MastheadContent.",
-                        "type": "ReactNode",
-                        "default": "<DefaultMastheadHeadHeader/>,<DefaultMastheadContent/>"
+                        "type": "ReactNode"
                     }
                 },
                 "MastheadHeader": {
                     "children": {
-                        "description": "Content for the Masthead header. Typically contains the MastheadOfficialIndicator and MastheadToggle components.",
+                        "description": "Content for the Masthead header. Typically contains the MastheadTitle and MastheadTrigger components.",
                         "type": "ReactNode"
                     }
                 },
-                "MastheadOfficialIndicator": {
+                "MastheadTitle": {
                     "children": {
-                        "description": "Text to display alongside the official Malaysia government flag icon. Defaults to 'Official Malaysia Government Website'.",
-                        "type": "ReactNode",
-                        "default": "Official Malaysia Government Website"
+                        "description": "Text to display alongside the official Malaysia flag.",
+                        "type": "ReactNode"
                     }
                 },
-                "MastheadToggle": {
+                "MastheadTrigger": {
                     "children": {
-                        "description": "Text for the toggle section. Defaults to 'Here's how you know'.",
-                        "type": "ReactNode",
-                        "default": "Here's how you know"
+                        "description": "Text for the trigger action",
+                        "type": "ReactNode"
                     }
                 },
                 "MastheadContent": {
                     "children": {
-                        "description": "Content for the body of the Masthead component, typically containing multiple MastheadSection components.",
+                        "description": "Content for the body of the Masthead component, expecting MastheadSection component.",
                         "type": "ReactNode"
                     }
                 },
                 "MastheadSection": {
+                    "title": {
+                        "description": "Title for the Masthead section. Typically describes the content in the section.",
+                        "type": "ReactNode"
+                    },
                     "icon": {
-                        "description": "Icon to display next to the section content. Typically an icon from the `icons` folder.",
+                        "description": "Icon to display next to the section content",
                         "type": "ReactNode"
                     },
                     "children": {
                         "description": "Content to display within the section, such as a title and body of text.",
-                        "type": "ReactNode"
-                    }
-                },
-                "MastheadSectionTitle": {
-                    "children": {
-                        "description": "Title for the Masthead section. Typically describes the content in the section.",
-                        "type": "ReactNode"
-                    }
-                },
-                "MastheadSectionBody": {
-                    "children": {
-                        "description": "Body text for the Masthead section. Describes the details or additional information related to the section title.",
                         "type": "ReactNode"
                     }
                 }
@@ -1982,7 +2014,7 @@
         "description": "A component that allows users to switching themes of the application dynamically.",
         "docs": {
             "import": "import { ThemeProvider } from \"@govtechmy/myds-react/hooks\";\nimport { ThemeSwitch } from \"@govtechmy/myds-react/theme-switch\";",
-            "use": "export default () => (\n  <ThemeProvider>\n    <ThemeSwitch />\n  </ThemeProvider>\n);",
+            "anatomy": "export default () => (\n  <ThemeProvider>\n    <ThemeSwitch />\n  </ThemeProvider>\n);",
             "props": {
                 "ThemeSwitch": {
                     "as": {
@@ -2023,7 +2055,7 @@
         "description": "A modal pop-up designed to capture user attention for important actions or messages. It consists of three main components, which are Header, Content, and Footer.",
         "docs": {
             "import": "import {\n  Dialog,\n  DialogBody,\n  DialogContent,\n  DialogDescription,\n  DialogHeader,\n  DialogTitle,\n  DialogTrigger,\n  DialogFooter,\n  DialogClose,\n} from \"@govtechmy/myds-react/dialog\";",
-            "use": "export default () => (\n  <Dialog>\n    <DialogTrigger />\n    <DialogBody>\n      <DialogHeader>\n        <DialogTitle />\n      </DialogHeader>\n      <DialogContent>\n        <DialogDescription />\n      </DialogContent>\n      <DialogFooter>\n        <DialogClose />\n      </DialogFooter>\n    </DialogBody>\n  </Dialog>\n);",
+            "anatomy": "export default () => (\n  <Dialog>\n    <DialogTrigger />\n    <DialogBody>\n      <DialogHeader>\n        <DialogTitle />\n      </DialogHeader>\n      <DialogContent>\n        <DialogDescription />\n      </DialogContent>\n      <DialogFooter>\n        <DialogClose />\n      </DialogFooter>\n    </DialogBody>\n  </Dialog>\n);",
             "props": {
                 "Dialog": {
                     "open": {

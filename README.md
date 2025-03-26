@@ -22,11 +22,18 @@ uv run data/components/extract.py
 uv run data/icons/build_icon_vector.py
 ```
 
-# Running in local:
+# Running locally:
 ```sh
 npm run dev-local
 ```
-API can be accessed http://localhost:3000/api/py/docs
+
+Access the page on http://localhost:3000/
+
+# Running locally with streamlit:
+```sh
+npm run dev-local-streamlit
+```
+**The streamlit preview will be available on http://localhost:8501**
 
 # Examples
 1. Python module usage - [example.ipynb](examples/example.ipynb)
@@ -34,6 +41,3 @@ API can be accessed http://localhost:3000/api/py/docs
 
 # Workflow
 ![workflow](process.png)
-
-
-hello

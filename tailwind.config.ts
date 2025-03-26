@@ -9,6 +9,7 @@ const config: Config = {
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
     './api/**/*.{js,ts,jsx,tsx,mdx}',
+    'node_modules/@govtechmy/myds-react/dist/**/*.{js,jsx,ts,tsx}',
   ],
   darkMode: "selector",
   presets: [preset],

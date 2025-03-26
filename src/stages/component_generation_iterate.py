@@ -18,7 +18,7 @@ def generate(component_task, build_context, current_component_string, write_file
         responseSchema=TsxOutput,
     )
     gen_code_response = client.models.generate_content(
-        model="gemini-2.0-flash",
+        model="gemini-2.0-flash-exp",
         config=generation_config_part2,
         contents=[
             build_context,
@@ -37,7 +37,8 @@ def generate(component_task, build_context, current_component_string, write_file
             + "Answer with generated code only. DO NOT ADD ANY EXTRA TEXT DESCRIPTION OR COMMENTS BESIDES THE CODE. Your answer contains code only ! component code only !\nImportant :\n"
             + "- Make sure you import provided components libraries and icons that are provided to you if you use them !\n"
             + "- Tailwind classes should be written directly in the elements class tags (or className in case of React). DO NOT WRITE ANY CSS OUTSIDE OF CLASSES. DO NOT USE ANY <style> IN THE CODE ! CLASSES STYLING ONLY !\n"
-            + "- Do not use libraries or imports except what is provided in this task; otherwise it would crash the component because not installed. Do not import extra libraries besides what is provided above !\n"
+            + "- Do not use libraries or imports except what is provided in this task; otherwise it would crash the component because not installed.\n"
+            + "- Do not import extra libraries besides what is provided above !\n"
             + "- DO NOT HAVE ANY DYNAMIC DATA OR DATA PROPS ! Components are meant to be working as is without supplying any variable to them when importing them ! Only write a component that render directly with placeholders as data, component not supplied with any dynamic data.\n"
             + "- DO NOT HAVE ANY DYNAMIC DATA OR DATA PROPS !\nUse picsum.photos for placeholder images\n"
             + "- DO NOT GENERATE SVG !\n"
@@ -59,3 +60,5 @@ def generate(component_task, build_context, current_component_string, write_file
                 )
 
     return generated_code["tsx"]
+    # return gen_code_response.text
+

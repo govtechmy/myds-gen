@@ -3,16 +3,17 @@ import json
 from google import genai
 from google.genai import types
 
-from src.util.output_schema import ComponentSchema, ValidPromptSchema, WireframeSchema
+from src.util.output_schema import ComponentSchema, ValidPromptSchema, WireframeSchema, PromptImproved
+from src.util.rag import rag_component
 
 DEP_TYPE = os.getenv("DEP_TYPE")
 GEMINI_API_KEY = os.environ["GEMINI_API_KEY"]
 client = genai.Client(api_key=GEMINI_API_KEY)
 
-if DEP_TYPE == "serverless":
-    import requests
+# if DEP_TYPE == "serverless":
+#     import requests
 
-    MYDS_JSON = os.environ["MYDS_JSON"]
+#     MYDS_JSON = os.environ["MYDS_JSON"]
 
 
 def prompt_validation(prompt):
@@ -32,17 +33,45 @@ def prompt_validation(prompt):
     valid_check = json.loads(validation_response.text)
     return valid_check["valid_prompt"]
 
+def prompt_improve(prompt):
+    system_instruction = "You are a senior UIUX Designer for designing developments of web components in the React framework. Revise the user's request to be more descriptive by including the shadcn components that will be needed. Do not mention the library in your output."
+
+    generation_config = types.GenerateContentConfig(
+        temperature=1,
+        systemInstruction=system_instruction,
+        responseMimeType="application/json",
+        responseSchema=PromptImproved,
+    )
+
+    improve_response = client.models.generate_content(
+        model="gemini-2.0-flash-exp",
+        config=generation_config,
+        contents=[prompt]
+    )
+
+    improve_data = json.loads(improve_response.text)
+    return improve_data
 
 def design_planning(prompt):
-    if DEP_TYPE == "serverless":
-        response = requests.get(MYDS_JSON)
-        data = response.json()
-    else:
-        with open("data/components/myds.json") as f:
-            data = json.load(f)
-    LIBRARY_COMPONENTS_MAP = [
-        {"name": e["name"], "description": e["description"]} for e in data
-    ]
+    # if DEP_TYPE == "serverless":
+    #     response = requests.get(MYDS_JSON)
+    #     data = response.json()
+    # else:
+    #     with open("data/components/myds.json") as f:
+    #         data = json.load(f)
+    # LIBRARY_COMPONENTS_MAP = [
+    #     {"name": e["name"], "description": e["description"]} for e in data
+    # ]
+
+    new_prompt = prompt_improve(prompt)
+
+    comp_include = [rag_component(f"{i['library_component_name']} - {i['library_component_usage_reason']}") for i in new_prompt["components"]]
+    comp_include = [x for i in comp_include for x in i]
+    comp_include = [
+            i
+            for n, i in enumerate(comp_include)
+            if i not in comp_include[:n]
+        ]
 
     system_instruction = """Your task is to design a new React component for a web app, according to the user's request.\nSpecify the pre-made library components to use in the task.\nYou must also specify the use of icons if you see that the task requires it."""
 
@@ -63,7 +92,7 @@ def design_planning(prompt):
                     + "\n".join(
                         [
                             f"{i['name']} : {i['description']}"
-                            for i in LIBRARY_COMPONENTS_MAP
+                            for i in comp_include
                         ]
                     )
                     # + "\n```"
@@ -74,12 +103,12 @@ def design_planning(prompt):
                     + "\n**Card component is not available.**"
                 )
             ],
-            role="model",
+            role="user",
         ),
         types.Content(
             parts=[
                 types.Part.from_text(
-                    text=f"USER QUERY : \n```\n{prompt}\n```\n\nDesign the new React web component task for the user as the creative genius you are"
+                    text=f"USER QUERY : \n```\n{new_prompt['improved_request']}\n```\n\nDesign the new React web component task for the user as the creative genius you are"
                 )
             ],
             role="user",
@@ -87,13 +116,13 @@ def design_planning(prompt):
     ]
 
     design_response = client.models.generate_content(
-        model="gemini-2.0-flash",
+        model="gemini-2.0-flash-exp",
         config=generation_config,
         contents=contents,
     )
 
     design_data = json.loads(design_response.text)
-    return design_data
+    return new_prompt['improved_request'], design_data
 
 
 def design_layout(component_task):
@@ -108,7 +137,7 @@ def design_layout(component_task):
     )
 
     design_response = client.models.generate_content(
-        model="gemini-2.0-flash",
+        model="gemini-2.0-flash-exp",
         config=generation_config,
         contents=[
             f"- COMPONENT NAME : {component_task['name']}\n\n"
@@ -127,7 +156,8 @@ def design_layout(component_task):
                 if component_task["icons"]
                 else ""
             )
-            + "\n\nOutput the generated wireframe in a ```ascii ``` block"
+            + "\n\nOutput the generated wireframe in a ```ascii ``` block\n"
+            + "You should make all assumptioms.\n"
             + "Specify the library components and the icons in the detailed wireframe diagram.\n"
             + "The detailed wireframe must look clean and professional as the creative genius you are."
         ],
