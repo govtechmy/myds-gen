@@ -34,7 +34,7 @@ def prompt_validation(prompt):
     return valid_check["valid_prompt"]
 
 def prompt_improve(prompt):
-    system_instruction = "You are a senior UIUX Designer for designing developments of web components in the React framework. Revise the user's request to be more descriptive by including the shadcn components that will be needed. Do not mention the library in your output."
+    system_instruction = "You are a senior UIUX Designer for designing developments of web components in the React framework."
 
     generation_config = types.GenerateContentConfig(
         temperature=1,
@@ -46,7 +46,12 @@ def prompt_improve(prompt):
     improve_response = client.models.generate_content(
         model="gemini-2.0-flash-exp",
         config=generation_config,
-        contents=[prompt]
+        # contents=[prompt]
+        contents=[f"""Improve the user's request in `<original prompt>` to be more descriptive by including the shadcn components that will be needed. Do not mention the library in your output. However do not recommend the `Card` component as it is currently unavailable.
+
+    <original_prompt>
+        {prompt}
+    </original_prompt>"""]
     )
 
     improve_data = json.loads(improve_response.text)
