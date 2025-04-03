@@ -79,8 +79,8 @@ import ReactDOM from 'react-dom/client';
       template="vite-react-ts"
       customSetup={{
         dependencies: {
-          "@govtechmy/myds-react": "^0.0.21",
-          "@govtechmy/myds-style": "^0.0.9",
+          "@govtechmy/myds-react": "^0.0.22",
+          "@govtechmy/myds-style": "^0.0.10",
           "postcss": "^8.5.3",
           "tailwindcss": "3",
           "typescript": "5.7.3",
