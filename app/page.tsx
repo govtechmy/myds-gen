@@ -9,6 +9,7 @@ import { Callout, CalloutTitle, CalloutContent } from "@govtechmy/myds-react/cal
 import { Tag } from "@govtechmy/myds-react/tag";
 import dotenv from 'dotenv';
 import Sandpackeditor from "./components/LiveEditor"
+import Link from "next/link"
 
 dotenv.config()
 export default function App() {
@@ -43,29 +44,25 @@ export default function App() {
   const [data, setData] = useState({})
   const [completed, setCompleted] = useState(false);
   const [newInput, setNewInput] = useState("");
-  const headers_api: any = process.env.MYDS_GEN_API
 
   const handleRun = async () => {
     setLoading(true);
     try {
-      // Simulate sequential API calls
       setStatus("Validating");
       const response1 = await fetch(`/api/py/validate-new-prompt?prompt=${input}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          // "X-API-KEY": headers_api
         }
       });
       const data1 = await response1.json();
-      // console.log(data1)
+
       if (data1.valid) {
         setStatus("Learning about the prompt");
         const response2 = await fetch(`/api/py/task_planning?prompt=${input}`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            // "X-API-KEY": headers_api
           },
         });
         const data2 = await response2.json();
@@ -75,7 +72,6 @@ export default function App() {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            // "X-API-KEY": headers_api
           },
           body: JSON.stringify(data2)
         }).then(res => res.json());
@@ -85,7 +81,6 @@ export default function App() {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            // "X-API-KEY": headers_api
           },
           body: JSON.stringify({ task: data2, wireframe: wireframeRes })
         }).then(res => res.json());
@@ -95,7 +90,6 @@ export default function App() {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            // "X-API-KEY": headers_api
           },
           body: JSON.stringify({ task: data2, context: contextRes })
         }).then(res => res.json());
@@ -121,7 +115,6 @@ export default function App() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          // "X-API-KEY": headers_api
         },
         body: JSON.stringify(updatedPrompt)
       });
@@ -136,7 +129,6 @@ export default function App() {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            // "X-API-KEY": headers_api
           },
           body: JSON.stringify(wireframe_update_body)
         }).then(res => res.json());
@@ -153,7 +145,6 @@ export default function App() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          // "X-API-KEY": headers_api
         },
         body: JSON.stringify(context_update_body)
       }).then(res => res.json());
@@ -164,7 +155,6 @@ export default function App() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          // "X-API-KEY": headers_api
         },
         body: JSON.stringify(component_update_body)
       }).then(res => res.json());
@@ -182,10 +172,13 @@ export default function App() {
     <main className="bg-bg-white">
       <ThemeProvider>
         <div className="mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 2xl:px-12">
-          <div className="flex flex-wrap items-center pt-4 mt-8 mb-0">
-            <h1 className="text-txt-black-900 text-3xl mt-auto px-2 sm:px-6 xl:px-8 2xl:px-10 font-bold tracking-tight">MYDS Gen</h1>
-            <div className="ml-auto mt-auto px-2 sm:px-6 xl:px-8 2xl:px-10">
-              <ThemeSwitch />
+          <div className="flex flex-wrap items-center pt-4 mt-8 mb-0 mx-4 md:mx-0">
+            <div className="flex-col">
+            <h1 className="text-txt-black-900 text-3xl mt-auto sm:px-6 xl:px-8 2xl:px-10 font-bold tracking-tight">MYDS Gen</h1>
+            <p className="text-txt-black-900 text-sm mt-auto font-bold tracking-tight sm:px-6 xl:px-8 2xl:px-10 hidden sm:block">Generative UI using the <Link href="https://design.digital.gov.my/" className="underline">MYDS</Link> library</p>
+            </div>
+            <div className="ml-auto mt-auto sm:px-6 xl:px-8 2xl:px-10">
+              <ThemeSwitch as="select" />
             </div>
           </div>
           <div className="p-4 flex flex-col lg:flex-row gap-6 xl:gap-8 2xl:gap-10">

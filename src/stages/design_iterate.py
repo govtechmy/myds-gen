@@ -15,10 +15,10 @@ client = genai.Client(api_key=GEMINI_API_KEY)
 #     MYDS_JSON = os.environ["MYDS_JSON"]
 
 def prompt_improve(prompt, current_code):
-    system_instruction = "You are a senior UIUX Designer for designing developments of web components in the React framework. The user is requesting for an update to a React web component. Revise the user's request to be more descriptive by including the shadcn components that will be needed. Do not mention the library in your output. If you judge it is relevant to do so, you can specify pre-made library components to use in the component update. Remember that card component is not available! Do not suggest card component!"
+    system_instruction = "You are a senior UIUX Designer for designing developments of web components in the React framework."
 
     generation_config = types.GenerateContentConfig(
-        temperature=0.6,
+        temperature=1,
         systemInstruction=system_instruction,
         responseMimeType="application/json",
         responseSchema=PromptImprovedIter,
@@ -27,14 +27,15 @@ def prompt_improve(prompt, current_code):
         types.Content(
             parts=[
                 types.Part.from_text(
-                    text="<original code>\n"
+                    text="The user is trying to create an update request for the component in `<original code>`. Improve the user's request in `<original prompt>` to be more descriptive by including the additional shadcn components that will be needed. Do not mention the library in your output. However do not recommend the `Card` component as it is currently unavailable."
+                    +"<original code>\n"
                     + "```tsx\n"
                     + current_code
                     + "\n```\n"
                     +"<original code/>\n"
-                    +"<update_request>\n"
+                    +"<original prompt>\n"
                     + prompt
-                    +"\n<update_request/>"
+                    +"\n<original prompt/>"
                 )
             ],
             role="user"
@@ -132,7 +133,7 @@ You must also specify the use of icons if you see that the user's update request
             role="user",
         ),
     ]
-    print("\n".join([x.text for i in contents for x in i.parts]))
+    # print("\n".join([x.text for i in contents for x in i.parts]))
     design_response = client.models.generate_content(
         model="gemini-2.0-flash-exp",
         config=generation_config,

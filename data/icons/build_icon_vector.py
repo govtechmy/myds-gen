@@ -1,5 +1,7 @@
 import pandas as pd
 import os
+import re
+import argparse
 from google import genai
 
 GEMINI_API_KEY = os.environ["GEMINI_API_KEY"]
@@ -11,151 +13,24 @@ def get_embeddings(s):
     return result.embeddings[0].values
 
 
-def main():
-    ##hardcoded for now
-    icon_names = [
-        "XIcon",
-        "AccessibleIcon",
-        "ArrowBackCloseIcon",
-        "ArrowBackIcon",
-        "ArrowDownIcon",
-        "ArrowForwardCloseIcon",
-        "ArrowForwardIcon",
-        "ArrowIncomingIcon",
-        "ArrowOutgoingIcon",
-        "ArrowUpIcon",
-        "AttachmentIcon",
-        "BellIcon",
-        "BoltIcon",
-        "BookIcon",
-        "ButtonIcon",
-        "CalendarIcon",
-        "ChatBubbleIcon",
-        "CheckCircleFillIcon",
-        "CheckCircleIcon",
-        "CheckIcon",
-        "Checkmark14PointStarIcon",
-        "CheckmarkShieldIcon",
-        "ChevronDownFillIcon",
-        "ChevronDownIcon",
-        "ChevronLeftFillIcon",
-        "ChevronLeftIcon",
-        "ChevronRightFillIcon",
-        "ChevronRightIcon",
-        "ChevronUpFillIcon",
-        "ChevronUpIcon",
-        "ClockIcon",
-        "ColumnCollapseIcon",
-        "ColumnExpandIcon",
-        "ComponentIcon",
-        "CopyIcon",
-        "CrossCircleIcon",
-        "CrossIcon",
-        "CursorIcon",
-        "DatabaseIcon",
-        "DesktopIcon",
-        "DirectionIcon",
-        "DocFileIcon",
-        "DocumentAddIcon",
-        "DocumentFilledIcon",
-        "DocumentMinusIcon",
-        "DocumentIcon",
-        "DownloadIcon",
-        "DropArrowDownIcon",
-        "DuplicateIcon",
-        "EditIcon",
-        "EmailIcon",
-        "ExcelFileIcon",
-        "ExpandIcon",
-        "EyeHideIcon",
-        "EyeShowIcon",
-        "FacebookIcon",
-        "FigmaIcon",
-        "FilterAscIcon",
-        "FilterDescIcon",
-        "FilterIcon",
-        "FlagIcon",
-        "FolderMinusIcon",
-        "FolderPlusIcon",
-        "FolderIcon",
-        "FormsFieldIcon",
-        "FormsIcon",
-        "GalleryIcon",
-        "GitHubIcon",
-        "GlobeIcon",
-        "GoogleIcon",
-        "GovMyIcon",
-        "GovIcon",
-        "GridIcon",
-        "HamburgerMenuIcon",
-        "HeartIcon",
-        "HomeIcon",
-        "ImageSliderIcon",
-        "InfoIcon",
-        "InstagramIcon",
-        "LinkIcon",
-        "LinkedInIcon",
-        "ListIcon",
-        "Lock2Icon",
-        "LockFillIcon",
-        "LockIcon",
-        "LogoutIcon",
-        "MalaysiaFlagIcon",
-        "MapIcon",
-        "MegaphoneIcon",
-        "MinusCircleIcon",
-        "MinusIcon",
-        "MobileIcon",
-        "MoneyIcon",
-        "MoonIcon",
-        "OptionsVerticalIcon",
-        "OptionsIcon",
-        "OrgChartIcon",
-        "PauseIcon",
-        "PdfFileIcon",
-        "PhoneIcon",
-        "PinIcon",
-        "PlaceholderIcon",
-        "PlayIcon",
-        "PlusCircleIcon",
-        "PlusIcon",
-        "PrinterIcon",
-        "QrCodeIcon",
-        "QuestionCircleIcon",
-        "RedoIcon",
-        "ReloadIcon",
-        "SearchIcon",
-        "SectionIcon",
-        "SettingIcon",
-        "ShareIcon",
-        "SolidLockIcon",
-        "StarIcon",
-        "SunIcon",
-        "SwapIcon",
-        "TableIcon",
-        "TabletIcon",
-        "TelegramIcon",
-        "TextIcon",
-        "ThumbsDownIcon",
-        "ThumbsUpIcon",
-        "TikTokIcon",
-        "TrashIcon",
-        "TrophyIcon",
-        "TwitterIcon",
-        "UndoIcon",
-        "UploadIcon",
-        "UserGroupIcon",
-        "UserIcon",
-        "VideoIcon",
-        "WarningCircleIcon",
-        "WarningDiamondIcon",
-        "WarningFillIcon",
-        "WarningIcon",
-        "WhatsappIcon",
-        "YoutubeIcon",
-        "ZoomInIcon",
-        "ZoomOutIcon",
-    ]
+def extract_icon_name(file_path, file_name):
+    with open(os.path.join(file_path, file_name)) as f:
+        data = f.read()
+    name = re.findall(
+        r"export const ([\w]*): FunctionComponent<\n? *?SVGProps<SVGSVGElement>\n?>",
+        data,
+    )
+    return name[0]
+
+
+def get_icon_names(file_path):
+    icon_files = [i for i in os.listdir(file_path) if ".tsx" in i]
+    icon_names = [extract_icon_name(file_path, i) for i in icon_files]
+    return icon_names
+
+
+def main(file_path):
+    icon_names = get_icon_names(file_path)
 
     df = pd.DataFrame(icon_names, columns=["icon_name"])
     df["vector"] = df["icon_name"].apply(get_embeddings)
@@ -163,4 +38,8 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("mydspath", type=str)
+    args = parser.parse_args()
+    icon_path = os.path.join(args.mydspath, "packages/react/src/icons")
+    main(file_path=icon_path)
