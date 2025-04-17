@@ -18,7 +18,7 @@ def generate(component_task, build_context, current_component_string, write_file
         responseSchema=TsxOutput,
     )
     gen_code_response = client.models.generate_content(
-        model="gemini-2.5-pro-exp-03-25",
+        model="gemini-2.0-flash",
         config=generation_config_part2,
         contents=[
             build_context,
