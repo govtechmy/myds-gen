@@ -467,14 +467,14 @@ export default function App() {
                       : "text-txt-black-900 dark:text-txt-dark"
                   } text-xl mb-4 justify-center`}
                 >
-                  Describe a component (eg: a pricing component)
+                  Describe a component
                 </h2>
                 <TextArea
                   className="h-50 min-h-[50px] mb-4 w-full"
                   size="small"
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
-                  placeholder="Describe your desired component..."
+                  placeholder="Describe your desired component (eg: a pricing component)..."
                   disabled={loading || loading_iter}
                 />
                 <Button
@@ -527,14 +527,14 @@ export default function App() {
                           : "text-txt-black-900"
                       } text-xl mb-4 justify-center`}
                     >
-                      Describe an update or modification (eg: add a sign up button)
+                      Describe an update or modification
                     </h2>
                     <TextArea
                       className="h-50 min-h-[50px] mb-4 w-full bg-bg-white dark:bg-bg-dark"
                       size="small"
                       value={newInput}
                       onChange={(e) => setNewInput(e.target.value)}
-                      placeholder="Enter an update for the component..."
+                      placeholder="Enter an update for the component (eg: add a sign up button)..."
                       disabled={loading || loading_iter || !apiFinalState} // Disable if loading or no final state
                     />
                     <Button
