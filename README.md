@@ -1,6 +1,9 @@
 # [WIP] MYDS-Gen
 A MYDS component generator
 
+TO DO:
+- update examples
+
 ## Setting up the env
 1. install packages using [uv](https://github.com/astral-sh/uv)
 ```sh
