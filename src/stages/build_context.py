@@ -1,5 +1,4 @@
 import os
-import uuid
 import pandas as pd
 from src.util.rag import rag_icon, rag_component
 
@@ -30,7 +29,10 @@ def example_block(comp_name, comp_examples, props):
         + "\n\n"
         f"## API reference for `{comp_name}` :\n"
         + "\n".join(
-            [f"\n### {c_name}\n\n{prop_md(c_prop)}" for c_name, c_prop in props.items()]
+            [
+                f"\n### {c_name}\n\n{prop_md(c_prop) if c_prop else 'This sub component does not have any props'}"
+                for c_name, c_prop in props.items()
+            ]
         )
     )
 
@@ -40,7 +42,7 @@ def example_block(comp_name, comp_examples, props):
 
 def gen_comp_task(prompt, design_data):
     component_task = {
-        "name": f"{design_data['new_component_name']}_{uuid.uuid4()}",
+        "name": f"{design_data['new_component_name']}",
         "description": {
             "user": prompt,
             "llm": design_data["new_component_description"],
@@ -106,18 +108,133 @@ def gen_comp_task_iter(prompt, design_data, current_component_task):
     return component_task
 
 
-def parse_task(component_task):
+def gen_comp_task_iter_(prompt, design_data):
+    update = {
+        "update_prompt": prompt,
+        "update_description": design_data.description_of_update,
+        "icons": (
+            [
+                i.lower().replace(" icon", "")
+                for i in design_data.new_component_icons_elements.if_so_what_new_component_icons_elements_are_needed
+            ]
+            if design_data.new_component_icons_elements.does_new_component_need_icons_elements
+            else []
+        ),
+        "components": (
+            [
+                {
+                    "name": i.library_component_name,
+                    "usage": i.library_component_usage_reason,
+                }
+                for i in design_data.new_library_components.if_so_what_library_components_should_be_included
+            ]
+            if design_data.new_library_components.does_update_need_new_library_components
+            else []
+        ),
+        "wireframe_status": design_data.wireframe_need_to_be_updated,
+        "wireframe": design_data.ascii_wireframe,
+    }
+
+    return update
+
+
+def parse_task_(component_task, gemini_api_key):
     design_task = {
         "components": component_task["components"],
         "icons": component_task["icons"],
     }
 
-    components_retrieved = [rag_component(i["name"]) for i in design_task["components"]]
+    components_retrieved = [
+        rag_component(i["name"], gemini_api_key) for i in design_task["components"]
+    ]
 
     components_retrieved = [x for i in components_retrieved for x in i]  # flatten
 
     retrieved = {
-        "icons": [rag_icon(i) for i in design_task["icons"]],
+        "icons": [rag_icon(i, gemini_api_key) for i in design_task["icons"]],
+        "components": [
+            i
+            for n, i in enumerate(components_retrieved)
+            if i not in components_retrieved[:n]
+        ],
+    }
+
+    flat_comp_list = [(i, x) for i, x in enumerate(retrieved["components"])]
+
+    total_suggestion = len(flat_comp_list)
+    suggestion_comp_block_ = "\n\n".join(
+        [
+            f"# Suggested library component ({i}/{total_suggestion}) : {x[1]['name']}\n- {x[1]['description']}\n"
+            # + f"Suggested usage : {design_task['components'][x[0]]['usage']}\n\n\n"
+            + f"## {x[1]['name']} can be imported into the new component like this:\n"
+            + f"```tsx\n{x[1]['docs']['import'].strip()}\n```\n\n---\n\n## Usage anatomy of `{x[1]['name']}`:\n"
+            + f"```tsx\n{x[1]['docs']['anatomy']}\n```\n"
+            + example_block(
+                x[1]["name"],
+                x[1]["docs"]["examples"],
+                x[1]["docs"]["props"],
+            )
+            for i, x in enumerate(flat_comp_list)
+        ]
+    )
+
+    suggestion_comp_block = (
+        "<component_suggestions>\n"
+        + "# Suggested library component usages: \n- "
+        + "\n- ".join(
+            [f"{i['name']} - {i['usage']}" for i in design_task["components"]]
+        )
+        + "\n\n"
+        + suggestion_comp_block_
+        + "</component_suggestions>"
+    )
+    if component_task["icons"]:
+        example_icon = retrieved["icons"][0]["retrieved"][0]
+        suggestion_icon_block = (
+            "<icon_suggestions>\n"
+            + "Icon elements can optionally be used when making the React component.\n\n---\n\n"
+            + "# example: importing icons in the component (only import the ones you need) :\n\n```tsx\nimport { "
+            + " , ".join([" , ".join(x["retrieved"]) for x in retrieved["icons"]])
+            + " } from @govtechmy/myds-react/icon\n```\n\n# example: using an icon inside the component :\n\n```tsx\n"
+            + f'<{example_icon} className="h-4 w-4" />\n```\n\n---\n\n\n'
+            + "Here are icons that are relevant to the component you are making. Here are the IconNames :\n\n```\n"
+            + "\n".join(
+                [f"- `{i}`" for x in retrieved["icons"] for i in x["retrieved"]]
+            )
+            + "\n```"
+            + "</icon_suggestions>"
+        )
+    else:
+        suggestion_icon_block = ""
+
+    if component_task["wireframe_status"]:
+        suggestion_wireframe_block = f"""<wireframe_suggestion>
+        The wireframe of the component is updated to:
+            <ascii_wireframe>
+                {component_task["wireframe"]}
+            </ascii_wireframe>
+        </wireframe_suggestion>
+        """
+    else:
+        suggestion_wireframe_block = ""
+
+    return suggestion_comp_block, suggestion_icon_block, suggestion_wireframe_block
+
+
+def parse_task(component_task, gemini_api_key):
+    design_task = {
+        "components": component_task["components"],
+        "icons": component_task["icons"],
+    }
+
+    components_retrieved = [
+        rag_component(i["name"], gemini_api_key) for i in design_task["components"]
+    ]
+
+    components_retrieved = [x for i in components_retrieved for x in i]  # flatten
+
+    retrieved = {
+        "icons": [rag_icon(i, gemini_api_key) for i in design_task["icons"]],
         "components": [
             i
             for n, i in enumerate(components_retrieved)
@@ -160,8 +277,10 @@ def parse_task(component_task):
             + " , ".join([" , ".join(x["retrieved"]) for x in retrieved["icons"]])
             + " } from @govtechmy/myds-react/icon\n```\n\n# example: using an icon inside the component :\n\n```tsx\n"
             + f'<{example_icon} className="h-4 w-4" />\n```\n\n---\n\n\n'
-            + "Here are some available icons that might be relevant to the component you are making. You can choose from them if relevant :\n\n```\n"
-            + "\n".join([f"- {i}" for x in retrieved["icons"] for i in x["retrieved"]])
+            + "Here are icons that are relevant to the component you are making. Here are the IconNames :\n\n```\n"
+            + "\n".join(
+                [f"- `{i}`" for x in retrieved["icons"] for i in x["retrieved"]]
+            )
             + "\n```"
         )
     else:
@@ -169,9 +288,11 @@ def parse_task(component_task):
     return suggestion_comp_block, suggestion_icon_block
 
 
-def generate(component_task, wireframe):
+def generate(component_task, wireframe, gemini_api_key):
     # component_task = gen_comp_task(prompt, design_data)
-    suggestion_comp_block, suggestion_icon_block = parse_task(component_task)
+    suggestion_comp_block, suggestion_icon_block = parse_task(
+        component_task, gemini_api_key
+    )
 
     if DEP_TYPE == "serverless":
         response = requests.get(DESIGN_DOC)

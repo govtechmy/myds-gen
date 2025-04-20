@@ -35,7 +35,7 @@ class WireframeSchema(BaseModel):
 
 class LibraryComponentIterate(BaseModel):
     does_update_need_new_library_components: bool
-    if_so_what_library_components_are_needed: Optional[List[LibraryComponent]] = None
+    if_so_what_library_components_should_be_included: Optional[List[LibraryComponent]] = None
 
 # class IterStep(BaseModel):
 #     step_num: int
@@ -46,6 +46,7 @@ class ComponentIterateSchema(BaseModel):
     new_component_icons_elements: NewComponentIconsElements
     new_library_components: LibraryComponentIterate
     wireframe_need_to_be_updated: bool
+    ascii_wireframe: str
     # steps: List[IterStep]
 
 

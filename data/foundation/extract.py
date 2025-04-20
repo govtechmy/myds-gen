@@ -59,7 +59,7 @@ MYDS divides the colour palettes into two (2) categories:
     theme_files = os.listdir("../myds/packages/style/styles/theme")
     theme_files.sort()
     for filename in theme_files:
-        print(filename)
+        # print(filename)
         full_design_block = full_design_block + extract_colour_dict(filename)
 
     with open("data/foundation/colour.md", "w+") as f:

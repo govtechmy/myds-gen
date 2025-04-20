@@ -4,13 +4,10 @@
   "description": "",
   "main": "",
   "scripts": {
-    "fastapi-local": "uv sync && uv run uvicorn api.index:app --reload",
-    "streamlit-local": "uv run streamlit run streamlit.py",
-    "fastapi-dev": "pip3 install -r api/requirements.txt && python3 -m uvicorn api.index:app --reload",
+    "fastapi-local": "uv sync && uv run uvicorn src.api:app --reload",
     "next-dev": "next dev",
     "dev-local": "concurrently \"npm run next-dev\" \"npm run fastapi-local\"",
-    "dev-local-streamlit": "concurrently \"npm run next-dev\" \"npm run fastapi-local\" \"npm run streamlit-local\"",
-    "dev": "concurrently \"npm run next-dev\" \"npm run fastapi-dev\"",
+    "dev": "concurrently \"npm run next-dev\"",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -25,9 +22,9 @@
   },
   "homepage": "https://github.com/govtechmy/myds-gen#readme",
   "dependencies": {
-    "@codesandbox/sandpack-react": "^2.20.0",
-    "@govtechmy/myds-react": "^0.0.18",
-    "@govtechmy/myds-style": "^0.0.9",
+    "@govtechmy/myds-react": "^0.0.22",
+    "@govtechmy/myds-style": "^0.0.10",
+    "@stackblitz/sdk": "^1.11.0",
     "@types/node": "22.5.5",
     "@types/react": "18.3.8",
     "@types/react-dom": "18.3.0",

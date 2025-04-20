@@ -1,64 +1,200 @@
-import os
-import json
-from google import genai
-from google.genai import types
-from src.util.output_schema import TsxOutput
+# import os
+from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_core.messages import HumanMessage, AIMessage
+from src.stages.build_context import gen_comp_task_iter_, parse_task_
+from src.util.langchain_schema import genStateIter
+from src.util.output_schema import ComponentIterateSchema, PromptImprovedIter
+from src.util.rag import rag_component
 
-GEMINI_API_KEY = os.environ["GEMINI_API_KEY"]
-client = genai.Client(api_key=GEMINI_API_KEY)
+# os.environ["GOOGLE_API_KEY"] = os.environ["GEMINI_API_KEY"]
 
 
-def generate(component_task, build_context, current_component_string, write_file=False):
-    system_instruction2 = "You are an expert at writing React components.\nYour task is to write a new update for the provided React component for a web app, according to the provided task details with best practices of React.\nThe React component you write can make use of Tailwind classes for styling.\nUtilize the library components and icons as much as you can if provided.\n\nYou will write the full React component code, which should include all imports. Your generated code will be directly written to a .tsx React component file and used in production."
+def prompt_enhance_iter(state: genStateIter):
+    design_prompt = state["history"].model_copy(deep=True)
+    new_prompt = f"""The user is requesting an update to the component you generated.
+    Based on the update request stated in <update_request>, list additional library components from shadcn that might be needed to perform the update in addtional_components field: 
+    <update_request>
+    {state["new_prompt"]}
+    </update_request>. 
+    
+    <important>
+    Improve my update request in `<update_request>` to be more descriptive.
+    list additional library components needed in the `addtional_components` field of your outut!
+    Do not mention the library in your output.
+    However do not recommend the `Card` and `Sheet` component as these are currently unavailable.
+    </important>
+    """
+    design_prompt.messages.append(HumanMessage(content=new_prompt))
 
-    generation_config_part2 = types.GenerateContentConfig(
-        temperature=0.2,
-        systemInstruction=system_instruction2,
-        responseMimeType="application/json",
-        responseSchema=TsxOutput,
+    design_model = ChatGoogleGenerativeAI(
+        model="gemini-2.0-flash",
+        api_key=state["gemini_api_key"],
+        temperature=1,
+        max_retries=2,
+    ).with_structured_output(PromptImprovedIter)
+
+    return {"enhance_prompt": design_model.invoke(design_prompt)}
+
+
+def design_update(state: genStateIter):
+    design_prompt = state["history"].model_copy(deep=True)
+    new_enh_prompt = state["enhance_prompt"]
+
+    prompt = new_enh_prompt.improved_request
+    if new_enh_prompt.additional_components:
+        comp_include = [
+            rag_component(
+                f"{i.library_component_name} - {i.library_component_usage_reason}"
+            )
+            for i in new_enh_prompt.additional_components
+        ]
+        comp_include = [x for i in comp_include for x in i]
+        comp_include = [
+            i for n, i in enumerate(comp_include) if i not in comp_include[:n]
+        ]
+
+        comp_include = "\n".join(
+            [f"`{i['name']}` : {i['description']}" for i in comp_include]
+        )
+    else:
+        comp_include = ""
+
+    new_design_prompt = f"""The user is requesting an update to the component you generated.
+    Based on the update request stated in <update_request>, design the React web component updates for the user, and determine if the wireframe should be updated: 
+    <update_request>
+    {prompt}
+    </update_request>. 
+    
+    <task_details>
+    Plan the component update task, determine the pre-made library components to be used in the component update, based on the list of components provided in <library_component>.
+    You must also specify the use of icons if you see that the user's update request requires it.
+    When suggesting icons, use common icon names used in Lucide icon library. **Use CrossIcon when the cross or closing or cancel icon is needed.**
+    When web components are added or removed, update the ascii_wireframe of the component to integrate the update requested.
+    </task_details>
+
+    <library_component>
+    {"ADDITIONAL LIBRARY COMPONENTS:" if comp_include else "no additional library components needed"}
+    {comp_include}
+    </library_component>
+    """
+    design_prompt.messages.append(HumanMessage(content=new_design_prompt))
+
+    design_model = ChatGoogleGenerativeAI(
+        model="gemini-2.0-flash",
+        api_key=state["gemini_api_key"],
+        temperature=0.4,
+        max_retries=2,
+    ).with_structured_output(ComponentIterateSchema)
+
+    return {"design_plan": design_model.invoke(design_prompt)}
+
+
+def generate_component_iter_stream(state: genStateIter):
+    comp_Prompt = state["history"].model_copy(deep=True)
+    new_enh_prompt = state["enhance_prompt"]
+    design_plan = state["design_plan"]
+    prompt = new_enh_prompt.improved_request
+
+    parsed_plan = gen_comp_task_iter_(prompt, design_plan)
+
+    suggestion_comp_block, suggestion_icon_block, suggestion_wireframe_block = (
+        parse_task_(parsed_plan, state["gemini_api_key"])
     )
-    gen_code_response = client.models.generate_content(
-        model="gemini-2.5-pro-exp-03-25",
-        config=generation_config_part2,
-        contents=[
-            build_context,
-            f"- COMPONENT NAME : {component_task['name']}\n\n"
-            + "- DESIRED COMPONENT CHANGES :\n```\n"
-            + component_task["update"]["update_prompt"]
-            + "\n```\n\n"
-            + "- additional component update suggestions :\n```\n"
-            + component_task["update"]["update_description"]
-            + "\n```\n\n"
-            + "- CURRENT COMPONENT CODE :"
-            + current_component_string
-            + "\n\nWrite the full code for the updated React web component, which uses Tailwind classes if needed (add tailwind dark: classes too if you can; backgrounds in dark: classes should be black), and, library components and icons, based on the provided design task.\n"
-            + "When using flexbox, use the `gap` property instead of `space-x`\n"
-            + "The full code of the new React component that you write will be written directly to a .tsx file inside the React project. Make sure all necessary imports are done, and that your full code is enclosed with ```tsx blocks.\n"
-            # + "Answer with generated code only. DO NOT ADD ANY EXTRA TEXT DESCRIPTION OR COMMENTS BESIDES THE CODE. Your answer contains code only ! component code only !\nImportant :\n"
-            + "- Make sure you import provided components libraries and icons that are provided to you if you use them !\n"
-            + "- Tailwind classes should be written directly in the elements class tags (or className in case of React). DO NOT WRITE ANY CSS OUTSIDE OF CLASSES. DO NOT USE ANY <style> IN THE CODE ! CLASSES STYLING ONLY !\n"
-            + "- Do not use libraries or imports except what is provided in this task; otherwise it would crash the component because not installed.\n"
-            + "- Do not import extra libraries besides what is provided above and available in current component code!\n"
-            + "- DO NOT HAVE ANY DYNAMIC DATA OR DATA PROPS ! Components are meant to be working as is without supplying any variable to them when importing them ! Only write a component that render directly with placeholders as data, component not supplied with any dynamic data.\n"
-            + "- DO NOT HAVE ANY DYNAMIC DATA OR DATA PROPS !\n- Use picsum.photos for placeholder images\n"
-            + "- DO NOT GENERATE SVG !\n"
-            + "- Only write the code for the component; Do not write extra code to import it! The code will directly be stored in an individual React .tsx file !\n"
-            + "- Very important : Your component should be exported as default !\n"
-            + "Write the React component code as the React component genius you are - with the best ui formatting.\n",
-        ],
+
+    new_prompt = f"""The user is requesting an update to the component you generated.
+    Update the component based on <user_request> and <task_details>:
+    
+    <update_request>
+    {prompt}
+    </update_request> 
+
+    <task_details>
+        <task_description>
+        {design_plan.description_of_update}
+        </task_description>
+
+        {suggestion_comp_block}
+
+        {suggestion_icon_block}
+
+        {suggestion_wireframe_block}
+
+    </task_details>
+    """
+    if state["model"] == "Gemini-2.0-flash":
+        model = "gemini-2.0-flash"
+    elif state["model"] == "Gemini-2.5-pro":
+        model = "gemini-2.5-pro-exp-03-25"
+    else:
+        raise ValueError("Invalid model name")
+
+    comp_model = ChatGoogleGenerativeAI(
+        # model="gemini-2.5-pro-exp-03-25",
+        model=model,
+        api_key=state["gemini_api_key"],
+        temperature=0.6,
+        max_retries=2,
     )
 
-    generated_code = json.loads(gen_code_response.text)
+    comp_Prompt.messages.append(HumanMessage(content=new_prompt))
+    code_generated = comp_model.invoke(comp_Prompt)
 
-    if write_file:
-        with open(f"output/{component_task['name']}.tsx", "w+") as f:
-            f.write(generated_code["tsx"].replace("```tsx\n", "").replace("\n```", ""))
-        if os.getenv("WEB_LOCAL_MODULE_PATH"):
-            with open(os.getenv("WEB_LOCAL_MODULE_PATH"), "w+") as f:
-                f.write(
-                    generated_code["tsx"].replace("```tsx\n", "").replace("\n```", "")
-                )
+    comp_Prompt.messages.append(AIMessage(content=code_generated.content))
 
-    return generated_code["tsx"]
-    # return gen_code_response.text
+    return {"history": comp_Prompt}
 
+
+def generate_component_iter(state: genStateIter):
+    comp_Prompt = state["history"].model_copy(deep=True)
+    new_enh_prompt = state["enhance_prompt"]
+    design_plan = state["design_plan"]
+    prompt = new_enh_prompt.improved_request
+
+    parsed_plan = gen_comp_task_iter_(prompt, design_plan)
+
+    suggestion_comp_block, suggestion_icon_block, suggestion_wireframe_block = (
+        parse_task_(parsed_plan)
+    )
+
+    new_prompt = f"""The user is requesting an update to the component you generated.
+    Update the component based on <user_request> and <task_details>:
+    
+    <update_request>
+    {prompt}
+    </update_request> 
+
+    <task_details>
+        <task_description>
+        {design_plan.description_of_update}
+        </task_description>
+
+        {suggestion_comp_block}
+
+        {suggestion_icon_block}
+
+        {suggestion_wireframe_block}
+
+    </task_details>
+    """
+
+    if state["model"] == "Gemini-2.0-flash":
+        model = "gemini-2.0-flash"
+    elif state["model"] == "Gemini-2.5-pro":
+        model = "gemini-2.5-pro-exp-03-25"
+    else:
+        raise ValueError("Invalid model name")
+
+    comp_model = ChatGoogleGenerativeAI(
+        # model="gemini-2.5-pro-exp-03-25",
+        model=model,
+        api_key=state["gemini_api_key"],
+        temperature=0.6,
+        max_retries=2,
+    )
+
+    comp_Prompt.messages.append(HumanMessage(content=new_prompt))
+    code_generated = comp_model.invoke(comp_Prompt)
+
+    comp_Prompt.messages.append(AIMessage(content=code_generated.content))
+
+    return {"history": comp_Prompt, "generatedCode": code_generated}

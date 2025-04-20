@@ -64,3 +64,11 @@ class GenIterate(BaseModel):
     task: BaseTaskWthUpdate
     context: str
     tsx: str
+
+class iterationInputStream(BaseModel):
+    previous_state: list[dict]
+    update_prompt: str
+
+class iterationInput(BaseModel):
+    history: list[dict]
+    update_prompt: str

@@ -95,7 +95,7 @@
             "import": "import {\n  Tooltip,\n  TooltipTrigger,\n  TooltipContent,\n} from \"@govtechmy/myds-react/tooltip\";",
             "anatomy": "<Tooltip>\n  <TooltipTrigger />\n  <TooltipContent />\n</Tooltip>",
             "props": {
-                "Tooltip": {
+                "Tooltip\n\n`Tooltip` is the wrapper component which manages the tooltip's state. It is being built on top of `TooltipPrimitive.Provider` and `TooltipPrimitive.Root`. Please refer to the full API references in this [documentation](https://www.radix-ui.com/primitives/docs/components/tooltip#provider).": {
                     "defaultOpen": {
                         "description": "The initial open state of the tooltip when it's first rendered.",
                         "type": "boolean"
@@ -118,7 +118,7 @@
                         "type": "boolean"
                     }
                 },
-                "TooltipContent": {
+                "TooltipContent\n\n`TooltipContent` is the \"bubble\" that displays the tooltip. It is being built on top of `TooltipPrimitive.Portal` and `TooltipPrimitive.Content`. Please refer to the full API references in this [documentation](https://www.radix-ui.com/primitives/docs/components/tooltip#portal).": {
                     "container": {
                         "description": "The element to portal the tooltip content into.",
                         "type": "HTMLElement",
@@ -140,7 +140,8 @@
                         "typeDescription": "top | right | bottom | left",
                         "default": "top"
                     }
-                }
+                },
+                "TooltipTrigger\n\n`TooltipTrigger` is the component where the user interacts with to show the tooltip. It is being built on top of `TooltipPrimitive.Trigger`. Please refer to the full API references in this [documentation](https://www.radix-ui.com/primitives/docs/components/tooltip#content).": null
             },
             "examples": [
                 "import {\n  Tooltip,\n  TooltipTrigger,\n  TooltipContent,\n} from \"@govtechmy/myds-react/tooltip\";\nexport default function component() {\n\treturn (import { Tooltip, TooltipTrigger, TooltipContent } from \"@govtechmy/myds-react/tooltip\";\n\t\t\n\t\t  <Tooltip open={true}>\n\t\t    <TooltipTrigger>\n\t\t        <QuestionCircleIcon />\n\t\t    </TooltipTrigger>\n\t\t    <TooltipContent>This is a helpful description.</TooltipContent>\n\t\t\n\t\t</Tooltip>\n\t\t  \n\t);\n}",
@@ -341,7 +342,7 @@
                         "default": "false"
                     }
                 },
-                "AccordionContent": {
+                "AccordionContent\n\n\n\n<small>\n  For more in-depth customization, you can refer to API references in this\n  [documentation](https://www.radix-ui.com/primitives/docs/components/accordion#api-reference)\n</small>": {
                     "asChild": {
                         "description": "The controlled value of the item to expand. Must be used in conjunction with onValueChange.",
                         "type": "boolean",
@@ -363,7 +364,7 @@
             "import": "import {\n  SearchBar,\n  SearchBarInput,\n  SearchBarInputContainer,\n  SearchBarSearchButton,\n  SearchBarResults,\n  SearchBarResultsList,\n  SearchBarResultsItem,\n  SearchBarClearButton,\n  SearchBarHint,\n} from \"@govtechmy/myds-react/search-bar\";",
             "anatomy": "export default () => (\n  <SearchBar size=\"large\">\n    <SearchBarInputContainer>\n      <SearchBarInput value={query} onValueChange={setQuery} />\n      <SearchBarHint>\n        Press <Pill size=\"small\">/</Pill> to search\n      </SearchBarHint>\n      <SearchBarClearButton />\n      <SearchBarSearchButton />\n    </SearchBarInputContainer>\n    <SearchBarResults open={true}>\n      <SearchBarResultsList>\n        <SearchBarResultsItem value=\"foo\" onSelect={...} >\n          Foo\n        </SearchBarResultsItem>\n        <SearchBarResultsItem value=\"bar\" onSelect={...} >\n          Bar\n        </SearchBarResultsItem>\n      </SearchBarResultsList>\n    </SearchBarResults>\n  </SearchBar>\n);",
             "props": {
-                "SearchBar": {
+                "SearchBar\n\n`SearchBar` is abstracted from cmdk's `Command.Root`. Please refer to the API references in [this documentation](https://github.com/pacocoursey/cmdk#command-cmdk-root).": {
                     "size": {
                         "description": "Sizes of the search bar",
                         "type": "enum",
@@ -371,7 +372,7 @@
                         "default": "medium"
                     }
                 },
-                "SearchBarInput": {
+                "SearchBarInput\n\n`SearchBarInput` is abstracted from cmdk's `Command.Input`. Please refer to the API references in [this documentation](https://github.com/pacocoursey/cmdk#input-cmdk-input)": {
                     "value": {
                         "description": "Input value",
                         "type": "string"
@@ -382,12 +383,19 @@
                         "typeDescription": "(value: string) => void"
                     }
                 },
+                "SearchBarInputContainer\n\n`SearchBarInputContainer` uses the same props as a regular `div` element.": null,
+                "SearchBarSearchButton\n\n`SearchBarSearchButton` uses the same props as MYDS' `Button`. Please refer to the API references in [this documentation](/docs/develop/button)": null,
+                "SearchBarClearButton\n\n`SearchBarClearButton` uses the same props as MYDS' `Button`. Please refer to the API references in [this documentation](/docs/develop/button)": null,
+                "SearchBarHint\n\n`SearchBarInputContainer` uses the same props as a regular `div` element.": null,
                 "SearchBarResults": {
                     "open": {
                         "description": "Whether the results pop-up is open or closed",
                         "type": "boolean"
                     }
-                }
+                },
+                "SearchBarResultsList\n\n`SearchBarResultsList` is abstracted from cmdk's `Command.List`. Please refer to the API references in [this documentation](https://github.com/pacocoursey/cmdk#list-cmdk-list)": null,
+                "SearchBarResultsItem\n\n`SearchBarResultsItem` is abstracted from cmdk's `Command.Item`. Please refer to the API references in [this documentation](https://github.com/pacocoursey/cmdk#item-cmdk-item-data-disabled-data-selected)": null,
+                "SearchBarResultsGroup\n\n`SearchBarResultsGroup` is abstracted from cmdk's `Command.Group`. Please refer to the API references in [this documentation](https://github.com/pacocoursey/cmdk#group-cmdk-group-hidden)\n```": null
             },
             "examples": [
                 "import {\n  SearchBar,\n  SearchBarInput,\n  SearchBarInputContainer,\n  SearchBarSearchButton,\n  SearchBarResults,\n  SearchBarResultsList,\n  SearchBarResultsItem,\n  SearchBarClearButton,\n  SearchBarHint,\n} from \"@govtechmy/myds-react/search-bar\";\nexport default function component() {\n\treturn (import {\n\t\t    SearchBar,\n\t\t    SearchBarInput,\n\t\t    SearchBarInputContainer,\n\t\t    SearchBarSearchButton,\n\t\t} from \"@govtechmy/myds-react/search-bar\";\n\t\t\n\t\t<SearchBar size=\"small\">\n\t\t  <SearchBarInputContainer>\n\t\t    <SearchBarInput placeholder=\"Search by name\" />\n\t\t    <SearchBarSearchButton />\n\t\t  </SearchBarInputContainer>\n\t\t</SearchBar>\n\t\t\n\t\t<SearchBar size=\"medium\">\n\t\t  <SearchBarInputContainer>\n\t\t    <SearchBarInput placeholder=\"Search by name\" />\n\t\t    <SearchBarSearchButton />\n\t\t  </SearchBarInputContainer>\n\t\t</SearchBar>\n\t\t\n\t\t<SearchBar size=\"large\">\n\t\t  <SearchBarInputContainer>\n\t\t    <SearchBarInput placeholder=\"Search by name\" />\n\t\t    <SearchBarSearchButton />\n\t\t  </SearchBarInputContainer>\n\t\t</SearchBar>\n\t);\n}",
@@ -406,7 +414,7 @@
             "import": "import { AutoPagination } from \"@govtechmy/myds-react/pagination\";",
             "anatomy": "<AutoPagination />",
             "props": {
-                "AutoPagination": {
+                "AutoPagination\n\nA pagination component that handles page navigation and different display patterns: `default`, `simple`, and `full`. This is a standalone and pre-assembled component that can handle common pagination use cases.": {
                     "count": {
                         "description": "The total number of items to be displayed.",
                         "type": "number"
@@ -448,7 +456,7 @@
                         "type": "ReactNode"
                     }
                 },
-                "Pagination": {
+                "Pagination\n\nA container component that provides pagination context and navigation structure through a `nav` element. It manages the core pagination state (current page, total pages, etc.).": {
                     "count": {
                         "description": "The total number of items to be displayed.",
                         "type": "number"
@@ -473,12 +481,17 @@
                         "typeDescription": "(page: number) => void"
                     }
                 },
-                "PaginationLabel": {
+                "PaginationContent\n\nA layout component rendered as an unordered list `ul` that arranges `PaginationItem` in a horizontal row.": null,
+                "PaginationItem\n\nA wrapper component rendered as a list item `li` that contains individual pagination elements like `PaginationNext`, `PaginationPrevious`, `PaginationLabel` and `PaginationEllipsis`.": null,
+                "PaginationNext\n\nA button component that handles navigaton to the next page. The underlying component can be substituted by using the `asChild` props.": null,
+                "PaginationPrevious\n\nA button component that handles navigaton to the previous page. The underlying component can be substituted by using the `asChild` props.": null,
+                "PaginationLabel\n\nA text component that displays pagination information.": {
                     "content": {
                         "description": "The long description of the pagination information.",
                         "type": "string"
                     }
-                }
+                },
+                "PaginationEllipsis\n\nA visual indicator component that represents skipped page numbers in the pagination sequence, rendered as three dots using an icon.": null
             },
             "examples": [
                 "import { AutoPagination } from \"@govtechmy/myds-react/pagination\";\nexport default function component() {\n\treturn (import { AutoPagination } from \"@govtechmy/myds-react/pagination\";\n\t\t\n\t\t// default type\n\t\t<AutoPagination\n\t\t  page={2}\n\t\t  limit={10}\n\t\t  count={200}\n\t\t  type=\"default\"\n\t\t  maxDisplay={4}\n\t\t/>\n\t\t\n\t\t// simple type\n\t\t<AutoPagination\n\t\t  page={2}\n\t\t  limit={10}\n\t\t  count={200}\n\t\t  type=\"simple\"\n\t\t  maxDisplay={4}\n\t\t/>\n\t\t\n\t\t// full type\n\t\t<AutoPagination\n\t\t  page={2}\n\t\t  limit={10}\n\t\t  count={200}\n\t\t  type=\"full\"\n\t\t  maxDisplay={4}\n\t\t/>\n\t);\n}"
@@ -1011,7 +1024,7 @@
             "import": "import {\n  Radio,\n  RadioButton,\n  RadioHintText,\n  RadioItem,\n  RadioLabel,\n} from \"@govtechmy/myds-react/radio\";",
             "anatomy": "<Radio>\n  <RadioItem>\n    <RadioButton value=\"apple\" id=\"apple\" />\n    <RadioLabel htmlFor=\"apple\">Apple</RadioLabel>\n  </RadioItem>\n  <RadioItem>\n    <RadioButton value=\"banana\" id=\"banana\" />\n    <div>\n      <RadioLabel htmlFor=\"banana\">Banana</RadioLabel>\n      <RadioHintText htmlFor=\"banana\">Comes pre-packaged.</RadioHintText>\n    </div>\n  </RadioItem>\n</Radio>",
             "props": {
-                "Radio": {
+                "Radio\n\n`Radio` is abstracted from Radix UI's `RadioGroup.Root`. Please refer to the API references in [this documentation](https://www.radix-ui.com/primitives/docs/components/radio-group#root).": {
                     "value": {
                         "description": "The controlled value of the radio item to check. Should be used in conjunction with `onValueChange`.",
                         "type": "string"
@@ -1033,13 +1046,16 @@
                         "default": "false"
                     }
                 },
-                "RadioItem": {
+                "RadioButton\n\n`RadioButton` is abstracted from Radix UI's `RadioGroup.Item`. Please refer to the API references in [this documentation](https://www.radix-ui.com/primitives/docs/components/radio-group#item).": null,
+                "RadioItem\n\n`RadioHintText` uses the same props as a regular `div` element.": {
                     "disabled": {
                         "description": "Disables the radio item if set to true",
                         "type": "boolean",
                         "default": "false"
                     }
-                }
+                },
+                "RadioHintText\n\n`RadioHintText` uses the same props as a regular `label` element.": null,
+                "RadioLabel\n\n`RadioLabel` uses the same props as a regular `label` element.": null
             },
             "examples": [
                 "import {\n  Radio,\n  RadioButton,\n  RadioHintText,\n  RadioItem,\n  RadioLabel,\n} from \"@govtechmy/myds-react/radio\";\nexport default function component() {\n\treturn (import {\n\t\t  Radio,\n\t\t  RadioButton,\n\t\t  RadioHintText,\n\t\t  RadioItem,\n\t\t  RadioLabel,\n\t\t} from \"@govtechmy/myds-react/radio\";\n\t\t\n\t\t<Radio size=\"small\">\n\t\t  <RadioItem>\n\t\t    <RadioButton value=\"email\" id=\"email\" />\n\t\t    <div className=\"grid\">\n\t\t      <RadioLabel htmlFor=\"email\">Email</RadioLabel>\n\t\t      <RadioHintText htmlFor=\"email\">\n\t\t        We will send notifications to your registered email address.\n\t\t      </RadioHintText>\n\t\t    </div>\n\t\t  </RadioItem>\n\t\t  <RadioItem>\n\t\t    <RadioButton value=\"phone_call\" id=\"phone_call\" />\n\t\t    <div className=\"grid\">\n\t\t      <RadioLabel htmlFor=\"phone_call\">Phone Call</RadioLabel>\n\t\t      <RadioHintText htmlFor=\"phone_call\">\n\t\t        Our representative will call you on your provided phone number.\n\t\t      </RadioHintText>\n\t\t    </div>\n\t\t  </RadioItem>\n\t\t</Radio>\n\t\t\n\t\t<Radio size=\"medium\">\n\t\t  <RadioItem>\n\t\t    <RadioButton value=\"email\" id=\"email\" />\n\t\t    <div className=\"grid\">\n\t\t      <RadioLabel htmlFor=\"email\">Email</RadioLabel>\n\t\t      <RadioHintText htmlFor=\"email\">\n\t\t        We will send notifications to your registered email address.\n\t\t      </RadioHintText>\n\t\t    </div>\n\t\t  </RadioItem>\n\t\t  <RadioItem>\n\t\t    <RadioButton value=\"phone_call\" id=\"phone_call\" />\n\t\t    <div className=\"grid\">\n\t\t      <RadioLabel htmlFor=\"phone_call\">Phone Call</RadioLabel>\n\t\t      <RadioHintText htmlFor=\"phone_call\">\n\t\t        Our representative will call you on your provided phone number.\n\t\t      </RadioHintText>\n\t\t    </div>\n\t\t  </RadioItem>\n\t\t</Radio>\n\t\t\n\t\t<Radio size=\"large\">\n\t\t  <RadioItem>\n\t\t    <RadioButton value=\"email\" id=\"email\" />\n\t\t    <div className=\"grid\">\n\t\t      <RadioLabel htmlFor=\"email\">Email</RadioLabel>\n\t\t      <RadioHintText htmlFor=\"email\">\n\t\t        We will send notifications to your registered email address.\n\t\t      </RadioHintText>\n\t\t    </div>\n\t\t  </RadioItem>\n\t\t  <RadioItem>\n\t\t    <RadioButton value=\"phone_call\" id=\"phone_call\" />\n\t\t    <div className=\"grid\">\n\t\t      <RadioLabel htmlFor=\"phone_call\">Phone Call</RadioLabel>\n\t\t      <RadioHintText htmlFor=\"phone_call\">\n\t\t        Our representative will call you on your provided phone number.\n\t\t      </RadioHintText>\n\t\t    </div>\n\t\t  </RadioItem>\n\t\t</Radio>\n\t);\n}",
@@ -1056,7 +1072,7 @@
             "import": "import { InputOTP, InputOTPSlot } from \"@/components/myds\";",
             "anatomy": "<InputOTP maxLength={4}>\n  <InputOTPSlot index={0} />\n  <InputOTPSlot index={1} />\n  <InputOTPSlot index={2} />\n  <InputOTPSlot index={3} />\n</InputOTP>",
             "props": {
-                "InputOTP": {
+                "InputOTP\n\n`InputOTP` is abstracted from input-otp's `OTPInput`. Please refer to the API references in [this documentation](https://github.com/guilhermerodz/input-otp?tab=readme-ov-file#otpinput).": {
                     "maxLength": {
                         "description": "The max length of the OTP - it should correspond to the number of slots",
                         "type": "number"
@@ -1109,7 +1125,7 @@
             "import": "import {\n  Tabs,\n  TabsList,\n  TabsTrigger,\n  TabsContent,\n  TabsCounter,\n} from \"@govtechmy/myds-react/tabs\";",
             "anatomy": "export default () => (\n  <Tabs>\n    <TabsList>\n      <TabsTrigger />\n    </TabsList>\n    <TabsContent />\n  </Tabs>\n);",
             "props": {
-                "Tabs": {
+                "Tabs\n\nThe primary container that composes all tab components together, managing state and interactions between triggers and their content panels. It is being built on top of `TabsPrimitive.Root`.": {
                     "variant": {
                         "description": "Style variant of the tab",
                         "type": "enum",
@@ -1123,14 +1139,18 @@
                         "default": "small"
                     }
                 },
-                "TabsList": {
+                "TabsList\n\nA container that houses and aligns all tab triggers, providing a consistent layout for navigation elements. It is being built on top of `TabsPrimitive.List`.": {
                     "width": {
                         "description": "Width of the TabList",
                         "type": "enum",
                         "typeDescription": "full | fit",
                         "default": "fit"
                     }
-                }
+                },
+                "TabsTrigger\n\nInteractive element that toggles visibility of its corresponding tab panel when selected. It is being built on top of `TabsPrimitive.Trigger`.": null,
+                "TabsContent\n\nThe panel that displays content when its corresponding trigger is selected, hiding when another tab is activated. It is being built on top of `TabsPrimitive.Content`.": null,
+                "TabsIcon\n\nThe `TabsIcon` is a wrapper component that applies consistent styling and sizing to icons within `TabsTrigger`, using context-based size variants (`small` or `medium`).": null,
+                "TabsCounter\n\nThe `TabsCounter` is a component that displays numerical indicators or badges within `TabTrigger`, adjusting its text size based on the parent tabs' context (`small` or `medium`).\n\n<small>\n  For more in-depth customization, you can refer to API references in this\n  [documentation](https://www.radix-ui.com/primitives/docs/components/tabs#api-reference)\n</small>": null
             },
             "examples": [
                 "import {\n  Tabs,\n  TabsList,\n  TabsTrigger,\n  TabsContent,\n  TabsCounter,\n} from \"@govtechmy/myds-react/tabs\";\nexport default function component() {\n\treturn (import {\n\t\t    Tabs,\n\t\t    TabsContent,\n\t\t    TabsCounter,\n\t\t} from \"@/components/myds\";\n\t\t\n\t\t<Tabs\n\t\t    defaultValue=\"1\"\n\t\t    size=\"small\"\n\t\t    variant=\"line\"\n\t\t>\n\t\t    <TabsList>\n\t\t        <TabsTrigger value=\"1\">Novel</TabsTrigger>\n\t\t        <TabsTrigger value=\"2\">Short Story</TabsTrigger>\n\t\t        <TabsTrigger value=\"3\">Poetry</TabsTrigger>\n\t\t        <TabsTrigger value=\"4\">Drama</TabsTrigger>\n\t\t    </TabsList>\n\t\t    <TabsContent value=\"1\" className=\"py-6\">\n\t\t         A novel is a long work of fiction that presents a complete story with\n\t\t         characters, plot, and setting. It typically encompasses various themes\n\t\t         such as love, family, life struggles, and societal challenges. Novels\n\t\t         allow readers to immerse themselves in new worlds through the author's\n\t\t         imagination.\n\t\t     </TabsContent>\n\t\t\n\t\t     <TabsContent value=\"2\" className=\"py-6\">\n\t\t         A short story is a brief work of fiction that can be read in one\n\t\t         sitting. Despite its concise format, it still contains engaging plots\n\t\t         and impactful characters. This compact format requires precise writing\n\t\t         to effectively deliver its message.\n\t\t     </TabsContent>\n\t\t\n\t\t     <TabsContent value=\"3\" className=\"py-6\">\n\t\t         Poetry is a creative form of writing that uses beautiful and rhythmic\n\t\t         language to convey feelings and ideas. Each line of poetry is carefully\n\t\t         chosen to create a deep impact on the reader, whether through rhyme,\n\t\t         metaphor, or symbolism.\n\t\t     </TabsContent>\n\t\t\n\t\t     <TabsContent value=\"4\" className=\"py-6\">\n\t\t         Drama is a work written for stage performance. It contains dialogue\n\t\t         between characters and clear stage directions. Drama can evoke various\n\t\t         emotions in the audience, from comedy to tragedy, while delivering\n\t\t         meaningful social messages.\n\t\t     </TabsContent>\n\t\t</Tabs>\n\t\t\n\t\t// for pill variant\n\t\t<Tabs\n\t\t    defaultValue=\"1\"\n\t\t    size=\"small\"\n\t\t    variant=\"pill\"\n\t\t>\n\t\t    <TabsList>\n\t\t        <TabsTrigger value=\"1\">Novel</TabsTrigger>\n\t\t        <TabsTrigger value=\"2\">Short Story</TabsTrigger>\n\t\t        <TabsTrigger value=\"3\">Poetry</TabsTrigger>\n\t\t        <TabsTrigger value=\"4\">Drama</TabsTrigger>\n\t\t    </TabsList>\n\t\t    <TabsContent value=\"1\" className=\"py-6\">\n\t\t         A novel is a long work of fiction that presents a complete story with\n\t\t         characters, plot, and setting. It typically encompasses various themes\n\t\t         such as love, family, life struggles, and societal challenges. Novels\n\t\t         allow readers to immerse themselves in new worlds through the author's\n\t\t         imagination.\n\t\t     </TabsContent>\n\t\t\n\t\t     <TabsContent value=\"2\" className=\"py-6\">\n\t\t         A short story is a brief work of fiction that can be read in one\n\t\t         sitting. Despite its concise format, it still contains engaging plots\n\t\t         and impactful characters. This compact format requires precise writing\n\t\t         to effectively deliver its message.\n\t\t     </TabsContent>\n\t\t\n\t\t     <TabsContent value=\"3\" className=\"py-6\">\n\t\t         Poetry is a creative form of writing that uses beautiful and rhythmic\n\t\t         language to convey feelings and ideas. Each line of poetry is carefully\n\t\t         chosen to create a deep impact on the reader, whether through rhyme,\n\t\t         metaphor, or symbolism.\n\t\t     </TabsContent>\n\t\t\n\t\t     <TabsContent value=\"4\" className=\"py-6\">\n\t\t         Drama is a work written for stage performance. It contains dialogue\n\t\t         between characters and clear stage directions. Drama can evoke various\n\t\t         emotions in the audience, from comedy to tragedy, while delivering\n\t\t         meaningful social messages.\n\t\t     </TabsContent>\n\t\t</Tabs>\n\t\t\n\t\t// for enclosed variant\n\t\t<Tabs\n\t\t    defaultValue=\"1\"\n\t\t    size=\"small\"\n\t\t    variant=\"enclosed\"\n\t\t>\n\t\t   <TabsContent value=\"1\" className=\"py-6\">\n\t\t     A novel is a long work of fiction that presents a complete story with\n\t\t     characters, plot, and setting. It typically encompasses various themes\n\t\t     such as love, family, life struggles, and societal challenges. Novels\n\t\t     allow readers to immerse themselves in new worlds through the author's\n\t\t     imagination.\n\t\t </TabsContent>\n\t\t\n\t\t <TabsContent value=\"2\" className=\"py-6\">\n\t\t     A short story is a brief work of fiction that can be read in one\n\t\t     sitting. Despite its concise format, it still contains engaging plots\n\t\t     and impactful characters. This compact format requires precise writing\n\t\t     to effectively deliver its message.\n\t\t </TabsContent>\n\t\t\n\t\t <TabsContent value=\"3\" className=\"py-6\">\n\t\t     Poetry is a creative form of writing that uses beautiful and rhythmic\n\t\t     language to convey feelings and ideas. Each line of poetry is carefully\n\t\t     chosen to create a deep impact on the reader, whether through rhyme,\n\t\t     metaphor, or symbolism.\n\t\t </TabsContent>\n\t\t\n\t\t <TabsContent value=\"4\" className=\"py-6\">\n\t\t     Drama is a work written for stage performance. It contains dialogue\n\t\t     between characters and clear stage directions. Drama can evoke various\n\t\t     emotions in the audience, from comedy to tragedy, while delivering\n\t\t     meaningful social messages.\n\t\t </TabsContent>\n\t\t</Tabs>\n\t);\n}",
@@ -1241,7 +1261,9 @@
             "import": "import { AutoToast } from \"@govtechmy/myds-react/toast\";\n\n// Put the component high up in the DOM tree\n<AutoToast />;",
             "anatomy": "// Then, publish or emit a new event to the Toast\nimport { useToast } from \"@govtechmy/myds-react/hooks\";\n\nexport default () => {\n  const { toast } = useToast();\n  return (\n    <button\n      onClick={() => {\n        toast({\n          variant: \"message\",\n          title: \"Hello, world!\",\n          description: \"this is a message toast description\",\n        });\n      }}\n    >\n      Message\n    </button>\n  );\n};",
             "props": {
-                "ToastRoot": {
+                "ToastProvider\n`ToastProvider` is abstracted from Radix UI's `ToastProvider`. Please refer to the API references in this [documentation](https://www.radix-ui.com/primitives/docs/components/toast#provider).": null,
+                "ToastViewport\n`ToastViewport` is abstracted from Radix UI's `ToastViewport`. Please refer to the API references in this [documentation](https://www.radix-ui.com/primitives/docs/components/toast#viewport).": null,
+                "ToastRoot\n`ToastRoot` is abstracted from Radix UI's `ToastRoot`. Please refer to the API references in this [documentation](https://www.radix-ui.com/primitives/docs/components/toast#root).": {
                     "variant": {
                         "description": "Style variant of the toast",
                         "type": "enum",
@@ -1253,7 +1275,10 @@
                         "type": "number",
                         "default": "5000"
                     }
-                }
+                },
+                "ToastTitle\n`ToastTitle` is abstracted from Radix UI's `ToastTitle`. Please refer to the API references in this [documentation](https://www.radix-ui.com/primitives/docs/components/toast#title).": null,
+                "ToastDescription\n`ToastDescription` is abstracted from Radix UI's `ToastDescription`. Please refer to the API references in this [documentation](https://www.radix-ui.com/primitives/docs/components/toast#description).": null,
+                "ToastClose\n`ToastClose` is abstracted from Radix UI's `ToastClose`. Please refer to the API references in this [documentation](https://www.radix-ui.com/primitives/docs/components/toast#close).\n\n\n\n```": null
             },
             "examples": [
                 "import { AutoToast } from \"@govtechmy/myds-react/toast\";\n\n// Put the component high up in the DOM tree\n<AutoToast />;\nexport default function component() {\n\treturn (// autotoast for simple usage\n\t\timport { Button } from \"@govtechmy/myds-react/button\";\n\t\timport { AutoToast }from \"@govtechmy/myds-react/toast\";\n\t\t\n\t\t// put the component high up the layout tree\n\t\t\n\t\t<AutoToast />\n\t\t\n\t\t// to publish or emit a new event to the Toast\n\t\timport { useToast } from \"@govtechmy/myds-react/hooks\";\n\t\t\n\t\tconst { toast } = useToast();\n\t\t\n\t\t<button\n\t\t  onClick={() => {\n\t\t    toast({\n\t\t      variant: \"message\",\n\t\t      title: \"Hello, world!\",\n\t\t      description: \"this is a message toast description\",\n\t\t    });\n\t\t  }}\n\t\t>\n\t\t  Message\n\t\t</button>\n\t);\n}"
@@ -1267,7 +1292,7 @@
             "import": "import { InputOTP, InputOTPSlot } from \"@/components/myds\";",
             "anatomy": "<InputOTP maxLength={4}>\n  <InputOTPSlot index={0} />\n  <InputOTPSlot index={1} />\n  <InputOTPSlot index={2} />\n  <InputOTPSlot index={3} />\n</InputOTP>",
             "props": {
-                "InputOTP": {
+                "InputOTP\n\n`InputOTP` is abstracted from input-otp's `OTPInput`. Please refer to the API references in [this documentation](https://github.com/guilhermerodz/input-otp?tab=readme-ov-file#otpinput).": {
                     "maxLength": {
                         "description": "The max length of the OTP - it should correspond to the number of slots",
                         "type": "number"
@@ -1320,7 +1345,7 @@
             "import": "import {\n  Radio,\n  RadioButton,\n  RadioHintText,\n  RadioItem,\n  RadioLabel,\n} from \"@govtechmy/myds-react/radio\";",
             "anatomy": "<Radio>\n  <RadioItem>\n    <RadioButton value=\"apple\" id=\"apple\" />\n    <RadioLabel htmlFor=\"apple\">Apple</RadioLabel>\n  </RadioItem>\n  <RadioItem>\n    <RadioButton value=\"banana\" id=\"banana\" />\n    <div>\n      <RadioLabel htmlFor=\"banana\">Banana</RadioLabel>\n      <RadioHintText htmlFor=\"banana\">Comes pre-packaged.</RadioHintText>\n    </div>\n  </RadioItem>\n</Radio>",
             "props": {
-                "Radio": {
+                "Radio\n\n`Radio` is abstracted from Radix UI's `RadioGroup.Root`. Please refer to the API references in [this documentation](https://www.radix-ui.com/primitives/docs/components/radio-group#root).": {
                     "value": {
                         "description": "The controlled value of the radio item to check. Should be used in conjunction with `onValueChange`.",
                         "type": "string"
@@ -1342,13 +1367,16 @@
                         "default": "false"
                     }
                 },
-                "RadioItem": {
+                "RadioButton\n\n`RadioButton` is abstracted from Radix UI's `RadioGroup.Item`. Please refer to the API references in [this documentation](https://www.radix-ui.com/primitives/docs/components/radio-group#item).": null,
+                "RadioItem\n\n`RadioHintText` uses the same props as a regular `div` element.": {
                     "disabled": {
                         "description": "Disables the radio item if set to true",
                         "type": "boolean",
                         "default": "false"
                     }
-                }
+                },
+                "RadioHintText\n\n`RadioHintText` uses the same props as a regular `label` element.": null,
+                "RadioLabel\n\n`RadioLabel` uses the same props as a regular `label` element.": null
             },
             "examples": [
                 "import {\n  Radio,\n  RadioButton,\n  RadioHintText,\n  RadioItem,\n  RadioLabel,\n} from \"@govtechmy/myds-react/radio\";\nexport default function component() {\n\treturn (import {\n\t\t  Radio,\n\t\t  RadioButton,\n\t\t  RadioHintText,\n\t\t  RadioItem,\n\t\t  RadioLabel,\n\t\t} from \"@govtechmy/myds-react/radio\";\n\t\t\n\t\t<Radio size=\"small\">\n\t\t  <RadioItem>\n\t\t    <RadioButton value=\"email\" id=\"email\" />\n\t\t    <div className=\"grid\">\n\t\t      <RadioLabel htmlFor=\"email\">Email</RadioLabel>\n\t\t      <RadioHintText htmlFor=\"email\">\n\t\t        We will send notifications to your registered email address.\n\t\t      </RadioHintText>\n\t\t    </div>\n\t\t  </RadioItem>\n\t\t  <RadioItem>\n\t\t    <RadioButton value=\"phone_call\" id=\"phone_call\" />\n\t\t    <div className=\"grid\">\n\t\t      <RadioLabel htmlFor=\"phone_call\">Phone Call</RadioLabel>\n\t\t      <RadioHintText htmlFor=\"phone_call\">\n\t\t        Our representative will call you on your provided phone number.\n\t\t      </RadioHintText>\n\t\t    </div>\n\t\t  </RadioItem>\n\t\t</Radio>\n\t\t\n\t\t<Radio size=\"medium\">\n\t\t  <RadioItem>\n\t\t    <RadioButton value=\"email\" id=\"email\" />\n\t\t    <div className=\"grid\">\n\t\t      <RadioLabel htmlFor=\"email\">Email</RadioLabel>\n\t\t      <RadioHintText htmlFor=\"email\">\n\t\t        We will send notifications to your registered email address.\n\t\t      </RadioHintText>\n\t\t    </div>\n\t\t  </RadioItem>\n\t\t  <RadioItem>\n\t\t    <RadioButton value=\"phone_call\" id=\"phone_call\" />\n\t\t    <div className=\"grid\">\n\t\t      <RadioLabel htmlFor=\"phone_call\">Phone Call</RadioLabel>\n\t\t      <RadioHintText htmlFor=\"phone_call\">\n\t\t        Our representative will call you on your provided phone number.\n\t\t      </RadioHintText>\n\t\t    </div>\n\t\t  </RadioItem>\n\t\t</Radio>\n\t\t\n\t\t<Radio size=\"large\">\n\t\t  <RadioItem>\n\t\t    <RadioButton value=\"email\" id=\"email\" />\n\t\t    <div className=\"grid\">\n\t\t      <RadioLabel htmlFor=\"email\">Email</RadioLabel>\n\t\t      <RadioHintText htmlFor=\"email\">\n\t\t        We will send notifications to your registered email address.\n\t\t      </RadioHintText>\n\t\t    </div>\n\t\t  </RadioItem>\n\t\t  <RadioItem>\n\t\t    <RadioButton value=\"phone_call\" id=\"phone_call\" />\n\t\t    <div className=\"grid\">\n\t\t      <RadioLabel htmlFor=\"phone_call\">Phone Call</RadioLabel>\n\t\t      <RadioHintText htmlFor=\"phone_call\">\n\t\t        Our representative will call you on your provided phone number.\n\t\t      </RadioHintText>\n\t\t    </div>\n\t\t  </RadioItem>\n\t\t</Radio>\n\t);\n}",
@@ -1365,7 +1393,7 @@
             "import": "import {\n  SearchBar,\n  SearchBarInput,\n  SearchBarInputContainer,\n  SearchBarSearchButton,\n  SearchBarResults,\n  SearchBarResultsList,\n  SearchBarResultsItem,\n  SearchBarClearButton,\n  SearchBarHint,\n} from \"@govtechmy/myds-react/search-bar\";",
             "anatomy": "export default () => (\n  <SearchBar size=\"large\">\n    <SearchBarInputContainer>\n      <SearchBarInput value={query} onValueChange={setQuery} />\n      <SearchBarHint>\n        Press <Pill size=\"small\">/</Pill> to search\n      </SearchBarHint>\n      <SearchBarClearButton />\n      <SearchBarSearchButton />\n    </SearchBarInputContainer>\n    <SearchBarResults open={true}>\n      <SearchBarResultsList>\n        <SearchBarResultsItem value=\"foo\" onSelect={...} >\n          Foo\n        </SearchBarResultsItem>\n        <SearchBarResultsItem value=\"bar\" onSelect={...} >\n          Bar\n        </SearchBarResultsItem>\n      </SearchBarResultsList>\n    </SearchBarResults>\n  </SearchBar>\n);",
             "props": {
-                "SearchBar": {
+                "SearchBar\n\n`SearchBar` is abstracted from cmdk's `Command.Root`. Please refer to the API references in [this documentation](https://github.com/pacocoursey/cmdk#command-cmdk-root).": {
                     "size": {
                         "description": "Sizes of the search bar",
                         "type": "enum",
@@ -1373,7 +1401,7 @@
                         "default": "medium"
                     }
                 },
-                "SearchBarInput": {
+                "SearchBarInput\n\n`SearchBarInput` is abstracted from cmdk's `Command.Input`. Please refer to the API references in [this documentation](https://github.com/pacocoursey/cmdk#input-cmdk-input)": {
                     "value": {
                         "description": "Input value",
                         "type": "string"
@@ -1384,12 +1412,19 @@
                         "typeDescription": "(value: string) => void"
                     }
                 },
+                "SearchBarInputContainer\n\n`SearchBarInputContainer` uses the same props as a regular `div` element.": null,
+                "SearchBarSearchButton\n\n`SearchBarSearchButton` uses the same props as MYDS' `Button`. Please refer to the API references in [this documentation](/docs/develop/button)": null,
+                "SearchBarClearButton\n\n`SearchBarClearButton` uses the same props as MYDS' `Button`. Please refer to the API references in [this documentation](/docs/develop/button)": null,
+                "SearchBarHint\n\n`SearchBarInputContainer` uses the same props as a regular `div` element.": null,
                 "SearchBarResults": {
                     "open": {
                         "description": "Whether the results pop-up is open or closed",
                         "type": "boolean"
                     }
-                }
+                },
+                "SearchBarResultsList\n\n`SearchBarResultsList` is abstracted from cmdk's `Command.List`. Please refer to the API references in [this documentation](https://github.com/pacocoursey/cmdk#list-cmdk-list)": null,
+                "SearchBarResultsItem\n\n`SearchBarResultsItem` is abstracted from cmdk's `Command.Item`. Please refer to the API references in [this documentation](https://github.com/pacocoursey/cmdk#item-cmdk-item-data-disabled-data-selected)": null,
+                "SearchBarResultsGroup\n\n`SearchBarResultsGroup` is abstracted from cmdk's `Command.Group`. Please refer to the API references in [this documentation](https://github.com/pacocoursey/cmdk#group-cmdk-group-hidden)\n```": null
             },
             "examples": [
                 "import {\n  SearchBar,\n  SearchBarInput,\n  SearchBarInputContainer,\n  SearchBarSearchButton,\n  SearchBarResults,\n  SearchBarResultsList,\n  SearchBarResultsItem,\n  SearchBarClearButton,\n  SearchBarHint,\n} from \"@govtechmy/myds-react/search-bar\";\nexport default function component() {\n\treturn (import {\n\t\t    SearchBar,\n\t\t    SearchBarInput,\n\t\t    SearchBarInputContainer,\n\t\t    SearchBarSearchButton,\n\t\t} from \"@govtechmy/myds-react/search-bar\";\n\t\t\n\t\t<SearchBar size=\"small\">\n\t\t  <SearchBarInputContainer>\n\t\t    <SearchBarInput placeholder=\"Search by name\" />\n\t\t    <SearchBarSearchButton />\n\t\t  </SearchBarInputContainer>\n\t\t</SearchBar>\n\t\t\n\t\t<SearchBar size=\"medium\">\n\t\t  <SearchBarInputContainer>\n\t\t    <SearchBarInput placeholder=\"Search by name\" />\n\t\t    <SearchBarSearchButton />\n\t\t  </SearchBarInputContainer>\n\t\t</SearchBar>\n\t\t\n\t\t<SearchBar size=\"large\">\n\t\t  <SearchBarInputContainer>\n\t\t    <SearchBarInput placeholder=\"Search by name\" />\n\t\t    <SearchBarSearchButton />\n\t\t  </SearchBarInputContainer>\n\t\t</SearchBar>\n\t);\n}",
@@ -2030,7 +2065,7 @@
                         "default": "[\n    { \n      \"label\": \"Light\",\n      \"value\": \"light\", \n      \"icon\": <SunIcon />; \n    },\n    { \n      \"label\": \"Dark\",\n      \"value\": \"dark\", \n      \"icon\": <MoonIcon />; \n    }\n]\n"
                     }
                 },
-                "ThemeProvider": {
+                "ThemeProvider\n\n\n\n</ThemeProvider>": {
                     "defaultTheme": {
                         "description": "The default theme to be applied.",
                         "type": "string",
