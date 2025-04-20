@@ -345,7 +345,7 @@ export default function App() {
           <div className="flex flex-wrap items-center pt-4 mt-8 mb-0 mx-4 md:mx-0">
             <div className="flex-col">
               <h1 className="text-txt-black-900 text-3xl mt-auto sm:px-6 xl:px-8 2xl:px-10 font-bold tracking-tight">
-                Jen
+                MYDS - Gen
               </h1>
               <p className="text-txt-black-900 text-sm mt-auto font-bold tracking-tight sm:px-6 xl:px-8 2xl:px-10 hidden sm:block">
                 Generative UI using the{" "}
@@ -428,10 +428,10 @@ export default function App() {
                           </SelectTrigger>
                           <SelectContent>
                             <SelectItem value="Gemini-2.0-flash">
-                              Gemini-2.0-flash (faster)
+                              Gemini-2.0-flash (fast, medium quality)
                             </SelectItem>
                             <SelectItem value="Gemini-2.5-pro">
-                              Gemini-2.5-pro (better quality)
+                              Gemini-2.5-pro (slow, high quality)
                             </SelectItem>
                           </SelectContent>
                         </Select>
@@ -467,7 +467,7 @@ export default function App() {
                       : "text-txt-black-900 dark:text-txt-dark"
                   } text-xl mb-4 justify-center`}
                 >
-                  Describe a component
+                  Describe a component (eg: a pricing component)
                 </h2>
                 <TextArea
                   className="h-50 min-h-[50px] mb-4 w-full"
@@ -527,7 +527,7 @@ export default function App() {
                           : "text-txt-black-900"
                       } text-xl mb-4 justify-center`}
                     >
-                      Describe an update or modification
+                      Describe an update or modification (eg: add a sign up button)
                     </h2>
                     <TextArea
                       className="h-50 min-h-[50px] mb-4 w-full bg-bg-white dark:bg-bg-dark"
