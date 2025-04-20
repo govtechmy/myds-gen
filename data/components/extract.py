@@ -52,12 +52,19 @@ def extract_comp_dict(mydspath, filename):
     if filename == "pagination":
         examples_doc = [examples_doc[0]]
 
-    prop_dict = {
-        i.split("\n")[0].strip(): re.findall(
-            r"<TypeTable\s*?type={{([\S\s]+?)}}\s*?\/>", i
-        )
+    prop_dict_ = {
+        i.split("\n")[0].strip(): i
         for i in props.split("###")[1:]
     }
+
+    prop_dict = {}
+    for k,j in prop_dict_.items():
+        it_table = re.findall(
+            r"<TypeTable\s*?type={{([\S\s]+?)}}\s*?\/>", j
+        )
+        prop_desc = re.sub(r"<TypeTable\s*?type={{[\S\s]+?}}\s*?\/>", "", j)
+        prop_dict[f"{prop_desc.strip()}" if prop_desc.strip() else k.strip()] = it_table if it_table else ["False"]
+
     if filename == "theme-switch":
         prop_dict = {
             i: eval(
@@ -78,13 +85,13 @@ def extract_comp_dict(mydspath, filename):
         }
     else:
         prop_dict = {
-            i: eval(
+            i: (eval(
                 "{"
                 + re.sub(r"\s\s\w+:", prop_proc, y)
                 .replace('"`', '"')
                 .replace('`"', '"')
                 + "}"
-            )
+            ) if y != "False" else None)
             for i, x in prop_dict.items()
             for y in x
         }

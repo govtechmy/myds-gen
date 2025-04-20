@@ -1,23 +1,21 @@
 [project]
 name = "myds-gen"
 version = "0.1.0"
-description = "Add your description here"
+description = "A MYDS component generator"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
     "fastapi[standard]>=0.115.11",
-    "fastparquet>=2024.11.0",
-    "google-genai>=1.7.0",
     "ipykernel>=6.29.5",
-    "numpy>=2.2.3",
+    "langchain>=0.3.23",
+    "langchain-google-genai>=2.1.2",
+    "langfuse>=2.60.2",
+    "langgraph>=0.3.25",
+    "langsmith>=0.3.26",
     "pandas>=2.2.3",
     "pydantic>=2.10.6",
     "python-dotenv>=1.0.1",
-    "rich>=13.9.4",
     "ruff>=0.9.7",
-    "streamlit>=1.43.2",
-    "streamlit-js-eval>=0.1.7",
     "tabulate>=0.9.0",
-    "tqdm>=4.67.1",
     "uvicorn[standard]>=0.34.0",
 ]
