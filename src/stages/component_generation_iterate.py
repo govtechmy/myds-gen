@@ -5,6 +5,7 @@ from src.stages.build_context import gen_comp_task_iter_, parse_task_
 from src.util.langchain_schema import genStateIter
 from src.util.output_schema import ComponentIterateSchema, PromptImprovedIter
 from src.util.rag import rag_component
+from src.util.model_map import model_mapping
 
 # os.environ["GOOGLE_API_KEY"] = os.environ["GEMINI_API_KEY"]
 
@@ -44,7 +45,8 @@ def design_update(state: genStateIter):
     if new_enh_prompt.additional_components:
         comp_include = [
             rag_component(
-                f"{i.library_component_name} - {i.library_component_usage_reason}"
+                f"{i.library_component_name} - {i.library_component_usage_reason}",
+                state["gemini_api_key"],
             )
             for i in new_enh_prompt.additional_components
         ]
@@ -121,16 +123,10 @@ def generate_component_iter_stream(state: genStateIter):
 
     </task_details>
     """
-    if state["model"] == "Gemini-2.0-flash":
-        model = "gemini-2.0-flash"
-    elif state["model"] == "Gemini-2.5-pro":
-        model = "gemini-2.5-pro-exp-03-25"
-    else:
-        raise ValueError("Invalid model name")
 
     comp_model = ChatGoogleGenerativeAI(
         # model="gemini-2.5-pro-exp-03-25",
-        model=model,
+        model=model_mapping(state["model"]),
         api_key=state["gemini_api_key"],
         temperature=0.6,
         max_retries=2,
@@ -177,16 +173,9 @@ def generate_component_iter(state: genStateIter):
     </task_details>
     """
 
-    if state["model"] == "Gemini-2.0-flash":
-        model = "gemini-2.0-flash"
-    elif state["model"] == "Gemini-2.5-pro":
-        model = "gemini-2.5-pro-exp-03-25"
-    else:
-        raise ValueError("Invalid model name")
-
     comp_model = ChatGoogleGenerativeAI(
         # model="gemini-2.5-pro-exp-03-25",
-        model=model,
+        model=model_mapping(state["model"]),
         api_key=state["gemini_api_key"],
         temperature=0.6,
         max_retries=2,

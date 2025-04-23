@@ -29,7 +29,7 @@ import { SettingIcon } from "@govtechmy/myds-react/icon";
 import StackBlitzEditor from "./components/LiveEditor";
 import Link from "next/link";
 
-const API_BASE_URL = "https://jen-api.onrender.com";
+const API_BASE_URL = "https://api.iwa.my";
 const INIT_STREAM_ENDPOINT = `${API_BASE_URL}/init_prompt_stream`;
 const ITER_STREAM_ENDPOINT = `${API_BASE_URL}/iteration_stream`;
 
@@ -345,7 +345,7 @@ export default function App() {
           <div className="flex flex-wrap items-center pt-4 mt-8 mb-0 mx-4 md:mx-0">
             <div className="flex-col">
               <h1 className="text-txt-black-900 text-3xl mt-auto sm:px-6 xl:px-8 2xl:px-10 font-bold tracking-tight">
-                MYDS - Gen
+                Jen
               </h1>
               <p className="text-txt-black-900 text-sm mt-auto font-bold tracking-tight sm:px-6 xl:px-8 2xl:px-10 hidden sm:block">
                 Generative UI using the{" "}
@@ -430,8 +430,11 @@ export default function App() {
                             <SelectItem value="Gemini-2.0-flash">
                               Gemini-2.0-flash (fast, medium quality)
                             </SelectItem>
+                            <SelectItem value="Gemini-2.5-flash">
+                              Gemini-2.5-flash (slow, great quality)
+                            </SelectItem>
                             <SelectItem value="Gemini-2.5-pro">
-                              Gemini-2.5-pro (slow, high quality)
+                              Gemini-2.5-pro (slower, high quality)
                             </SelectItem>
                           </SelectContent>
                         </Select>
@@ -474,7 +477,7 @@ export default function App() {
                   size="small"
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
-                  placeholder="Describe your desired component (eg: a pricing component)..."
+                  placeholder="Describe your desired component..."
                   disabled={loading || loading_iter}
                 />
                 <Button
@@ -534,7 +537,7 @@ export default function App() {
                       size="small"
                       value={newInput}
                       onChange={(e) => setNewInput(e.target.value)}
-                      placeholder="Enter an update for the component (eg: add a sign up button)..."
+                      placeholder="Enter an update for the component..."
                       disabled={loading || loading_iter || !apiFinalState} // Disable if loading or no final state
                     />
                     <Button

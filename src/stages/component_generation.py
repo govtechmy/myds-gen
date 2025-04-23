@@ -2,6 +2,7 @@
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.prompts import ChatPromptTemplate
 from src.util.langchain_schema import genState
+from src.util.model_map import model_mapping
 
 # os.environ["GOOGLE_API_KEY"] = os.environ["GEMINI_API_KEY"]
 
@@ -40,16 +41,9 @@ def generate_component_stream(state: genState):
         ]
     )
 
-    if state["model"] == "Gemini-2.0-flash":
-        model = "gemini-2.0-flash"
-    elif state["model"] == "Gemini-2.5-pro":
-        model = "gemini-2.5-pro-exp-03-25"
-    else:
-        raise ValueError("Invalid model name")
-
     comp_model = ChatGoogleGenerativeAI(
         # model="gemini-2.5-pro-exp-03-25",
-        model=model,
+        model=model_mapping(state["model"]),
         api_key=state["gemini_api_key"],
         temperature=0.8,
         max_retries=2,
@@ -143,16 +137,9 @@ def generate_component(state: genState):
         ]
     )
 
-    if state["model"] == "Gemini-2.0-flash":
-        model = "gemini-2.0-flash"
-    elif state["model"] == "Gemini-2.5-pro":
-        model = "gemini-2.5-pro-exp-03-25"
-    else:
-        raise ValueError("Invalid model name")
-
     comp_model = ChatGoogleGenerativeAI(
         # model="gemini-2.5-pro-exp-03-25",
-        model=model,
+        model=model_mapping(state["model"]),
         api_key=state["gemini_api_key"],
         temperature=0.8,
         max_retries=2,
