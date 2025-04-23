@@ -430,8 +430,11 @@ export default function App() {
                             <SelectItem value="Gemini-2.0-flash">
                               Gemini-2.0-flash (fast, medium quality)
                             </SelectItem>
+                            <SelectItem value="Gemini-2.5-flash">
+                              Gemini-2.5-flash (slow, great quality)
+                            </SelectItem>
                             <SelectItem value="Gemini-2.5-pro">
-                              Gemini-2.5-pro (slow, high quality)
+                              Gemini-2.5-pro (slower, high quality)
                             </SelectItem>
                           </SelectContent>
                         </Select>
