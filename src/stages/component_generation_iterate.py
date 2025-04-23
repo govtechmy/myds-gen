@@ -44,7 +44,8 @@ def design_update(state: genStateIter):
     if new_enh_prompt.additional_components:
         comp_include = [
             rag_component(
-                f"{i.library_component_name} - {i.library_component_usage_reason}"
+                f"{i.library_component_name} - {i.library_component_usage_reason}",
+                state["gemini_api_key"],
             )
             for i in new_enh_prompt.additional_components
         ]
