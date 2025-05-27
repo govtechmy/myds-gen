@@ -431,10 +431,13 @@ export default function App() {
                               Gemini-2.0-flash (fast, medium quality)
                             </SelectItem>
                             <SelectItem value="Gemini-2.5-flash">
-                              Gemini-2.5-flash (slow, great quality)
+                              Gemini-2.5-flash (medium, great quality)
+                            </SelectItem>
+                            <SelectItem value="Gemini-2.5-flash-thinking">
+                              Gemini-2.5-flash-thinking (slow, better quality)
                             </SelectItem>
                             <SelectItem value="Gemini-2.5-pro">
-                              Gemini-2.5-pro (slower, high quality)
+                              Gemini-2.5-pro (slower, high quality, ⚠️ Only works for paid API!)
                             </SelectItem>
                           </SelectContent>
                         </Select>
