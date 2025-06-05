@@ -1,11 +1,17 @@
-# import os
+import os
 import json
+import requests
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain_core.vectorstores import InMemoryVectorStore
+from langchain_core.load import load
 
 from .langchain_schema import learnState
 
 # os.environ["GOOGLE_API_KEY"] = os.environ["GEMINI_API_KEY"]
+DEP_TYPE = os.getenv("DEP_TYPE")
+print(DEP_TYPE)
+if DEP_TYPE == "serverless":
+    BLOB_URL = os.getenv("BLOB_URL")
 
 
 def retrieve_full(component_name):
@@ -19,7 +25,14 @@ def rag_icon(icon_name, gemini_api_key):
         model="models/text-embedding-004", google_api_key=gemini_api_key
     )
     vector_store = InMemoryVectorStore(embeddings)
-    vector_store = vector_store.load("data/icons/icon_vector.json", embeddings)
+    if DEP_TYPE == "serverless":
+        vector_path = f"{BLOB_URL}/icon_vector.json"
+        vector = requests.get(vector_path).json()
+        vector_store.store = load(vector)
+    else:
+        vector_path = "data/icons/icon_vector.json"
+        vector_store = vector_store.load(vector_path, embeddings)
+
     return {
         "icon": icon_name,
         "retrieved": [
@@ -34,7 +47,13 @@ def rag_component(query, gemini_api_key):
         model="models/text-embedding-004", google_api_key=gemini_api_key
     )
     vector_store = InMemoryVectorStore(embeddings)
-    vector_store = vector_store.load("data/components/comp_vector.json", embeddings)
+    if DEP_TYPE == "serverless":
+        vector_path = f"{BLOB_URL}/comp_vector.json"
+        vector = requests.get(vector_path).json()
+        vector_store.store = load(vector)
+    else:
+        vector_path = "data/components/comp_vector.json"
+        vector_store = vector_store.load(vector_path, embeddings)
     top2retrieved = [
         i.metadata["component_name"]
         for i in vector_store.similarity_search(query=query, k=4)

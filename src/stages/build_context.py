@@ -1,25 +1,36 @@
 import os
-import pandas as pd
 from src.util.rag import rag_icon, rag_component
 
 DEP_TYPE = os.getenv("DEP_TYPE")
 
 if DEP_TYPE == "serverless":
     import requests
-
-    DESIGN_DOC = os.environ["DESIGN_DOC"]
-    COLOR_DOC = os.environ["COLOR_DOC"]
-
+    BLOB_URL = os.getenv("BLOB_URL")
 
 # ----------------
 # processing markdown tables and code examples
 def prop_md(prop_dict):
-    base_df = pd.DataFrame(
-        columns=["description", "type", "default", "typeDescription"]
-    )
-    prop_df = pd.DataFrame.from_dict(prop_dict).T
-    base_df = pd.concat([base_df, prop_df]).fillna("-")
-    return base_df.to_markdown(tablefmt="github")
+    detail_columns = ["description", "type", "default", "typeDescription"]
+    all_headers = ["Prop"] + detail_columns
+
+    header_line = "| " + " | ".join(all_headers) + " |"
+    separator_line = "| " + " | ".join(["---"] * len(all_headers)) + " |"
+    markdown_lines = [header_line, separator_line]
+
+    if prop_dict: 
+        for prop_name, details in prop_dict.items():
+            row_values = [prop_name]
+            for col_key in detail_columns:
+                value = str(details.get(col_key, "-")).replace("|", "\\|")
+                row_values.append(value)
+            
+            data_line = "| " + " | ".join(row_values) + " |"
+            markdown_lines.append(data_line)
+    else:
+        pass
+
+
+    return "\n".join(markdown_lines)
 
 
 def example_block(comp_name, comp_examples, props):
@@ -295,7 +306,7 @@ def generate(component_task, wireframe, gemini_api_key):
     )
 
     if DEP_TYPE == "serverless":
-        response = requests.get(DESIGN_DOC)
+        response = requests.get(F"{BLOB_URL}/design_doc_min.md")
         design_text = response.text
     else:
         with (
@@ -306,7 +317,7 @@ def generate(component_task, wireframe, gemini_api_key):
     design_text = "".join(design_text)
 
     if DEP_TYPE == "serverless":
-        response = requests.get(COLOR_DOC)
+        response = requests.get(f"{BLOB_URL}/colour.md")
         colour_text = response.text
     else:
         with (
@@ -423,17 +434,25 @@ def generate_iter(component_task, wireframe):
     # component_task = gen_comp_task(prompt, design_data)
     suggestion_comp_block, suggestion_icon_block = parse_task_iter(component_task)
 
-    with (
-        open("data/foundation/design_doc_min.md") as design_raw
-    ):  # a distilled version of https://myds.vercel.app/en/docs/design foundation tabs
-        design_text = design_raw.readlines()
+    if DEP_TYPE == "serverless":
+        response = requests.get(F"{BLOB_URL}/design_doc_min.md")
+        design_text = response.text
+    else:
+        with (
+            open("data/foundation/design_doc_min.md") as design_raw
+        ):  # a distilled version of https://myds.vercel.app/en/docs/design foundation tabs
+            design_text = design_raw.readlines()
 
     design_text = "".join(design_text)
 
-    with (
-        open("data/foundation/colour.md") as design_colour
-    ):  # extracted from https://github.com/govtechmy/myds/tree/main/packages/style/styles/theme
-        colour_text = design_colour.readlines()
+    if DEP_TYPE == "serverless":
+        response = requests.get(f"{BLOB_URL}/colour.md")
+        colour_text = response.text
+    else:
+        with (
+            open("data/foundation/colour.md") as design_colour
+        ):  # extracted from https://github.com/govtechmy/myds/tree/main/packages/style/styles/theme
+            colour_text = design_colour.readlines()
 
     colour_text = "".join(colour_text)
 

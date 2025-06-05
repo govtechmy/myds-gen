@@ -1,7 +1,7 @@
-import os
+# import os
 import json
 from langgraph.graph import StateGraph, START, END
-from langfuse.callback import CallbackHandler
+# from langfuse.callback import CallbackHandler
 from langchain_core.messages.ai import AIMessageChunk
 from langchain_core.messages import messages_to_dict
 from src.stages.design import validate, enhance, plan, wireframe
@@ -22,17 +22,16 @@ from src.util.langchain_schema import (
     learnState,
 )
 
-# os.environ["GOOGLE_API_KEY"] = os.environ["GEMINI_API_KEY"]
-os.environ["LANGSMITH_TRACING"] = os.environ["LANGSMITH_TRACING"]
-os.environ["LANGSMITH_API_KEY"] = os.environ["LANGSMITH_API_KEY"]
-os.environ["LANGSMITH_PROJECT"] = "jen"
-os.environ["LANGSMITH_ENDPOINT"] = "https://api.smith.langchain.com"
+# os.environ["LANGSMITH_TRACING"] = os.environ["LANGSMITH_TRACING"]
+# os.environ["LANGSMITH_API_KEY"] = os.environ["LANGSMITH_API_KEY"]
+# os.environ["LANGSMITH_PROJECT"] = "jen"
+# os.environ["LANGSMITH_ENDPOINT"] = "https://api.smith.langchain.com"
 
-langfuse_handler = CallbackHandler(
-    secret_key=os.environ["langchain_sk"],
-    public_key=os.environ["langchain_pk"],
-    host="https://cloud.langfuse.com",
-)
+# langfuse_handler = CallbackHandler(
+#     secret_key=os.environ["langchain_sk"],
+#     public_key=os.environ["langchain_pk"],
+#     host="https://cloud.langfuse.com",
+# )
 
 
 def context_builder(state: genState):
@@ -77,7 +76,7 @@ def design_plan_step(user_prompt: str, gemini_api_key: str):
 
     state = workflow.invoke(
         {"user_prompt": user_prompt, "gemini_api_key": gemini_api_key},
-        config={"callbacks": [langfuse_handler]},
+        # config={"callbacks": [langfuse_handler]},
     )
     return state
 
@@ -95,7 +94,7 @@ def generate_component_step_Stream(design_state: designState):
             "context": design_state["context"],
         },
         stream_mode=["messages", "values"],
-        config={"callbacks": [langfuse_handler], "run_name": "init_call_stream"},
+        # config={"callbacks": [langfuse_handler], "run_name": "init_call_stream"},
     )
     for event_type, event in events:
         if event_type == "messages":
@@ -135,7 +134,7 @@ def generate_component_step(design_state: designState, stream=False):
             "context": design_state["context"],
             "stream": stream,
         },
-        config={"callbacks": [langfuse_handler], "run_name": "init_call_static"},
+        # config={"callbacks": [langfuse_handler], "run_name": "init_call_static"},
     )
     static_output = dict(static_output)
     static_output["history"] = messages_to_dict(static_output["history"].to_messages())
@@ -157,7 +156,7 @@ def generate_component_iteration(
     iteration_workflow = iter_graph.compile()
     static_output = iteration_workflow.invoke(
         history,
-        config={"callbacks": [langfuse_handler], "run_name": "iter_call_static"},
+        # config={"callbacks": [langfuse_handler], "run_name": "iter_call_static"},
     )
     static_output = dict(static_output)
     static_output["history"] = messages_to_dict(static_output["history"].to_messages())
@@ -180,7 +179,7 @@ def generate_component_iteration_Stream(
     events = iteration_workflow.stream(
         history,
         stream_mode=["messages", "values"],
-        config={"callbacks": [langfuse_handler], "run_name": "iter_call_stream"},
+        # config={"callbacks": [langfuse_handler], "run_name": "iter_call_stream"},
     )
     events_passed = 0
     for event_type, event in events:

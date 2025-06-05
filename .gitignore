@@ -214,3 +214,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 app/components/test.tsx
+app/preview/generatedComponent.tsx
+examples/example-api.ipynb
+langcain.ipynb
