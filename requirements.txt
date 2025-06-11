@@ -1,0 +1,7 @@
+fastapi[standard]>=0.115.11
+uvicorn[standard]>=0.34.0
+langchain-core>=0.3.23
+langchain-google-genai>=2.1.2
+langgraph>=0.3.25
+pydantic>=2.10.6
+numpy>=2.2.6

@@ -29,9 +29,8 @@ import { SettingIcon } from "@govtechmy/myds-react/icon";
 import StackBlitzEditor from "./components/LiveEditor";
 import Link from "next/link";
 
-const API_BASE_URL = "https://jen-api.onrender.com";
-const INIT_STREAM_ENDPOINT = `${API_BASE_URL}/init_prompt_stream`;
-const ITER_STREAM_ENDPOINT = `${API_BASE_URL}/iteration_stream`;
+const INIT_STREAM_ENDPOINT = `/api/init_prompt_stream`;
+const ITER_STREAM_ENDPOINT = `/api/iteration_stream`;
 
 const cleanCodeMarkers = (codeChunk: string): string => {
   return codeChunk.replace(/^(\/\/)?```tsx\\n?|\\n?(\/\/)?```$/g, "");
@@ -252,7 +251,7 @@ export default function App() {
         response,
         (chunk) => setCode((prev) => prev + chunk),
         (finalState) => {
-          console.log("Received final state:", finalState);
+          console.log("Received final state:");
           setApiFinalState(finalState);
         },
         () => {
@@ -318,7 +317,7 @@ export default function App() {
           }
         },
         (finalState) => {
-          console.log("Received updated final state:", finalState);
+          console.log("Received updated final state:");
           setApiFinalState(finalState);
         },
         () => {
